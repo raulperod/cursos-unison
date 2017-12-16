@@ -1,0 +1,168 @@
+doctype html
+html(lang='es')
+   head
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+      meta(name='description', content='')
+      meta(name='author', content='')
+      title Evaluar curso
+      // Bootstrap core CSS
+      link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+      // Custom fonts for this template
+      link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+      // Page level plugin CSS
+      link(href='/public/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
+      // Custom styles for this template
+      link(href='/public/css/sb-admin.css', rel='stylesheet')
+   body#page-top.fixed-nav.sticky-footer.bg-dark
+      // Navigation
+      nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+         a.navbar-brand(href='#') Unison
+         button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+         #navbarResponsive.collapse.navbar-collapse
+            ul#exampleAccordion.navbar-nav.navbar-sidenav
+               li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
+                  a.nav-link(href='#')
+                     i.fa.fa-fw.fa-user-o
+                     span.nav-link-text Mi perfil
+               li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
+                  a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
+                     i.fa.fa-fw.fa-book
+                     span.nav-link-text Mis cursos
+                  ul#collapseCursos.sidenav-second-level.collapse
+                     li
+                        a(href='#') Crear solicitud
+               li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
+                  a.nav-link(href='#')
+                     i.fa.fa-fw.fa-book
+                     span.nav-link-text Ver cursos
+            ul.navbar-nav.sidenav-toggler
+               li.nav-item
+                  a#sidenavToggler.nav-link.text-center
+                     i.fa.fa-fw.fa-angle-left
+            ul.navbar-nav.ml-auto
+               li.nav-item
+                  a.nav-link(data-toggle='modal', data-target='#exampleModal')
+                     i.fa.fa-fw.fa-sign-out
+                     | Cerrar sesión
+      .content-wrapper
+         .container-fluid
+            // Breadcrumbs
+            ol.breadcrumb
+               li.breadcrumb-item
+                  a(href='#') Nombre de usuario
+               li.breadcrumb-item.active Evaluar curso
+            // Example DataTables Card
+            .card.card-register.mx-auto.mt-5
+               .card-header Evaluar curso
+               .card-body
+                  form
+                     .form-group
+                        label(for='') De acuerdo a sus expectativas
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') La pertinencia de los contenidos fue
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') Los tópicos tratados
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') Los tiempos de la presentación
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') El logro de los objetivos planteados fue
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') Los materiales de apoyo fueron
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') La aplicación de los conocimientos adquiridos es
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') Los medios tecnológicos usados fueron
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') La cantidad de información fue
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='') En general el programa fue
+                        select.form-control(required='')
+                           option(value='0') Excelente
+                           option(value='1') Bueno
+                           option(value='2') Regular
+                           option(value='3') Malo
+                     .form-group
+                        label(for='exampleInputCaracter') Sugerencias para mejorar
+                        textarea.form-control(rows='4', placeholder='Sugerencias para mejorar')
+                     input.btn.btn-primary.btn-block(type='submit', value='Finalizar')
+         // /.container-fluid
+         // /.content-wrapper
+         footer.sticky-footer
+            .container
+               .text-center
+                  small Copyright © Your Website 2017
+         // Scroll to Top Button
+         a.scroll-to-top.rounded(href='#page-top')
+            i.fa.fa-angle-up
+         // Logout Modal
+         #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#exampleModalLabel.modal-title ¿Estas seguro?
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                  .modal-body Selecciona cerrar sesión si realmente quieres salir.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     a.btn.btn-primary(href='#') Cerrar sesión
+         // Bootstrap core JavaScript
+         script(src='/public/vendor/jquery/jquery.min.js')
+         script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
+         // Core plugin JavaScript
+         script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+         // Page level plugin JavaScript
+         script(src='/public/vendor/datatables/jquery.dataTables.js')
+         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
+         // Custom scripts for all pages
+         script(src='/public/js/sb-admin.min.js')
+         // Custom scripts for this page
+         script(src='/public/js/sb-admin-datatables.min.js')

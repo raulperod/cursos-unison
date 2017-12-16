@@ -1,0 +1,33 @@
+{
+  "name": "cursos-unison",
+  "version": "1.0.0",
+  "description": "Proyecto de ADO",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raulperod/cursos-unison.git"
+  },
+  "keywords": [
+    "Node",
+    "Express"
+  ],
+  "author": "Raul Perez, Cesar Salazar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raulperod/cursos-unison/issues"
+  },
+  "homepage": "https://github.com/raulperod/cursos-unison#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.2",
+    "method-override": "^2.3.10",
+    "mysql": "^2.15.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}

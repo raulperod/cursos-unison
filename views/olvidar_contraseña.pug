@@ -1,0 +1,37 @@
+doctype html
+html(lang='es')
+   head
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+      meta(name='description', content='')
+      meta(name='author', content='')
+      title ¿Olvidaste tu contraseña?
+      // Bootstrap core CSS
+      link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+      // Custom fonts for this template
+      link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+      // Custom styles for this template
+      link(href='/public/css/sb-admin.css', rel='stylesheet')
+   body.bg-dark
+      .container
+         .card.card-login.mx-auto.mt-5
+            .card-header Nueva contraseña
+            .card-body
+               .text-center.mt-4.mb-5
+                  h4 ¿Olvidaste tu contraseña?
+                  br
+                  p
+                     | Ingrese el correo electronico con el que se registro para enviarle su nueva contraseña.
+               form
+                  .form-group
+                     input.form-control(type='email', aria-describedby='emailHelp', placeholder='Ingrese su correo electronico')
+                  a.btn.btn-primary.btn-block(href='#') Nueva contraseña
+               .text-center
+                  a.d-block.small.mt-3(href='/cuenta/registrar') Registrarse
+                  a.d-block.small(href='/cuenta/login') Iniciar Sesión
+      // Bootstrap core JavaScript
+      script(src='/public/vendor/jquery/jquery.min.js')
+      script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      // Core plugin JavaScript
+      script(src='/public/vendor/jquery-easing/jquery.easing.min.js')

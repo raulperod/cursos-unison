@@ -1,0 +1,58 @@
+doctype html
+html(lang='en')
+   head
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+      meta(name='description', content='')
+      meta(name='author', content='')
+      title Registro
+      // Bootstrap core CSS
+      link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+      // Custom fonts for this template
+      link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+      // Custom styles for this template
+      link(href='/public/css/sb-admin.css', rel='stylesheet')
+   body.bg-dark
+      .container
+         .card.card-register.mx-auto.mt-5
+            .card-header Registrarse
+            .card-body
+               form
+                  .form-group
+                     .form-row
+                        .col-md-6
+                           label(for='exampleInputName') Nombre(s)
+                           input#exampleInputName.form-control(type='text', aria-describedby='nameHelp', placeholder='Nombres')
+                        .col-md-6
+                           label(for='exampleInputLastName') Apellidos
+                           input#exampleInputApellido.form-control(type='text', aria-describedby='nameHelp', placeholder='Apellidos')
+                  .form-group
+                     label(for='exampleInputEmail1') Correo Electronico
+                     input#exampleInputEmail1.form-control(type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
+                  .form-group
+                     .form-row
+                        .col-md-6
+                           label(for='exampleInputPassword1') Contraseña
+                           input#exampleInputPassword1.form-control(type='password', placeholder='Contraseña')
+                        .col-md-6
+                           label(for='exampleConfirmPassword') Confirmar contraseña
+                           input#exampleConfirmPassword.form-control(type='password', placeholder='Confirmar contraseña')
+                  .form-group
+                     select.form-control(required='')
+                        option(value='', disabled='', selected='', hidden='') Seleccione una Institución
+                        option(value='0') Universidad de Sonora
+                        option(value='1') Otra Institución
+                  .form-group
+                     select.form-control(required='')
+                        option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
+                        option(value='0') Alumno
+                        option(value='1') Profesor
+                  a.btn.btn-primary.btn-block(href='#') Registrar
+               .text-center
+                  a.d-block.small.mt-3(href='/cuenta/login') Iniciar Sesión
+      // Bootstrap core JavaScript
+      script(src='/public/vendor/jquery/jquery.min.js')
+      script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      // Core plugin JavaScript
+      script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
