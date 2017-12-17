@@ -4,7 +4,7 @@ const UsuarioModel = require('./conexion')
 
 function obtenerUsuarioPorCorreo(correo, next) {
     UsuarioModel
-        .query(`SELECT u.idUsuario, u.correo, u.password, u.status 
+        .query(`SELECT u.idUsuario, u.correo, u.password, u.estado 
                 FROM usuarios u 
                 WHERE u.correo = ? `, correo ,(error, resultado, fields) => {
             
@@ -20,6 +20,16 @@ function obtenerCodigoVerificacionPorId(idUsuario, next) {
                 WHERE u.idUsuario = ? `, idUsuario ,(error, resultado, fields) => {
                  
             next(error, resultado[0])
+        })
+}
+
+function cambiarPasswordPorCorreo(usuario, next){
+    UsuarioModel
+        .query(`UPDATE usuarios 
+                SET ? 
+                WHERE correo = ?`, [usuario, usuario.correo], (error, resultado, fields) => {
+
+            next(error)
         })
 }
 
@@ -45,6 +55,7 @@ function actualizarUsuario(usuario, next) {
 module.exports = {
     obtenerUsuarioPorCorreo,
     obtenerCodigoVerificacionPorId,
+    cambiarPasswordPorCorreo,
     crearUsuario,
     actualizarUsuario
 }

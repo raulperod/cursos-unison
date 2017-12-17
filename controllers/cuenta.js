@@ -47,8 +47,8 @@ function loginPost(req, res) {
             // inicia al usuario y sus variables a utlizar
             req.session.user = usuario
             // envia para saber que es correcto
-            res.json({msg:'Datos correctos', tipo: 4})
-            res.redirect('/cuenta/login')
+            //res.json({msg:'Datos correctos', tipo: 4})
+            res.redirect('/usuario/mis-cursos')
         })
         .catch( error => {
             // si hubo erro lo manda
@@ -67,7 +67,12 @@ function olvidarContrasenaGet(req, res) {
 }
 
 function olvidarContrasenaPost(req, res) {
-    res.render('./cuenta/olvidar_contraseña')
+    let usuario = {correo: req.body.correo}
+    usuario.password = bcrypt.hashSync('12345678')
+
+    UsuarioModel.cambiarPasswordPorCorreo(usuario, (error) => {
+        (error) ? res.json({error: 'algo malo paso'}) : res.redirect('/cuenta/login')
+    })
 }
 
 function registrarGet(req, res) {
@@ -110,7 +115,7 @@ function verificarCorreoPost(req, res) {
             if(codigoVerificacion == usuario.codigoVerificacion){ // lo puso bien
                 // cambio su estado        
                 UsuarioModel.actualizarUsuario({idUsuario, estado:1}, (error) => {
-                    (error) ? res.json({error: 'error al actualizar'}) : res.redirect('/cuenta/login')
+                    (error) ? res.json({error: 'error al actualizar'}) : res.redirect('/usuario/mis-cursos')
                 })    
             }else{ // lo puso mal
                 res.json({error: 'codigo de verificacion incorrecto'})
