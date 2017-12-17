@@ -22,6 +22,13 @@ cuenta
     .get(  CuentaController.registrarGet )
     .post( CuentaController.registrarPost )
 
+// cursos-unison/cuenta/verificar-codigo/:idUsuario
+usuario
+    .route("/verificar-codigo/:idUsuario")
+    .get(  CuentaController.verificarCorreoGet )
+    .post( CuentaController.verificarCorreoPost )
+
+
 // cursos-unison/cuenta/logout
 cuenta.get('/logout', CuentaController.logout )
 

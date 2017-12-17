@@ -1,27 +1,27 @@
 'use strict'
 
 function loginGet(req, res) {
-    res.render('login')
+    res.render('./cuenta/login')
 }
 
 function loginPost(req, res) {
-    res.render('login')
+    res.render('./cuenta/login')
 }
 
 function olvidarContrasenaGet(req, res) {
-    res.render('olvidar_contraseña')
+    res.render('./cuenta/olvidar_contraseña')
 }
 
 function olvidarContrasenaPost(req, res) {
-    res.render('olvidar_contraseña')
+    res.render('./cuenta/olvidar_contraseña')
 }
 
 function registrarGet(req, res) {
-    res.render('registro')
+    res.render('./cuenta/registro')
 }
 
 function registrarPost(req, res) {
-    res.render('registro')
+    res.render('./cuenta/registro')
 }
 
 function logout(req, res) {
@@ -31,6 +31,14 @@ function logout(req, res) {
     res.redirect("/login")
 }
 
+function verificarCorreoGet(req, res) {
+    res.render('./cuenta/verificar_correo')
+}
+
+function verificarCorreoPost(req, res) {
+    res.render('./cuenta/verificar_correo')
+}
+
 module.exports = {
     loginGet,
     loginPost,
@@ -38,5 +46,7 @@ module.exports = {
     olvidarContrasenaPost,
     registrarGet,
     registrarPost,
-    logout
+    logout,
+    verificarCorreoGet,
+    verificarCorreoPost
 }
