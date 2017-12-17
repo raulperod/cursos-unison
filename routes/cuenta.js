@@ -23,8 +23,8 @@ cuenta
     .post( CuentaController.registrarPost )
 
 // cursos-unison/cuenta/verificar-codigo/:idUsuario
-usuario
-    .route("/verificar-codigo/:idUsuario")
+cuenta
+    .route("/verificar-correo/:idUsuario")
     .get(  CuentaController.verificarCorreoGet )
     .post( CuentaController.verificarCorreoPost )
 

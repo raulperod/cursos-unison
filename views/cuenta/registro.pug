@@ -18,37 +18,40 @@ html(lang='en')
          .card.card-register.mx-auto.mt-5
             .card-header Registrarse
             .card-body
-               form
+               form(method='post' action='/cuenta/registrar')
                   .form-group
                      .form-row
                         .col-md-6
                            label(for='exampleInputName') Nombre(s)
-                           input#exampleInputName.form-control(type='text', aria-describedby='nameHelp', placeholder='Nombres')
+                           input#exampleInputName.form-control(name='nombre' type='text', aria-describedby='nameHelp', placeholder='Nombres')
                         .col-md-6
                            label(for='exampleInputLastName') Apellidos
-                           input#exampleInputApellido.form-control(type='text', aria-describedby='nameHelp', placeholder='Apellidos')
+                           input#exampleInputApellido.form-control(name='apellido' type='text', aria-describedby='nameHelp', placeholder='Apellidos')
                   .form-group
                      label(for='exampleInputEmail1') Correo Electronico
-                     input#exampleInputEmail1.form-control(type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
+                     input#exampleInputEmail1.form-control(name='correo' type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
                   .form-group
                      .form-row
                         .col-md-6
                            label(for='exampleInputPassword1') Contraseña
-                           input#exampleInputPassword1.form-control(type='password', placeholder='Contraseña')
+                           input#exampleInputPassword1.form-control(name='password' type='password', placeholder='Contraseña')
                         .col-md-6
                            label(for='exampleConfirmPassword') Confirmar contraseña
-                           input#exampleConfirmPassword.form-control(type='password', placeholder='Confirmar contraseña')
+                           input#exampleConfirmPassword.form-control(name='password_confirm' type='password', placeholder='Confirmar contraseña')
                   .form-group
-                     select.form-control(required='')
+                     select.form-control(required='' name='institucion')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Institución
-                        option(value='0') Universidad de Sonora
-                        option(value='1') Otra Institución
+                        option() Universidad de Sonora
+                        option() Otra Institución
                   .form-group
-                     select.form-control(required='')
+                     select.form-control(required='' name='tipo')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
                         option(value='0') Alumno
                         option(value='1') Profesor
-                  a.btn.btn-primary.btn-block(href='#') Registrar
+                  .form-group
+                     label(for='exampleInputEmail1') Expediente
+                     input#exampleInputName.form-control(name='expediente' type='text', aria-describedby='nameHelp', placeholder='Expediente')      
+                  button.btn.btn-primary.btn-block(type='submit') Registrar
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/login') Iniciar Sesión
       // Bootstrap core JavaScript

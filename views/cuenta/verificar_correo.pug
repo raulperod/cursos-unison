@@ -18,14 +18,14 @@ html(lang='en')
          .card.card-login.mx-auto.mt-5
             .card-header  Verificar Correo
             .card-body
-               form
+               form(method='post' action='/cuenta/verificar-correo/'+idUsuario+'')
                   .row
                      .col-12
                         h1 Verificar Correo
                         p Introduzca el codigo de verificación que se envio a su correo.
                   .form-group
-                     input#exampleInputPassword1.form-control(type='password', placeholder='Codigo de Verificación')
-                  a.btn.btn-primary.btn-block(href='#') Completar Registro
+                     input#exampleInputPassword1.form-control(name='codigoVerificacion' type='text' placeholder='Codigo de Verificación')
+                  button.btn.btn-primary.btn-block(type='submit') Completar Registro
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

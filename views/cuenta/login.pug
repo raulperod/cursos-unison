@@ -18,14 +18,14 @@ html(lang='es')
          .card.card-login.mx-auto.mt-5
             .card-header Iniciar Sesión
             .card-body
-               form
+               form(method='post' action='/cuenta/login')
                   .form-group
                      label(for='correo') Correo Electronico
                      input.form-control(name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
                   .form-group
                      label(for='password') Contraseña
                      input.form-control(name='password', type='password', placeholder='Contraseña')
-                  a.btn.btn-primary.btn-block(href='#') Iniciar Sesión
+                  button.btn.btn-primary.btn-block(type='submit') Iniciar Sesión
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/registrar') Registrar
                   a.d-block.small(href='/cuenta/olvidar-contrasena') ¿Olvidaste tu contraseña?
