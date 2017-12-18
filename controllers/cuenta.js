@@ -47,8 +47,7 @@ function loginPost(req, res) {
             // inicia al usuario y sus variables a utlizar
             req.session.user = usuario
             // envia para saber que es correcto
-            //res.json({msg:'Datos correctos', tipo: 4})
-            res.redirect('/usuario/mis-cursos')
+            res.json({msg:'Datos correctos', tipo: 4})
         })
         .catch( error => {
             // si hubo erro lo manda
@@ -70,8 +69,8 @@ function olvidarContrasenaPost(req, res) {
     let usuario = {correo: req.body.correo}
     usuario.password = bcrypt.hashSync('12345678')
 
-    UsuarioModel.cambiarPasswordPorCorreo(usuario, (error) => {
-        (error) ? res.json({error: 'algo malo paso'}) : res.redirect('/cuenta/login')
+    UsuarioModel.cambiarPasswordPorCorreo(usuario, (error, id) => {
+        (error || id == -1) ? res.json({error: 'correo inexistente', tipo:2}) : res.json({error: 'se cambio correctamente', tipo:3})
     })
 }
 
@@ -87,7 +86,7 @@ function registrarPost(req, res) {
     delete req.body.password_confirm // borro el de confirmar
 
     UsuarioModel.crearUsuario(req.body, (error, id) => {
-        (error) ? res.json({error: error}) : res.redirect('/cuenta/verificar-correo/'+id)
+        (error) ? res.json({msg: 'error', tipo:1, id:-1}) : res.json({msg:'correcto', tipo:3, id})
     })
 }
 
@@ -95,11 +94,17 @@ function logout(req, res) {
     // cierra la sesion del usuario
     req.session = null
     // te redirecciona al inicio
-    res.redirect("/login")
+    res.redirect("/cuenta/login")
 }
 
 function verificarCorreoGet(req, res) {
-    res.render('./cuenta/verificar_correo', {idUsuario: req.params.idUsuario})
+    UsuarioModel.comprobarEstadoPorId(req.params.idUsuario, (error, usuario) => {
+        if(error || usuario.estado > 0){
+            res.redirect('/cuenta/login')
+        }else{
+            res.render('./cuenta/verificar_correo', {idUsuario: req.params.idUsuario})
+        }
+    })
 }
 
 function verificarCorreoPost(req, res) {
@@ -108,17 +113,15 @@ function verificarCorreoPost(req, res) {
 
     UsuarioModel.obtenerCodigoVerificacionPorId(idUsuario, (error, usuario) => {
         if(error){
-            res.json({error: error})
-        }else if(usuario.estado > 0){
-            res.redirect('/cuenta/login')
+            res.json({error, tipo:0})
         }else{
             if(codigoVerificacion == usuario.codigoVerificacion){ // lo puso bien
                 // cambio su estado        
                 UsuarioModel.actualizarUsuario({idUsuario, estado:1}, (error) => {
-                    (error) ? res.json({error: 'error al actualizar'}) : res.redirect('/usuario/mis-cursos')
+                    (error) ? res.json({error, tipo:0}) : res.json({error, tipo:3})
                 })    
             }else{ // lo puso mal
-                res.json({error: 'codigo de verificacion incorrecto'})
+                res.json({error: 'codigo incorrecto', tipo:2})
             }
         }
     })

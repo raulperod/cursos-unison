@@ -7,9 +7,27 @@ function obtenerUsuarioPorCorreo(correo, next) {
         .query(`SELECT u.idUsuario, u.correo, u.password, u.estado 
                 FROM usuarios u 
                 WHERE u.correo = ? `, correo ,(error, resultado, fields) => {
+                   
+            try{
+                next(error, resultado[0])
+            }catch(error){
+                next(error, null)
+            }        
             
+        })
+}
 
-            next(error, resultado[0])
+function comprobarEstadoPorId(idUsuario, next){
+    UsuarioModel
+        .query(`SELECT u.estado 
+                FROM usuarios u 
+                WHERE u.idUsuario = ? `, idUsuario ,(error, resultado, fields) => {
+            
+            try{
+                next(error, resultado[0])
+            }catch(error){
+                next(error, null)
+            }
         })
 }
 
@@ -19,7 +37,11 @@ function obtenerCodigoVerificacionPorId(idUsuario, next) {
                 FROM usuarios u 
                 WHERE u.idUsuario = ? `, idUsuario ,(error, resultado, fields) => {
                  
-            next(error, resultado[0])
+            try{
+                next(error, resultado[0])
+            }catch(error){
+                next(error, null)
+            }
         })
 }
 
@@ -28,8 +50,8 @@ function cambiarPasswordPorCorreo(usuario, next){
         .query(`UPDATE usuarios 
                 SET ? 
                 WHERE correo = ?`, [usuario, usuario.correo], (error, resultado, fields) => {
-
-            next(error)
+            
+            (resultado.affectedRows == 0) ? next(error, -1) : next(error, 1)        
         })
 }
 
@@ -38,7 +60,11 @@ function crearUsuario(usuario, next) {
         .query(`INSERT INTO usuarios 
                 SET ?`, usuario, (error, resultado, fields) => {
             
-            (error) ? next(error, -1) : next(error, resultado.insertId)
+            try{
+                next(error, resultado.insertId)
+            }catch(error){
+                next(error, null)
+            }
         })
 }
 
@@ -54,6 +80,7 @@ function actualizarUsuario(usuario, next) {
 
 module.exports = {
     obtenerUsuarioPorCorreo,
+    comprobarEstadoPorId,
     obtenerCodigoVerificacionPorId,
     cambiarPasswordPorCorreo,
     crearUsuario,

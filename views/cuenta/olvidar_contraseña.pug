@@ -23,10 +23,11 @@ html(lang='es')
                   br
                   p
                      | Ingrese el correo electronico con el que se registro para enviarle su nueva contraseña.
-               form(method='post' action='/cuenta/olvidar-contrasena')
+               #aviso
+               form#formValid(method='post' action='/cuenta/olvidar-contrasena')
                   .form-group
-                     input.form-control(name='correo' type='email', aria-describedby='emailHelp', placeholder='Ingrese su correo electronico')
-                  button.btn.btn-primary.btn-block(type='submit') Nueva contraseña
+                     input#correo.form-control(name='correo' type='email', aria-describedby='emailHelp', placeholder='Ingrese su correo electronico')
+                  input.btn.btn-primary.btn-block(type='submit' value='Nueva contraseña')
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/registrar') Registrarse
                   a.d-block.small(href='/cuenta/login') Iniciar Sesión
@@ -35,3 +36,4 @@ html(lang='es')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
       // Core plugin JavaScript
       script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+      script(src='/public/js/avisos/password.js')

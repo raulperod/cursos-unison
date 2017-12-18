@@ -18,14 +18,15 @@ html(lang='es')
          .card.card-login.mx-auto.mt-5
             .card-header Iniciar Sesión
             .card-body
-               form(method='post' action='/cuenta/login')
+               #aviso   
+               form(id='formLogin' method='post' action='/cuenta/login')
                   .form-group
                      label(for='correo') Correo Electronico
-                     input.form-control(name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
+                     input.form-control(id='correo' name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
                   .form-group
                      label(for='password') Contraseña
-                     input.form-control(name='password', type='password', placeholder='Contraseña')
-                  button.btn.btn-primary.btn-block(type='submit') Iniciar Sesión
+                     input.form-control(id='password' name='password', type='password', placeholder='Contraseña')
+                  input.btn.btn-primary.btn-block(type='submit' value='Iniciar Sesión')
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/registrar') Registrar
                   a.d-block.small(href='/cuenta/olvidar-contrasena') ¿Olvidaste tu contraseña?
@@ -34,3 +35,4 @@ html(lang='es')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
       // Core plugin JavaScript
       script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+      script(src='/public/js/avisos/login.js')

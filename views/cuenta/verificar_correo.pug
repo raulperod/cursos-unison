@@ -18,16 +18,17 @@ html(lang='en')
          .card.card-login.mx-auto.mt-5
             .card-header  Verificar Correo
             .card-body
-               form(method='post' action='/cuenta/verificar-correo/'+idUsuario+'')
-                  .row
-                     .col-12
-                        h1 Verificar Correo
-                        p Introduzca el codigo de verificación que se envio a su correo.
+               #aviso
+               form#formValid(method='post' action='/cuenta/verificar-correo/'+idUsuario+'')
                   .form-group
-                     input#exampleInputPassword1.form-control(name='codigoVerificacion' type='text' placeholder='Codigo de Verificación')
-                  button.btn.btn-primary.btn-block(type='submit') Completar Registro
+                     h1 Verificar Correo
+                     p Introduzca el codigo de verificación que se envio a su correo.
+                  .form-group
+                     input#codigo.form-control(name='codigoVerificacion' type='text' placeholder='Codigo de Verificación')
+                  input.btn.btn-primary.btn-block(type='submit' value='Completar Registro')
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
       // Core plugin JavaScript
       script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+      script(src='/public/js/avisos/verificar.js')
