@@ -1,21 +1,21 @@
 'use strict'
 
 const nodemailer = require('nodemailer'),
-    emisor = 'elcesarin21@gmail.com',
+    emisor = 'cursosunisonnoreply@gmail.com',
     transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             type: 'OAuth2',
             user: emisor,
-            clientId: '408648198858-gdess7ej7tjgc87m4tgocrmsjt1h4nli.apps.googleusercontent.com',
-            clientSecret: '3aZm427ktnBi1-q6v4ReAHcV',
-            refreshToken: '1/SaWOWB1eVDGEHkCJJgHjUkwPOeTrz9oe2RQfVjTPYVXU4RHhPqrUkp0QmrXSw0p-'
-        }
+            clientId: '389431071357-kg8djnh907es5grtr8ra0lrgaked3b2k.apps.googleusercontent.com',
+            clientSecret: 'vMsRfvu7XiJy5PG0r5xqabKv',
+            refreshToken: '1/2ifn6aAkfXMQIip0PheQGDRUGufW6mXNRN-G-Vn6zpU'
+          }
     })
 
 function enviarCorreo (res, receptor, asunto, mensajeHTML) {  
     let mailOptions = {
-        from: emisor,
+        from: `"Cursos Extracurriculares UNISON" <${emisor}>`,
         to: receptor,
         subject: asunto,
         html: mensajeHTML
