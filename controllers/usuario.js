@@ -1,7 +1,7 @@
 'use strict'
 
 function miPerfilGet(req, res) {
-    res.render('./usuario/mi_perfil')
+    res.render('./usuario/mi_perfil', {usuario: req.session.user})
 }
 
 function miPerfilPost(req, res) {

@@ -4,7 +4,7 @@ const UsuarioModel = require('./conexion')
 
 function obtenerUsuarioPorCorreo(correo, next) {
     UsuarioModel
-        .query(`SELECT u.idUsuario, u.correo, u.password, u.estado 
+        .query(`SELECT u.idUsuario, u.correo, u.password, u.estado, u.nombre, u.apellido, u.tipo, u.expediente 
                 FROM usuarios u 
                 WHERE u.correo = ? `, correo ,(error, resultado, fields) => {
                    

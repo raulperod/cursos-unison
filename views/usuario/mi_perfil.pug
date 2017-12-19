@@ -52,7 +52,7 @@ html(lang='es')
             // Breadcrumbs
             ol.breadcrumb
                li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+                  a(href='#') #{usuario.nombre} {usuario.apellido}
                li.breadcrumb-item.active Mi perfil
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
@@ -60,35 +60,38 @@ html(lang='es')
                .card-body
                   form
                      .form-group
-                        .form-row
-                           .col-md-6
-                              label(for='exampleInputName') Nombre(s)
-                              input#exampleInputName.form-control(type='text', aria-describedby='nameHelp', value='Raul Francisco')
-                           .col-md-6
-                              label(for='exampleInputLastName') Apellidos
-                              input#exampleInputApellido.form-control(type='text', aria-describedby='nameHelp', value='Perez Rodriguez')
-                     .form-group
-                        label(for='exampleInputEmail1') Correo Electronico
-                        input#exampleInputEmail1.form-control(type='email', aria-describedby='emailHelp', value='raul@gmail.com')
-                     .form-group
-                        .form-row
-                           .col-md-6
-                              label(for='exampleInputPassword1') Contraseña
-                              input#exampleInputPassword1.form-control(type='password', placeholder='Contraseña')
-                           .col-md-6
-                              label(for='exampleConfirmPassword') Confirmar contraseña
-                              input#exampleConfirmPassword.form-control(type='password', placeholder='Confirmar contraseña')
-                     .form-group
-                        select.form-control(required='')
-                           option(value='', disabled='', selected='', hidden='') Seleccione una Institución
-                           option(value='0') Universidad de Sonora
-                           option(value='1') Otra Institución
-                     .form-group
-                        select.form-control(required='')
-                           option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
-                           option(value='0') Alumno
-                           option(value='1') Profesor
-                     a.btn.btn-primary.btn-block(href='#') Guardar Perfil
+                     .form-row
+                        .col-md-6
+                           label(for='nombre') Nombre(s)
+                           input#nombre.form-control(name='nombre' type='text', aria-describedby='nameHelp', placeholder='Nombres')
+                        .col-md-6
+                           label(for='apellido') Apellidos
+                           input#apellido.form-control(name='apellido' type='text', aria-describedby='nameHelp', placeholder='Apellidos')
+                  .form-group
+                     label(for='correo') Correo Electronico
+                     input#correo.form-control(name='correo' type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
+                  .form-group
+                     .form-row
+                        .col-md-6
+                           label(for='password') Contraseña
+                           input#pass.form-control(name='password' type='password', placeholder='Contraseña')
+                        .col-md-6
+                           label(for='password_confirm') Confirmar contraseña
+                           input#pass2.form-control(name='password_confirm' type='password', placeholder='Confirmar contraseña')
+                  .form-group
+                     select.form-control(required='' name='institucion')
+                        option(value='', disabled='', selected='', hidden='') Seleccione una Institución
+                        option() Universidad de Sonora
+                        option() Otra Institución
+                  .form-group
+                     select.form-control(required='' name='tipo')
+                        option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
+                        option(value='0') Alumno
+                        option(value='1') Profesor
+                  .form-group
+                     label(for='expediente') Expediente
+                     input#exp.form-control(name='expediente' type='text', aria-describedby='nameHelp', placeholder='Expediente')      
+                  input.btn.btn-primary.btn-block(type='submit' value='Guardar Perfil') 
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer

@@ -1,7 +1,8 @@
 'use strict'
 
 const UsuarioModel = require('../models/usuario'),
-    bcrypt = require('bcrypt-nodejs')
+    bcrypt = require('bcrypt-nodejs'),
+    enviarCorreo = require('./correo')
 
 function loginGet(req, res) {
     res.render('./cuenta/login')
@@ -61,16 +62,35 @@ function loginPost(req, res) {
     })
 }
 
+function generarPassword(longitud){
+    const caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789"
+    let pass = ""
+    for (let i=0 ; i<longitud; i++){
+        pass += caracteres.charAt( Math.floor( Math.random() * caracteres.length ) )
+    }
+    return pass;
+}
+
 function olvidarContrasenaGet(req, res) {
     res.render('./cuenta/olvidar_contraseña')
 }
 
 function olvidarContrasenaPost(req, res) {
-    let usuario = {correo: req.body.correo}
-    usuario.password = bcrypt.hashSync('12345678')
+    let usuario = {correo: req.body.correo},
+        pass = generarPassword(8)
+        
+    usuario.password = bcrypt.hashSync(pass)
 
     UsuarioModel.cambiarPasswordPorCorreo(usuario, (error, id) => {
-        (error || id == -1) ? res.json({error: 'correo inexistente', tipo:2}) : res.json({error: 'se cambio correctamente', tipo:3})
+        if(error || id == -1){ 
+            res.json({error: 'correo inexistente', tipo:2})  
+        }else{
+            let asunto = '¡Nueva contraseña!',
+                mensaje = `<p>Tu nueva contraseña es <strong>${pass}</strong>.</p>`
+
+            enviarCorreo(res, usuario.correo, asunto, mensaje)
+            res.json({error: 'se cambio correctamente', tipo:3})   
+        }
     })
 }
 
@@ -80,13 +100,22 @@ function registrarGet(req, res) {
 
 function registrarPost(req, res) {
     // modifico o agrego lo faltante
-    req.body.codigoVerificacion = '12345'
+    req.body.codigoVerificacion = generarPassword(10)
     req.body.tipo = (req.body.tipo == '0') ? 0 : 1
     req.body.password = bcrypt.hashSync(req.body.password)
     delete req.body.password_confirm // borro el de confirmar
 
     UsuarioModel.crearUsuario(req.body, (error, id) => {
-        (error) ? res.json({msg: 'error', tipo:1, id:-1}) : res.json({msg:'correcto', tipo:3, id})
+        if(error){
+            res.json({msg: 'error', tipo:1, id:-1})
+        }else{
+            let asunto = '¡Código de verificación!',
+                mensaje = `<p>El código de verificación es <strong>${req.body.codigoVerificacion}</strong>.<p>
+                           <p>El link para validar es <a href="http://localhost:3000/cuenta/verificar-correo/${id}">clic aqui</a></p>`
+
+            enviarCorreo(res, req.body.correo, asunto, mensaje)
+            res.json({msg:'correcto', tipo:3, id})
+        }
     })
 }
 
