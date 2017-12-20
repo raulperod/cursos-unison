@@ -11,8 +11,6 @@ html(lang='es')
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
       // Custom fonts for this template
       link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
-      // Page level plugin CSS
-      link(href='/public/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
       // Custom styles for this template
       link(href='/public/css/sb-admin.css', rel='stylesheet')
    body#page-top.fixed-nav.sticky-footer.bg-dark
@@ -24,7 +22,7 @@ html(lang='es')
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -52,46 +50,50 @@ html(lang='es')
             // Breadcrumbs
             ol.breadcrumb
                li.breadcrumb-item
-                  a(href='#') #{usuario.nombre} {usuario.apellido}
+                  a(href='#') #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Mi perfil
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Mi perfil
                .card-body
-                  form
+                  form#formMP(method='post', action='usuario/mi-perfil')
                      .form-group
-                     .form-row
-                        .col-md-6
-                           label(for='nombre') Nombre(s)
-                           input#nombre.form-control(name='nombre' type='text', aria-describedby='nameHelp', placeholder='Nombres')
-                        .col-md-6
-                           label(for='apellido') Apellidos
-                           input#apellido.form-control(name='apellido' type='text', aria-describedby='nameHelp', placeholder='Apellidos')
-                  .form-group
-                     label(for='correo') Correo Electronico
-                     input#correo.form-control(name='correo' type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
-                  .form-group
-                     .form-row
-                        .col-md-6
-                           label(for='password') Contraseña
-                           input#pass.form-control(name='password' type='password', placeholder='Contraseña')
-                        .col-md-6
-                           label(for='password_confirm') Confirmar contraseña
-                           input#pass2.form-control(name='password_confirm' type='password', placeholder='Confirmar contraseña')
-                  .form-group
-                     select.form-control(required='' name='institucion')
-                        option(value='', disabled='', selected='', hidden='') Seleccione una Institución
-                        option() Universidad de Sonora
-                        option() Otra Institución
-                  .form-group
-                     select.form-control(required='' name='tipo')
-                        option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
-                        option(value='0') Alumno
-                        option(value='1') Profesor
-                  .form-group
-                     label(for='expediente') Expediente
-                     input#exp.form-control(name='expediente' type='text', aria-describedby='nameHelp', placeholder='Expediente')      
-                  input.btn.btn-primary.btn-block(type='submit' value='Guardar Perfil') 
+                        .form-row
+                           .col-md-6
+                              label(for='nombre') Nombre(s)
+                              input#nombre.form-control(type='text', value=''+usuario.nombre+'', aria-describedby='nameHelp', disabled)
+                           .col-md-6
+                              label(for='apellido') Apellidos
+                              input#apellido.form-control(type='text', value=''+usuario.apellido+'', aria-describedby='nameHelp', placeholder='Apellidos' disabled)
+                     .form-group
+                        label(for='correo') Correo Electronico
+                        input#correo.form-control(type='email', value=''+usuario.correo+'', aria-describedby='emailHelp', placeholder='Correo Electronico' disabled)
+                     .form-group
+                        #aviso
+                        label(for='password_old') Contraseña actual
+                        input#passold.form-control(name='password_old' type='password', placeholder='Contraseña actual')
+                     .form-group
+                        #aviso2   
+                        .form-row
+                           .col-md-6
+                              label(for='password_new') Nueva contraseña
+                              input#passnew.form-control(name='password_new' type='password', placeholder='Nueva contraseña')
+                           .col-md-6
+                              label(for='password_new_confirm') Confirmar nueva contraseña
+                              input#passnew2.form-control(type='password', placeholder='Confirmar nueva contraseña')
+                     .form-group
+                        label(for='institución') Institución
+                        input.form-control(type='text', value=''+usuario.institucion+'', disabled)
+                     .form-group
+                        label(for='tipo') Ocupación
+                        if usuario.tipo == 0
+                           input.form-control(type='text', value='Alumno', disabled)
+                        else
+                           input.form-control(type='text', value='Maestro', disabled)   
+                     .form-group
+                        label(for='expediente') Expediente
+                        input#exp.form-control(type='text', aria-describedby='nameHelp', value=''+usuario.expediente+'', disabled)      
+                     input.btn.btn-primary.btn-block(type='submit' value='Guardar Perfil') 
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -112,7 +114,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -139,10 +141,7 @@ html(lang='es')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
          // Core plugin JavaScript
          script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
          // Custom scripts for all pages
          script(src='/public/js/sb-admin.min.js')
          // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')
+         script(src='/public/js/avisos/usuario/miPerfil.js')

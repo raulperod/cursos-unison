@@ -22,10 +22,10 @@ html(lang='es')
                form(id='formLogin' method='post' action='/cuenta/login')
                   .form-group
                      label(for='correo') Correo Electronico
-                     input.form-control(id='correo' name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
+                     input.form-control(id='correo' name='correo' type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
                   .form-group
                      label(for='password') Contraseña
-                     input.form-control(id='password' name='password', type='password', placeholder='Contraseña')
+                     input.form-control(id='password' name='password' type='password', placeholder='Contraseña')
                   input.btn.btn-primary.btn-block(type='submit' value='Iniciar Sesión')
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/registrar') Registrar
@@ -35,4 +35,4 @@ html(lang='es')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
       // Core plugin JavaScript
       script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-      script(src='/public/js/avisos/login.js')
+      script(src='/public/js/avisos/cuenta/login.js')
