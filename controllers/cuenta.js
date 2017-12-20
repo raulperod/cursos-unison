@@ -111,7 +111,7 @@ function registrarPost(req, res) {
         }else{
             let asunto = '¡Código de verificación!',
                 mensaje = `<p>El código de verificación es <strong>${req.body.codigoVerificacion}</strong>.<p>
-                           <p>Ingrese al siguiente <a href="http://localhost:3000/cuenta/verificar-correo/${id}">enlaace</a> para introducir el código de validación</p>`
+                           <p>Ingrese al siguiente <a href="http://localhost:3000/cuenta/verificar-correo/${id}">enlace</a> para introducir el código de validación</p>`
 
             enviarCorreo(res, req.body.correo, asunto, mensaje)
             res.json({msg:'correcto', tipo:3, id})

@@ -13,7 +13,7 @@ CREATE TABLE `usuarios` (
   `idUsuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
-  `correo` varchar(20) NOT NULL,
+  `correo` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `expediente` varchar(20) NOT NULL,
   `codigoVerificacion` varchar(20) NOT NULL,

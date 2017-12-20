@@ -11,9 +11,6 @@ $(function(){
         if(correo.value == "" || pass.value == ""){
             mostrarAviso(5);
             return false;
-        }else if(correo.value.length > 20){
-            mostrarAviso(1);
-            return false;
         }
         obtenerMensaje();
         return false;
@@ -37,7 +34,7 @@ switch(error) {
     case 5:
         $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
             +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ambos campos son requeridos!.</div>");
-        break;
+        break; 
     default:
         break;
 }
