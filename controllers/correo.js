@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer'),
           }
     })
 
-function enviarCorreo (res, receptor, asunto, mensajeHTML) {  
+function enviarCorreo (receptor, asunto, mensajeHTML) {  
     let mailOptions = {
         from: `"Cursos Extracurriculares UNISON" <${emisor}>`,
         to: receptor,

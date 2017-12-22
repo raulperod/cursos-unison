@@ -27,7 +27,8 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `cursos` (
   `idCurso` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `division` varchar(50) NULL,
+  `nombre` varchar(255) NULL,
+  `division` varchar(50) NOT NULL DEFAULT 'División de Ciencias Exactas y Naturales',
   `departamento` varchar(50) NULL,
   `caracter` varchar(80) NULL,
   `objetivoGeneral` TEXT NULL,
@@ -39,9 +40,8 @@ CREATE TABLE `cursos` (
   `perfilAcademico` TEXT NULL,
   `capacidadAutoFin` TEXT NULL,
   `utilidad` TEXT NULL,
-  `expInstructor` TEXT NULL,
-  `AntecedentesAlumnos` TEXT NULL,
-  `duracion` TEXT NULL,
+  `antecedentesAlumnos` TEXT NULL,
+  `duracion` int(10) unsigned,
   `cupoMaximo` int(10) unsigned NULL,
   `cupoMinimo` int(10) unsigned NULL,
   `numeroDeParticipantes` int(10) unsigned NULL,
@@ -52,6 +52,7 @@ CREATE TABLE `cursos` (
   `telefono` varchar(20) NULL,
   `fechaInicio` date NULL,
   `fechaFinal` date NULL,
+  `estado` int(10) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCurso`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

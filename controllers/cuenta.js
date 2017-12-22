@@ -88,7 +88,7 @@ function olvidarContrasenaPost(req, res) {
             let asunto = '¡Nueva contraseña!',
                 mensaje = `<p>Tu nueva contraseña es <strong>${pass}</strong>.</p>`
 
-            enviarCorreo(res, usuario.correo, asunto, mensaje)
+            enviarCorreo(usuario.correo, asunto, mensaje)
             res.json({error: 'se cambio correctamente', tipo:3})   
         }
     })
@@ -113,7 +113,7 @@ function registrarPost(req, res) {
                 mensaje = `<p>El código de verificación es <strong>${req.body.codigoVerificacion}</strong>.<p>
                            <p>Ingrese al siguiente <a href="http://localhost:3000/cuenta/verificar-correo/${id}">enlace</a> para introducir el código de validación</p>`
 
-            enviarCorreo(res, req.body.correo, asunto, mensaje)
+            enviarCorreo(req.body.correo, asunto, mensaje)
             res.json({msg:'correcto', tipo:3, id})
         }
     })
@@ -140,14 +140,19 @@ function verificarCorreoPost(req, res) {
     let idUsuario = req.params.idUsuario,
         codigoVerificacion = req.body.codigoVerificacion
 
-    UsuarioModel.obtenerCodigoVerificacionPorId(idUsuario, (error, usuario) => {
+    UsuarioModel.obtenerUsuarioPorId(idUsuario, (error, usuario) => {
         if(error){
             res.json({error, tipo:0})
         }else{
             if(codigoVerificacion == usuario.codigoVerificacion){ // lo puso bien
                 // cambio su estado        
                 UsuarioModel.actualizarUsuario({idUsuario, estado:1}, (error) => {
-                    (error) ? res.json({error, tipo:0}) : res.json({error, tipo:3})
+                    if(error){
+                        res.json({error, tipo:0})
+                    }else{
+                        req.session.user = usuario
+                        res.json({error, tipo:3})
+                    }
                 })    
             }else{ // lo puso mal
                 res.json({error: 'codigo incorrecto', tipo:2})

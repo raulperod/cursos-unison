@@ -8,6 +8,7 @@ const express = require('express'),
     cookieSession = require("cookie-session"),
     CuentaRouter = require('./routes/cuenta'),
     UsuarioRouter = require('./routes/usuario'),
+    SolicitudRouter = require('./routes/solicitud'),
     app = express()
 
 app
@@ -32,5 +33,7 @@ app
 app.use("/cuenta",CuentaRouter)
 // cursos-unison/usuario
 app.use("/usuario",UsuarioRouter)
+// cursos-unison/solicitud
+app.use("/solicitud",SolicitudRouter)
 
 module.exports = app

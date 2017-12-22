@@ -31,9 +31,9 @@ function comprobarEstadoPorId(idUsuario, next){
         })
 }
 
-function obtenerCodigoVerificacionPorId(idUsuario, next) {
+function obtenerUsuarioPorId(idUsuario, next) {
     UsuarioModel
-        .query(`SELECT u.codigoVerificacion, u.estado 
+        .query(`SELECT * 
                 FROM usuarios u 
                 WHERE u.idUsuario = ? `, idUsuario ,(error, resultado, fields) => {
                  
@@ -81,7 +81,7 @@ function actualizarUsuario(usuario, next) {
 module.exports = {
     obtenerUsuarioPorCorreo,
     comprobarEstadoPorId,
-    obtenerCodigoVerificacionPorId,
+    obtenerUsuarioPorId,
     cambiarPasswordPorCorreo,
     crearUsuario,
     actualizarUsuario

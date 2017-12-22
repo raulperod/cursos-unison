@@ -33,7 +33,7 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
                   a.nav-link(href='#')
                      i.fa.fa-fw.fa-user-o
@@ -69,47 +69,22 @@ html(lang='es')
                               th Instructor
                               th Acción
                         tbody
-                           tr
-                              td Curso de Linux
-                              td Pedro Perez
-                              td Manuel Lopez
-                              td
-                                 a.btn.btn-success(href='#') Enviar registro
-                                 a.btn.btn-primary(href='#') Editar registro
-                                 a.btn.btn-danger(href='#') Cancelar registro
-                           tr
-                              td Curso de Base de datos
-                              td Ivan Mendez
-                              td Luis Guerrero
-                              td
-                                 a.btn.btn-danger(href='#') Cancelar curso
-                           tr
-                              td Curso de Java
-                              td Carlos Ramirez
-                              td Julio Castro
-                              td
-                                 a.btn.btn-primary(href='#') Pasar lista
-                                 a.btn.btn-primary(href='#') Evaluar participantes
-                           tr
-                              td Curso de Python
-                              td Alberto Castillo
-                              td Miguel Velasquez
-                              td
-                                 a.btn.btn-primary(href='#') Evaluar instructor
-                                 a.btn.btn-primary(href='#') Evaluar curso
-                           tr
-                              td Curso de C++
-                              td Jose Acosta
-                              td Alejando Carrasco
-                              td
-                                 a.btn.btn-success(href='#') Enviar informe
-                                 a.btn.btn-primary(href='#') Editar informe
-                           tr
-                              td Curso de Videojuegos
-                              td Juan Ozuna
-                              td David Ramos
-                              td
-                                 a.btn.btn-success(href='#') Generar constancias
+                     
+                           each curso in misCursos
+                              tr
+                                 td= curso.nombreC
+                                 td= curso.nombreR
+                                 td= curso.nombreI
+                                 if curso.estado == 1 
+                                    if curso.tipo == 3
+                                       td
+                                          a.btn.btn-success(href='#') Enviar registro
+                                          a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
+                                          a.btn.btn-danger(href='#') Cancelar registro
+                                    else
+                                       td
+                                          a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
+                           
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer

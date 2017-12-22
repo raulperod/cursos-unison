@@ -11,8 +11,6 @@ html(lang='es')
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
       // Custom fonts for this template
       link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
-      // Page level plugin CSS
-      link(href='/public/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
       // Custom styles for this template
       link(href='/public/css/sb-admin.css', rel='stylesheet')
    body#page-top.fixed-nav.sticky-footer.bg-dark
@@ -24,7 +22,7 @@ html(lang='es')
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi Perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -33,7 +31,7 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
                   a.nav-link(href='#')
                      i.fa.fa-fw.fa-book
@@ -51,21 +49,22 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
+               li.breadcrumb-item Mis cursos   
                li.breadcrumb-item.active Crear solicitud
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Crear solicitud
                .card-body
-                  form
+                  form#formCS(method='post' action='/solicitud/crear-curso')
+                     #aviso   
                      .form-group
-                        label(for='exampleInputCAracter') Nombre del Curso
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', value='OpenCL y CUDA')
+                        label(for='nombre') Nombre del Curso
+                        input#nombre.form-control(name='nombre', type='text', aria-describedby='emailHelp', placeholder='Nombre del Curso')
                      .form-group
-                        label(for='exampleInputCAracter') Correo del Instructor
-                        input#exampleInputEmail1.form-control(type='email', aria-describedby='emailHelp', value='roberto@mat.uson.mx')
-                     input.btn.btn-primary.btn-block(type='submit', value='Guardar')
+                        label(for='correo') Correo del Instructor
+                        input#correo.form-control(name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo del Instructor')
+                     input.btn.btn-primary.btn-block(type='submit', value='Crear solicitud')
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -86,16 +85,12 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
          // Core plugin JavaScript
          script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
          // Custom scripts for all pages
          script(src='/public/js/sb-admin.min.js')
-         // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')
+         script(src='/public/js/avisos/solicitud/crearSolicitud.js')

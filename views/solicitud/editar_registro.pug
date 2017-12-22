@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -33,7 +33,7 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
                   a.nav-link(href='#')
                      i.fa.fa-fw.fa-book
@@ -51,100 +51,184 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
-               li.breadcrumb-item.active Editar registro
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
+               li.breadcrumb-item.active Editar solicitud de registro
+            .card.mb-3
+               .card-body
+                  | Nota: El curriculum debera entregarse por separado.   
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Editar solicitud de registro
                .card-body
-                  form
-                     .form-group
-                        label(for='exampleInputCAracter') Nombre del Curso
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', value='OpenCL y CUDA')
-                     .form-group
-                        label(for='exampleInputCAracter') Instructor
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', value='Roberto Ramos Romo')
-                     .form-group
-                        .form-row
-                           .col-md-6
-                              select.form-control(required='')
-                                 option(value='', disabled='', selected='', hidden='') Seleccione la División
-                                 option(value='0') ALguno
-                                 option(value='1') Alguno otro
-                           .col-md-6
-                              select.form-control(required='')
-                                 option(value='', disabled='', selected='', hidden='') Seleccione el Departamento
-                                 option(value='0') ALguno
-                                 option(value='1') Alguno otro
-                     .form-group
-                        label(for='exampleInputCAracter') Caracter
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Objetivo General
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Objetivos Específicos
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Contenido Sintético
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Forma de conducción del proceso enseñanza-aprendizaje
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Requisitos de Evaluación
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Bibliografia
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Perfil académico deseable del responsable de la materia
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Capacidad de autofinanciamiento
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Utilidad y oportunidad en función del programa
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Antecedentes o habilidades necesarias de los alumnos
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Duración del programa
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        .form-row
-                           .col-md-6
-                              label(for='exampleInputCAracter') Fecha inicio
-                              input#exampleInputEmail1.form-control(type='date', aria-describedby='emailHelp')
-                           .col-md-6
-                              label(for='exampleInputCAracter') Fecha terminación
-                              input#exampleInputEmail1.form-control(type='date', aria-describedby='emailHelp')
-                     .form-group
-                        .form-row
-                           .col-md-6
-                              label(for='exampleInputCAracter') Cupo máximo
-                              input#exampleInputEmail1.form-control(type='number', aria-describedby='emailHelp')
-                           .col-md-6
-                              label(for='exampleInputCAracter') Cupo mínimo
-                              input#exampleInputEmail1.form-control(type='number', aria-describedby='emailHelp')
-                     .form-group
-                        label(for='exampleInputCAracter') Requisitos de idioma
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Infraestructura necesaria para ofrecer el curso
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Cargo del instructor
-                        textarea.form-control(rows='2', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Dependencia
-                        textarea.form-control(rows='2', placeholder='Introduzca texto aqui...')
-                     .form-group
-                        label(for='exampleInputCAracter') Teléfono
-                        input#exampleInputEmail1.form-control(type='tel', aria-describedby='emailHelp', placeholder='Introduzca telefono o fax aqui...')
-                     a.btn.btn-primary.btn-block(href='login.html') Guardar
+                  form(method='post', action='/solicitud/editar-registro/'+registro.idCurso)
+                     if tipo == 3
+                        .form-group
+                           label(for='nombre') Nombre del Curso
+                           input.form-control(name='nombre' type='text' value=''+registro.nombre+'' )
+                        .form-group
+                           .form-row
+                              .col-md-6
+                                 select.form-control()
+                                    option(disabled='', selected='') División de Ciencias Exactas y Naturales
+
+                              .col-md-6
+                                 select.form-control(name='departamento')
+                                    if registro.departamento == null
+                                       option(disabled='', selected='') Seleccione el Departamento
+                                       option() Departemento de Matemáticas
+                                       option() Departamento de Física
+                                       option() Departamento de Geología
+                                    else if registro.departamento == 'Departemento de Matemáticas'
+                                       option(disabled='') Seleccione el Departamento
+                                       option(selected='') Departemento de Matemáticas
+                                       option() Departamento de Física
+                                       option() Departamento de Geología
+                                    else if registro.departamento == 'Departamento de Física'
+                                       option(disabled='', selected='') Seleccione el Departamento
+                                       option() Departemento de Matemáticas
+                                       option(selected='') Departamento de Física
+                                       option() Departamento de Geología     
+                                    else
+                                       option(disabled='', selected='') Seleccione el Departamento
+                                       option() Departemento de Matemáticas
+                                       option() Departamento de Física
+                                       option(selected='') Departamento de Geología
+
+                        .form-group
+                           label(for='caracter') Caracter
+                           textarea.form-control(name='caracter', rows='1' ) #{registro.caracter}
+                        .form-group 
+                           label(for='objetivoGeneral') Objetivo General
+                           textarea.form-control(name='objetivoGeneral', rows='5') #{registro.objetivoGeneral}
+                        .form-group
+                           label(for='objetivosEspecificos') Objetivos Específicos
+                           textarea.form-control(name='objetivosEspecificos', rows='5') #{registro.objetivosEspecificos}
+                        .form-group
+                           label(for='contenidoSintetico') Contenido Sintético
+                           textarea.form-control(name='contenidoSintetico', rows='5') #{registro.contenidoSintetico}
+                        .form-group
+                           label(for='formaEnsenanza') Forma de conducción del proceso enseñanza-aprendizaje
+                           textarea.form-control(name='formaEnsenanza', rows='5') #{registro.formaEnsenanza}
+                        .form-group
+                           label(for='requisitosDeEvaluacion') Requisitos de Evaluación
+                           textarea.form-control(name='requisitosDeEvaluacion', rows='5') #{registro.requisitosDeEvaluacion}
+                        .form-group
+                           label(for='bibliografia') Bibliografia
+                           textarea.form-control(name='bibliografia', rows='5') #{registro.bibliografia}
+                        .form-group
+                           label(for='perfilAcademico') Perfil académico deseable del responsable de la materia
+                           textarea.form-control(name='perfilAcademico', rows='5' ) #{registro.perfilAcademico}
+                        .form-group
+                           label(for='capacidadAutoFin') Capacidad de autofinanciamiento
+                           textarea.form-control(name='capacidadAutoFin', rows='5')  #{registro.capacidadAutoFin}
+                        .form-group
+                           label(for='utilidad') Utilidad y oportunidad en función del programa
+                           textarea.form-control(name='utilidad', rows='5') #{registro.utilidad}
+                        .form-group
+                           label(for='antecedentesAlumnos') Antecedentes o habilidades necesarias de los alumnos
+                           textarea.form-control(name='antecedentesAlumnos', rows='5') #{registro.antecedentesAlumnos}
+                        .form-group
+                           label(for='duracion') Duración del programa (horas)
+                           input.form-control(name='duracion' type='number' min='0' value=''+registro.duracion+'')
+                        .form-group
+                           .form-row
+                              .col-md-6
+                                 label(for='fechaInicio') Fecha inicio
+                                 input.form-control(name='fechaInicio' type='date' value=''+registro.fechaInicio+'')
+                              .col-md-6
+                                 label(for='fechaFinal') Fecha terminación
+                                 input.form-control(name='fechaFinal' type='date' value=''+registro.fechaFinal+'')
+                        .form-group
+                           .form-row
+                              .col-md-6
+                                 label(for='cupoMaximo') Cupo máximo
+                                 input.form-control(name='cupoMaximo' type='number' value=''+registro.cupoMaximo+'')
+                              .col-md-6
+                                 label(for='cupoMinimo') Cupo mínimo
+                                 input.form-control(name='cupoMinimo' type='number' value=''+registro.cupoMinimo+'')
+                        .form-group
+                           label(for='reqIdioma') Requisitos de idioma
+                           textarea.form-control(name='reqIdioma', rows='3' ) #{registro.reqIdioma}
+                        .form-group
+                           label(for='infraestructuraNecesaria') Infraestructura necesaria para ofrecer el curso
+                           textarea.form-control(name='infraestructuraNecesaria', rows='3') #{registro.infraestructuraNecesaria}
+                        .form-group
+                           label(for='cargoInstructor') Cargo del instructor
+                           textarea.form-control(name='cargoInstructor', rows='3') #{registro.cargoInstructor}
+                        .form-group
+                           label(for='dependencia') Dependencia
+                           textarea.form-control(name='dependencia', rows='3') #{registro.dependencia}
+                        .form-group
+                           label(for='telefono') Teléfono
+                           textarea.form-control(name='telefono', rows='1') #{registro.telefono}
+                        input.btn.btn-primary.btn-block(type='submit' value='Guardar') 
+                     else
+                        .form-group
+                           label(for='nombre') Nombre del Curso
+                           input.form-control(type='text' value=''+registro.nombre+'' disabled)
+                        .form-group
+                           label(for='caracter') Caracter
+                           textarea.form-control(name='caracter', rows='1' ) #{registro.caracter}
+                        .form-group 
+                           label(for='objetivoGeneral') Objetivo General
+                           textarea.form-control(name='objetivoGeneral', rows='5') #{registro.objetivoGeneral}
+                        .form-group
+                           label(for='objetivosEspecificos') Objetivos Específicos
+                           textarea.form-control(name='objetivosEspecificos', rows='5') #{registro.objetivosEspecificos}
+                        .form-group
+                           label(for='contenidoSintetico') Contenido Sintético
+                           textarea.form-control(name='contenidoSintetico', rows='5') #{registro.contenidoSintetico}
+                        .form-group
+                           label(for='formaEnsenanza') Forma de conducción del proceso enseñanza-aprendizaje
+                           textarea.form-control(name='formaEnsenanza', rows='5') #{registro.formaEnsenanza}
+                        .form-group
+                           label(for='requisitosDeEvaluacion') Requisitos de Evaluación
+                           textarea.form-control(name='requisitosDeEvaluacion', rows='5') #{registro.requisitosDeEvaluacion}
+                        .form-group
+                           label(for='bibliografia') Bibliografia
+                           textarea.form-control(name='bibliografia', rows='5') #{registro.bibliografia}
+                        .form-group
+                           label(for='utilidad') Utilidad y oportunidad en función del programa
+                           textarea.form-control(name='utilidad', rows='5') #{registro.utilidad}
+                        .form-group
+                           label(for='antecedentesAlumnos') Antecedentes o habilidades necesarias de los alumnos
+                           textarea.form-control(name='antecedentesAlumnos', rows='5') #{registro.antecedentesAlumnos}
+                        .form-group
+                           label(for='duracion') Duración del programa (horas)
+                           input.form-control(name='duracion' type='number' min='0' value=''+registro.duracion+'')
+                        .form-group
+                           .form-row
+                              .col-md-6
+                                 label(for='fechaInicio') Fecha inicio
+                                 input.form-control(name='fechaInicio' type='date' value=''+registro.fechaInicio+'')
+                              .col-md-6
+                                 label(for='fechaFinal') Fecha terminación
+                                 input.form-control(name='fechaFinal' type='date' value=''+registro.fechaFinal+'')
+                        .form-group
+                           .form-row
+                              .col-md-6
+                                 label(for='cupoMaximo') Cupo máximo
+                                 input.form-control(name='cupoMaximo' type='number' value=''+registro.cupoMaximo+'')
+                              .col-md-6
+                                 label(for='cupoMinimo') Cupo mínimo
+                                 input.form-control(name='cupoMinimo' type='number' value=''+registro.cupoMinimo+'')
+                        .form-group
+                           label(for='reqIdioma') Requisitos de idioma
+                           textarea.form-control(name='reqIdioma', rows='3' ) #{registro.reqIdioma}
+                        .form-group
+                           label(for='infraestructuraNecesaria') Infraestructura necesaria para ofrecer el curso
+                           textarea.form-control(name='infraestructuraNecesaria', rows='3') #{registro.infraestructuraNecesaria}
+                        .form-group
+                           label(for='cargoInstructor') Cargo del instructor
+                           textarea.form-control(name='cargoInstructor', rows='3') #{registro.cargoInstructor}
+                        .form-group
+                           label(for='dependencia') Dependencia
+                           textarea.form-control(name='dependencia', rows='3') #{registro.dependencia}
+                        .form-group
+                           label(for='telefono') Teléfono
+                           textarea.form-control(name='telefono', rows='1') #{registro.telefono}
+                        input.btn.btn-primary.btn-block(type='submit' value='Guardar') 
+
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -165,7 +249,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
