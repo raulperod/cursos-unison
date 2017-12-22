@@ -49,7 +49,12 @@ function misCursosGet(req, res) {
                         res.render('./usuario/mis_cursos' , {usuario, misCursos: [] })
                     }else{
                         misCursos = acomodarMisCursos(cursosUsuario, misCursos)
-                        res.render('./usuario/mis_cursos' , {usuario, misCursos})
+                        let enviarError = req.session.enviarError,
+                            enviarCorrecto = req.session.enviarCorrecto
+
+                        req.session.enviarError = false;
+                        req.session.enviarCorrecto = false;
+                        res.render('./usuario/mis_cursos' , {usuario, misCursos, enviarError, enviarCorrecto})
                     }  
                 })
             }else{

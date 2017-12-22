@@ -91,15 +91,80 @@ function editarRegistroPost(req, res){
 
     CursoModel.actualizarCurso(registro, (error) => {
         if(error){
-            console.log(error)
+            res.json({msg:`${error}`, tipo:0})
+        }else{
+            res.json({msg:`Cambios correctamente`, tipo:1})
         }
-        res.redirect('/usuario/mis-cursos')
     })
+}
+
+function cancelarRegistroGet(req, res){
+    let idCurso = req.params.idCurso,
+        usuario = req.session.user
+
+    CursosUsuariosModel.obtenerintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length == 0 || curso == null){
+            res.redirect('/usuario/mis-cursos')
+        }else{
+            // si el usuario actual es el representante, entonces permite borrar el curso
+            if(curso[0].idUsuario == usuario.idUsuario){
+                CursoModel.borrarCurso(idCurso, (error) => {
+                    if(error){
+                        res.redirect('/usuario/mis-cursos')
+                    }else{
+                        // si el representante no es el instructor se le manda un correo al instructor del cancelamiento
+                        if(curso[1].idUsuario != usuario.idUsuario){ 
+                            let asunto = 'Solicitud de registro de curso cancelado!',
+                                mensaje = `${usuario.nombre} ${usuario.apellido} ha cancelado la solicitud de registro del curso "${curso[0].nombreC}".`
+                            
+                            enviarCorreo(curso[1].correo, asunto, mensaje)    
+                        }     
+                        res.redirect('/usuario/mis-cursos')
+                    }
+                    
+                })
+            }
+        }
+    })
+} 
+
+function enviarRegistroPost(req, res){
+    let idCurso = req.params.idCurso
+
+    CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
+        if(error || curso == null || comprobarCurso(curso)){
+            req.session.enviarError = true;
+            res.redirect('/usuario/mis-cursos')
+        }else{
+            // cambio el estado del curso
+            let cursoUp = {idCurso, estado:2}
+            CursoModel.actualizarCurso(cursoUp, (error) => {
+                if(error){
+                    req.session.enviarError = true;
+                    res.redirect('/usuario/mis-cursos')
+                }else{
+                    req.session.enviarCorrecto = true;
+                    res.redirect('/usuario/mis-cursos')
+                }
+            })
+        }    
+    })    
+} 
+
+function comprobarCurso(curso){
+    for(let llave in curso){
+        let atributo = curso[llave]
+        if( llave == 'numeroDeParticipantes') continue
+        if(atributo == '' || atributo == null || atributo == '0000-00-00') return true
+    }
+    return false;
 }
 
 module.exports = {
     crearSolicitudGet,
     crearSolicitudPost,
     editarRegistroGet,
-    editarRegistroPost
+    editarRegistroPost,
+    cancelarRegistroGet,
+    enviarRegistroPost
 }

@@ -16,4 +16,14 @@ solicitud
     .get(  SolicitudController.editarRegistroGet )
     .post( SolicitudController.editarRegistroPost )
 
+// cursos-unison/solicitud/cancelar-registro/:idCurso
+solicitud
+    .route("/cancelar-registro/:idCurso")
+    .get(  SolicitudController.cancelarRegistroGet )
+
+// cursos-unison/solicitud/enviar-registro/:idCurso
+solicitud
+    .route("/enviar-registro/:idCurso")
+    .post( SolicitudController.enviarRegistroPost )
+
 module.exports = solicitud

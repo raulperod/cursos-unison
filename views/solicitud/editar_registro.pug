@@ -60,7 +60,7 @@ html(lang='es')
             .card.card-register.mx-auto.mt-5
                .card-header Editar solicitud de registro
                .card-body
-                  form(method='post', action='/solicitud/editar-registro/'+registro.idCurso)
+                  form(id='editForm' method='post', action='/solicitud/editar-registro/'+registro.idCurso)
                      if tipo == 3
                         .form-group
                            label(for='nombre') Nombre del Curso
@@ -238,6 +238,18 @@ html(lang='es')
          // Scroll to Top Button
          a.scroll-to-top.rounded(href='#page-top')
             i.fa.fa-angle-up
+         // editarModel
+         #editarModel.modal(tabindex='-1', role='dialog')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5.modal-title Editar registro
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+                  .modal-body
+                     p Las modificaciones se han guardado correctamente.
+                  .modal-footer
+                     a.btn.btn-primary(href='/usuario/mis-cursos') Aceptar  
          // Logout Modal
          #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')
@@ -262,3 +274,4 @@ html(lang='es')
          script(src='/public/js/sb-admin.min.js')
          // Custom scripts for this page
          script(src='/public/js/sb-admin-datatables.min.js')
+         script(src='/public/js/avisos/solicitud/editarRegistro.js')

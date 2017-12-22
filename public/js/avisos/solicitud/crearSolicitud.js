@@ -35,8 +35,10 @@ function obtenerMensaje() {
         data: datosFormulario.serialize(),
         success : function(data) {
             var arreglo=Object.values(data);
-            if(arreglo[1] == 3) window.location.replace("/usuario/mis-cursos");
-            mostrarAviso(arreglo[1]);
+            if(arreglo[1] == 3){
+				$('#crearSolicitudModal').modal('show')
+			} 
+			mostrarAviso(arreglo[1]);
         }
     });
 }

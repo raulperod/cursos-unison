@@ -78,13 +78,76 @@ html(lang='es')
                                  if curso.estado == 1 
                                     if curso.tipo == 3
                                        td
-                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarModal') Enviar registro
+                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarModal'+curso.idCurso) Enviar registro
                                           a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
-                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarModal') Cancelar registro
+                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarModal'+curso.idCurso) Cancelar registro
                                     else
                                        td
                                           a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
-                           
+                                 else if curso.estado == 2
+                                    td
+                                       button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
+
+
+         each curso in misCursos
+            if curso.estado == 1 
+               if curso.tipo == 3
+                  // Enviar Solicitud Modal
+                  .modal.fade(id='enviarModal'+curso.idCurso, tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                     .modal-dialog(role='document')
+                        .modal-content
+                           .modal-header
+                              h5#exampleModalLabel.modal-title ¿Estas seguro?
+                              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                 span(aria-hidden='true') ×
+                           form(id='enviarForm'+curso.idCurso, method='post', action='/solicitud/enviar-registro/'+curso.idCurso)
+                              .modal-body
+                                 p Estas seguro que quieres enviar la solicitud
+                              .modal-footer
+                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                                 button.btn.btn-primary(type='submit') Aceptar
+
+                  // Cancelar Solicitud modal
+                  .modal.fade(id='cancelarModal'+curso.idCurso,tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                     .modal-dialog(role='document')
+                        .modal-content
+                           .modal-header
+                              h5#cancelarModalLabel.modal-title ¿Estas seguro?
+                              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                 span(aria-hidden='true') ×
+                           .modal-body Selecciona "Aceptar" si realmente quieres cancelar la solicitud.
+                           .modal-footer
+                              button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                              a.btn.btn-primary(href='/solicitud/cancelar-registro/'+curso.idCurso) Aceptar
+         // enviarErrorModal
+         #enviarErrorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#exampleModalLabel.modal-title Error
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                  .modal-body La solicitud tiene campos que no se han llenado.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         // enviarCorrectoModal
+         #enviarCorrectoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#exampleModalLabel.modal-title Se ha completado la solicitud
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+               
+                  .modal-body 
+                     h5 Los pasos a seguir son:
+                     p 1. Imprimir los documentos generados por el sistema.
+                     p 2. Presentar los documentos al Director de División.   
+                     p 3. Esperar a que el H. Consejo Divisional evalúe el formato de registro del curso.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -106,39 +169,25 @@ html(lang='es')
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
-         // Enviar Solicitud Modal
-         #enviarModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-            .modal-dialog(role='document')
-               .modal-content
-                  .modal-header
-                     h5#enviarModalLabel.modal-title ¿Estas seguro?
-                     button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                  .modal-body Selecciona enviar si realmente quieres enviar la solicitud.
-                  .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='/cuenta/logout') Enviar
-         // Cancelar Solicitud modal
-         #cancelarModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-            .modal-dialog(role='document')
-               .modal-content
-                  .modal-header
-                     h5#cancelarModalLabel.modal-title ¿Estas seguro?
-                     button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                  .modal-body Selecciona cancelar si realmente quieres cancelar la solicitud.
-                  .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='/cuenta/logout') Cancelar
-         // Bootstrap core JavaScript
-         script(src='/public/vendor/jquery/jquery.min.js')
-         script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
-         // Core plugin JavaScript
-         script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
-         // Custom scripts for all pages
-         script(src='/public/js/sb-admin.min.js')
-         // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')
+      // Bootstrap core JavaScript
+      script(src='/public/vendor/jquery/jquery.min.js')
+      script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      // Core plugin JavaScript
+      script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+      // Page level plugin JavaScript
+      script(src='/public/vendor/datatables/jquery.dataTables.js')
+      script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
+      // Custom scripts for all pages
+      script(src='/public/js/sb-admin.min.js')
+      // Custom scripts for this page
+      script(src='/public/js/sb-admin-datatables.min.js')
+      script(src='/public/js/documentos/pdfmake.min.js')
+      script(src='/public/js/documentos/vfs_fonts.js')
+      script(src='/public/js/documentos/solicitud.js')
+      if enviarError
+         script.
+            $('#enviarErrorModal').modal('show')
+
+      if enviarCorrecto
+         script.
+            $('#enviarCorrectoModal').modal('show')

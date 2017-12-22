@@ -55,8 +55,18 @@ function actualizarCurso(curso, next){
         })
 }
 
+function borrarCurso(idCurso, next) {
+    CursoModel
+        .query(`DELETE FROM cursos 
+                WHERE idCurso = ?`, idCurso , (error, resultado, fields) => {
+
+            next(error)
+        })
+}
+
 module.exports = {
     obtenerCursoPorId,
     crearCurso,
-    actualizarCurso
+    actualizarCurso,
+    borrarCurso
 }

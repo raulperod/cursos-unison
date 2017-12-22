@@ -13,6 +13,19 @@ function obtenerCursosUsuariosPorIdUsuario(id, next) {
         })
 }
 
+function obtenerintructorPorIdCurso(idCurso, next){
+    CursosUsuariosModel
+        .query(`SELECT u.idUsuario, u.correo, c.nombre nombreC, cu.tipo
+                FROM cursos_usuarios cu
+                JOIN usuarios u ON u.idUsuario = cu.idUsuario
+                JOIN cursos c ON c.idCurso = cu.idCurso
+                WHERE cu.idCurso = ? AND (cu.tipo = 2 OR cu.tipo = 3)
+                ORDER BY cu.tipo DESC`, idCurso, (error, resultado, fields) => {
+            
+            next(error, resultado)
+        })
+}
+
 function obtenerCursosUsuariosPorIdCurso(idsCurso, next) {
     CursosUsuariosModel
         .query(`SELECT cu.idCurso, c.nombre nombreC, concat(u.nombre, ' ', u.apellido) nombreU, c.estado, cu.tipo
@@ -54,6 +67,7 @@ function crearCursosUsuarios(cursosUsuarios, next){
 
 module.exports = {
     obtenerCursosUsuariosPorIdUsuario,
+    obtenerintructorPorIdCurso,
     obtenerCursosUsuariosPorIdCurso,
     obtenerTipoPorIdCursoYidUsuario,
     crearCursosUsuarios
