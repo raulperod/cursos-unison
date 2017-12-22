@@ -31,6 +31,19 @@ html(lang='es')
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/registrar') Registrarse
                   a.d-block.small(href='/cuenta/login') Iniciar Sesión
+      // olvidar modal
+      #olvidarModal.modal(tabindex='-1', role='dialog')
+         .modal-dialog(role='document')
+            .modal-content
+               .modal-header
+                  h5.modal-title Nueva contraseña
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+               .modal-body
+                  p Se envio correctamente la nueva contraseña al correo!.
+               .modal-footer
+                  a.btn.btn-primary(href='/cuenta/login') Aceptar
+                  //a.btn.btn-secondary(href='/cuenta/login') Cerrar
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

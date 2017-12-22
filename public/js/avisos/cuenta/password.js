@@ -34,7 +34,10 @@ function obtenerMensaje() {
         type: 'POST',
         data: datosFormulario.serialize(),
         success : function(data) {
-            var arreglo=Object.values(data);
+			var arreglo=Object.values(data);
+			if(arreglo[1] == 3){
+				$('#olvidarModal').modal('show')
+			}
             mostrarAviso(arreglo[1]);
         }
     });

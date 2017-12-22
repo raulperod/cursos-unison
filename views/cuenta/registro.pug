@@ -55,6 +55,19 @@ html(lang='en')
                   input.btn.btn-primary.btn-block(type='submit' value='Registrar')
                .text-center
                   a.d-block.small.mt-3(href='/cuenta/login') Iniciar Sesión
+      // registro modal
+      #registroModal.modal(tabindex='-1', role='dialog')
+         .modal-dialog(role='document')
+            .modal-content
+               .modal-header
+                  h5.modal-title Registro
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+               .modal-body
+                  p Para completar el registro, se enviara un codigo de verificacion a su correo.
+               .modal-footer
+                  a.btn.btn-primary(href='/cuenta/login') Aceptar
+                  //a.btn.btn-secondary(href='/cuenta/login') Cerrar
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

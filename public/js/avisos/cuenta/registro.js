@@ -46,7 +46,9 @@ function obtenerMensaje() {
         data: datosFormulario.serialize(),
         success : function(data) {
             var arreglo=Object.values(data);
-        	if(arreglo[1]==3) window.location.replace("/cuenta/verificar-correo/"+arreglo[2]);
+        	if(arreglo[1]==3){
+				$('#registroModal').modal('show')
+			} 
             mostrarAviso(arreglo[1]);
         }
     });

@@ -124,6 +124,19 @@ html(lang='es')
          // Scroll to Top Button
          a.scroll-to-top.rounded(href='#page-top')
             i.fa.fa-angle-up
+         // mi perfil modal
+         #miPerfilModal.modal(tabindex='-1', role='dialog')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5.modal-title Mi Perfil
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+                  .modal-body
+                     p La contraseña se cambio correctamente.
+                  .modal-footer
+                     a.btn.btn-primary(href='/usuario/mis-cursos') Aceptar
+                     //a.btn.btn-secondary(href='/usuario/mis-cursos') Cerrar   
          // Logout Modal
          #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')

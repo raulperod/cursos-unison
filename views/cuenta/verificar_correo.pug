@@ -26,6 +26,19 @@ html(lang='en')
                   .form-group
                      input#codigo.form-control(name='codigoVerificacion' type='text' placeholder='Codigo de Verificación')
                   input.btn.btn-primary.btn-block(type='submit' value='Completar Registro')
+      // registro modal
+      #verificarModal.modal(tabindex='-1', role='dialog')
+         .modal-dialog(role='document')
+            .modal-content
+               .modal-header
+                  h5.modal-title Codigo de verificación
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+               .modal-body
+                  p Codigo de verificación correcto.
+               .modal-footer
+                  a.btn.btn-primary(href='/cuenta/login') Aceptar
+                  //a.btn.btn-secondary(href='/cuenta/login') Cerrar
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

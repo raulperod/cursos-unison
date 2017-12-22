@@ -44,7 +44,7 @@ html(lang='es')
                      i.fa.fa-fw.fa-angle-left
             ul.navbar-nav.ml-auto
                li.nav-item
-                  a.nav-link(data-toggle='modal', data-target='#exampleModal')
+                  a.nav-link(data-toggle='modal', data-target='#logoutModal')
                      i.fa.fa-fw.fa-sign-out
                      | Cerrar sesión
       .content-wrapper
@@ -78,9 +78,9 @@ html(lang='es')
                                  if curso.estado == 1 
                                     if curso.tipo == 3
                                        td
-                                          a.btn.btn-success(href='#') Enviar registro
+                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarModal') Enviar registro
                                           a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
-                                          a.btn.btn-danger(href='#') Cancelar registro
+                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarModal') Cancelar registro
                                     else
                                        td
                                           a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
@@ -95,7 +95,7 @@ html(lang='es')
          a.scroll-to-top.rounded(href='#page-top')
             i.fa.fa-angle-up
          // Logout Modal
-         #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+         #logoutModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')
                .modal-content
                   .modal-header
@@ -106,6 +106,30 @@ html(lang='es')
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
+         // Enviar Solicitud Modal
+         #enviarModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#enviarModalLabel.modal-title ¿Estas seguro?
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                  .modal-body Selecciona enviar si realmente quieres enviar la solicitud.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     a.btn.btn-primary(href='/cuenta/logout') Enviar
+         // Cancelar Solicitud modal
+         #cancelarModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#cancelarModalLabel.modal-title ¿Estas seguro?
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                  .modal-body Selecciona cancelar si realmente quieres cancelar la solicitud.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     a.btn.btn-primary(href='/cuenta/logout') Cancelar
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

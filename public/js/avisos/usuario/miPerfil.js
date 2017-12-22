@@ -34,10 +34,7 @@ function mostrarAviso(error){
 	        $("#aviso2").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
 		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Las contraseñas no coinciden!</div>");
 			break;
-		case 4:
-	        $("#aviso2").html("<div class='alert alert-success alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>La contraseña se cambio correctamente!</div>");
-	        break;			
+				
 	}
 }
 function obtenerMensaje() {
@@ -46,7 +43,10 @@ function obtenerMensaje() {
         type: 'POST',
         data: datosFormulario.serialize(),
         success : function(data) {
-            var arreglo=Object.values(data);
+			var arreglo=Object.values(data);
+			if(arreglo[1] == 4){
+				$('#miPerfilModal').modal('show')
+			}
             mostrarAviso(arreglo[1]);
         }
     });
