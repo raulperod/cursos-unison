@@ -26,4 +26,19 @@ solicitud
     .route("/enviar-registro/:idCurso")
     .post( SolicitudController.enviarRegistroPost )
 
+// cursos-unison/solicitud/enviar-registro/:idCurso
+solicitud
+    .route("/ver-solicitudes")
+    .get( SolicitudController.verSolicitudesGet )
+
+// cursos-unison/solicitud/aprobar/:idCurso
+solicitud
+    .route("/aprobar/:idCurso")
+    .get( SolicitudController.aprobarGet )
+
+// cursos-unison/solicitud/no-aprobar/:idCurso
+solicitud
+    .route("/no-aprobar/:idCurso")
+    .post( SolicitudController.noAprobarPost )
+
 module.exports = solicitud

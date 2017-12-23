@@ -54,7 +54,7 @@ function crearSolicitudPost(req, res) {
                                 res.json({msg:'Error base de datos', tipo: 2})
                             }else{
                                 let asunto = 'Creacion de nuevo curso',
-                                    mensaje = `${usuario.nombre} ${usuario.apellido} lo a agregado como instructor para el curso ${nuevaSolicitud.nombre}`
+                                    mensaje = `<p>${usuario.nombre} ${usuario.apellido} lo a agregado como instructor para el curso ${nuevaSolicitud.nombre}.</p>`
                                 enviarCorreo(correoInstructor, asunto, mensaje)
                                 res.json({msg:'se agrego correctamente', tipo: 3})
                             }
@@ -102,7 +102,7 @@ function cancelarRegistroGet(req, res){
     let idCurso = req.params.idCurso,
         usuario = req.session.user
 
-    CursosUsuariosModel.obtenerintructorPorIdCurso(idCurso, (error, curso) => {
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
         if(error || curso.length == 0 || curso == null){
             res.redirect('/usuario/mis-cursos')
         }else{
@@ -115,7 +115,7 @@ function cancelarRegistroGet(req, res){
                         // si el representante no es el instructor se le manda un correo al instructor del cancelamiento
                         if(curso[1].idUsuario != usuario.idUsuario){ 
                             let asunto = 'Solicitud de registro de curso cancelado!',
-                                mensaje = `${usuario.nombre} ${usuario.apellido} ha cancelado la solicitud de registro del curso "${curso[0].nombreC}".`
+                                mensaje = `<p>${usuario.nombre} ${usuario.apellido} ha cancelado la solicitud de registro del curso "${curso[0].nombreC}".</p>`
                             
                             enviarCorreo(curso[1].correo, asunto, mensaje)    
                         }     
@@ -160,11 +160,98 @@ function comprobarCurso(curso){
     return false;
 }
 
+function verSolicitudesGet(req, res){
+    let usuario = req.session.user
+
+    CursosUsuariosModel.obtenerSolicitudes((error, solicitudes) => {
+        if(error){
+            solicitudes = []
+            res.render('./solicitud/ver_solicitudes', {solicitudes, usuario})
+        }else{
+            solicitudes = obtenerSolicitudesOrdenadas(solicitudes)
+            res.render('./solicitud/ver_solicitudes', {solicitudes, usuario})
+        }
+    })
+}
+
+function obtenerSolicitudesOrdenadas(solicitudes){
+    let solicitudesOrdenadas = []
+    
+    for(let i=0 ; i<solicitudes.length ; i+=2){
+        let solicitud = {}
+        solicitud.idCurso = solicitudes[i].idCurso
+        solicitud.nombreC = solicitudes[i].nombreC
+        solicitud.nombreR = solicitudes[i].nombreU
+        solicitud.nombreI = solicitudes[i+1].nombreU
+        solicitudesOrdenadas.push(solicitud)
+    }
+    return solicitudesOrdenadas
+}
+
+function aprobarGet(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso
+
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length == 0){
+            res.redirect('/solicitud/ver-solicitudes')
+        }else{ 
+            // cambio el estado del curso
+            let cursoUp = {idCurso, estado:3}
+
+            CursoModel.actualizarCurso(cursoUp, (error) => {
+                if(error){
+                    res.redirect('/solicitud/ver-solicitudes')
+                }else{
+                    // mandar correo al responsable
+                    let asunto = 'Se a aprobado la solicitud del curso!',
+                        mensaje = `<p>El H. Consejo Divisional ha aprobado la imparticion del curso "${curso[0].nombreC}".</p>`
+                    
+                    enviarCorreo(curso[0].correo, asunto, mensaje)
+                    res.redirect('/solicitud/ver-solicitudes')
+                }
+            })
+        }
+    })
+} 
+
+function noAprobarPost(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso,
+        correccion = req.body.correccion
+
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length == 0){
+            res.redirect('/solicitud/ver-solicitudes')
+        }else{ 
+            // cambio el estado del curso
+            let cursoUp = {idCurso, estado:1}
+
+            CursoModel.actualizarCurso(cursoUp, (error) => {
+                if(error){
+                    res.redirect('/solicitud/ver-solicitudes')
+                }else{
+                    // mandar correo al responsable
+                    let asunto = 'No se aprobo la solicitud del curso...',
+                        mensaje = `<p>El H. Consejo Divisional no ha aprobado la imparticion del curso "${curso[0].nombreC}", por las siguientes razones:</p>
+                                   <p>${correccion}</p> `
+                    
+                    enviarCorreo(curso[0].correo, asunto, mensaje)
+                    res.redirect('/solicitud/ver-solicitudes')
+                }
+            })
+        }
+    })
+} 
+
 module.exports = {
     crearSolicitudGet,
     crearSolicitudPost,
     editarRegistroGet,
     editarRegistroPost,
     cancelarRegistroGet,
-    enviarRegistroPost
+    enviarRegistroPost,
+    verSolicitudesGet,
+    aprobarGet,
+    noAprobarPost
 }

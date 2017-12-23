@@ -48,8 +48,7 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Ver solicitudes
             // Example DataTables Card
             .card.mb-3
@@ -67,13 +66,33 @@ html(lang='es')
                               th Instructor
                               th Acción
                         tbody
-                           tr
-                              td 12256
-                              td Curso de Linux
-                              td Pedro Perez
-                              td Manuel Lopez
-                              td
-                                 a.btn.btn-success(href='#') Evaluar
+                           each solicitud in solicitudes
+                              tr
+                                 td= solicitud.idCurso
+                                 td= solicitud.nombreC
+                                 td= solicitud.nombreR
+                                 td= solicitud.nombreI
+                                 td
+                                    a.btn.btn-success(href='#', data-toggle='modal', data-target='#evaluarModal'+solicitud.idCurso) Evaluar
+         
+         each solicitud in solicitudes
+            .modal.fade(id='evaluarModal'+solicitud.idCurso,tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Evaluación de la solicitud
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                     form(method='post', action='/solicitud/no-aprobar/'+solicitud.idCurso)
+                        .modal-body
+                           .form-group
+                              p Nota: Si la solicitud no es aprobada, escribir las razones
+                              label.col-form-label(for='correccion') Correción:
+                              textarea.form-control(name='correccion', rows='4')
+                        .modal-footer
+                           a.btn.btn-primary(href='/solicitud/aprobar/'+solicitud.idCurso) Aprobar
+                           button.btn.btn-secondary(type='submit') No aprobar
+                              
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -93,8 +112,9 @@ html(lang='es')
                         span(aria-hidden='true') ×
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      a.btn.btn-primary(href='#') Cerrar sesión
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
