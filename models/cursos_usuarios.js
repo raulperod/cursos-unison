@@ -28,7 +28,7 @@ function obtenerResponsableYintructorPorIdCurso(idCurso, next){
 
 function obtenerCursosUsuariosPorIdCurso(idsCurso, next) {
     CursosUsuariosModel
-        .query(`SELECT cu.idCurso, c.nombre nombreC, concat(u.nombre, ' ', u.apellido) nombreU, c.estado, cu.tipo
+        .query(`SELECT cu.idCurso, u.correo, c.nombre nombreC, concat(u.nombre, ' ', u.apellido) nombreU, c.estado, cu.tipo
                 FROM cursos_usuarios cu
                 JOIN usuarios u ON cu.idUsuario = u.idUsuario
                 JOIN cursos c ON cu.idCurso = c.idCurso

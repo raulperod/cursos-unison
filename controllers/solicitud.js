@@ -244,6 +244,24 @@ function noAprobarPost(req, res){
     })
 } 
 
+function enviarDescripcionCursoPost(req, res){
+    let idCurso = req.params.idCurso
+
+    CursosUsuariosModel.obtenerCursosUsuariosPorIdCurso(idCurso, (error, RyI) => {
+        if(error){
+            res.json({ curso: `${error}`})
+        }else{
+            CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
+                if(error){
+                    res.json({ curso: `${error}`})
+                }else{
+                    res.json({RyI, curso})
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
     crearSolicitudGet,
     crearSolicitudPost,
@@ -253,5 +271,6 @@ module.exports = {
     enviarRegistroPost,
     verSolicitudesGet,
     aprobarGet,
-    noAprobarPost
+    noAprobarPost,
+    enviarDescripcionCursoPost
 }

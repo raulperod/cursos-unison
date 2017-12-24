@@ -26,6 +26,10 @@ solicitud
     .route("/enviar-registro/:idCurso")
     .post( SolicitudController.enviarRegistroPost )
 
+solicitud
+    .route("/enviar-descripcion/:idCurso")
+    .post( SolicitudController.enviarDescripcionCursoPost )
+
 // cursos-unison/solicitud/enviar-registro/:idCurso
 solicitud
     .route("/ver-solicitudes")
