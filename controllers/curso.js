@@ -3,6 +3,7 @@
 const UsuarioModel = require('../models/usuario'),
     CursoModel = require('../models/curso'),
     CursosUsuariosModel = require('../models/cursos_usuarios'),
+    CursosUsuariosAsistenciaModel = require('../models/cursos_usuarios_asistencia'),
     enviarCorreo = require('./correo'),
     bcrypt = require('bcrypt-nodejs')
 
@@ -71,11 +72,71 @@ function cancelarPost(req, res){
 }
 
 function asistenciaGet(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso
 
+    CursosUsuariosAsistenciaModel.obtenerAsistenciaPorIdCurso(idCurso, (error, asistencias) => {
+        if(error){
+            console.log(error)
+            res.redirect('/usuario/mis-cursos')
+        }else if(asistencias.length == 0){
+            // busco los participantes
+            CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
+                if(error){
+                    console.log(error)
+                    res.redirect('/usuario/mis-cursos')
+                }else{
+                    // creas la lista de asistencia
+                    let asistencias = [],
+                        fecha = obtenerDiaActual()
+                    // le meto los participantes del curso
+                    for(let i=0 ; i < participantes.length ; i++){
+                        asistencias.push([participantes[i].idUsuario, idCurso, fecha])
+                    }
+                    CursosUsuariosAsistenciaModel.crearAsistencia(asistencias, (error) => {
+                        res.redirect('/curso/asistencia/'+idCurso)
+                    })
+                }
+            })
+        }else{
+            res.render('./curso/pasar_asistencia', {usuario, asistencias})
+        }
+    })
+}
+
+function obtenerDiaActual(){
+    let date = new Date(),
+        day = date.getDate(),
+        month = date.getMonth(),
+        year = date.getFullYear()
+
+    if (month < 10) month = "0" + month
+    if (day < 10) day = "0" + day
+
+    return year + "-" + month + "-" + day
 }
 
 function asistenciaPost(req, res){
+    let idCurso = req.params.idCurso,
+        idUsuario = req.params.idUsuario,
+        asistio = req.body.asistio,
+        fecha = obtenerDiaActual()
+
+    let asistencia = {
+        idUsuario,
+        idCurso,
+        fecha,
+        asistio
+    }
+
+    let mensaje = {
+        msg: `El usuario ${idUsuario} ${asistio}`
+    }
     
+    CursosUsuariosAsistenciaModel.actualizarAsistencia(asistencia, (error) => {
+        if(error) mensaje.msg = `${error}`
+        res.json(mensaje)
+    })
 }
 
 module.exports = {

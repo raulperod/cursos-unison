@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis Cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,8 +51,7 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Pasar asistencia
             .card.mb-3
                .card-body
@@ -71,32 +70,31 @@ html(lang='es')
                               th Apellido
                               th Acción
                         tbody
-                           tr
-                              td Pedro
-                              td Lopez
-                              td
-                                 form
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='si')
-                                          |  Asistio
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='no', checked='')
-                                          |  No asistio
-                           tr
-                              td Ivan
-                              td Guerrero
-                              td
-                                 form
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='si')
-                                          |  Asistio
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='no', checked='')
-                                          |  No asistio
+                           each asistencia in asistencias
+                              tr
+                                 td #{asistencia.nombre}
+                                 td #{asistencia.apellido}
+                                 td
+                                    form(id='form'+asistencia.idCurso+asistencia.idUsuario, method='post', action='/curso/asistencia/'+asistencia.idCurso+'/'+asistencia.idUsuario)
+                                       if asistencia.asistio == '1'
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+asistencia.idCurso+' '+asistencia.idUsuario, type='radio', name='asistio', value='1',checked='')
+                                                |  Asistio
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+asistencia.idCurso+' '+asistencia.idUsuario, type='radio', name='asistio', value='0')
+                                                |  No asistio
+                                       else
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+asistencia.idCurso+' '+asistencia.idUsuario, type='radio', name='asistio', value='1')
+                                                |  Asistio
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+asistencia.idCurso+' '+asistencia.idUsuario, type='radio', name='asistio', value='0', checked='')
+                                                |  No asistio
+                           
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -117,7 +115,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
@@ -130,3 +128,27 @@ html(lang='es')
          script(src='/public/js/sb-admin.min.js')
          // Custom scripts for this page
          script(src='/public/js/sb-admin-datatables.min.js')
+         script.
+            $(document).ready(function(){  
+               $(".radioA").change(function(){
+                  var clases = $(this).attr("class");
+                  var listaDeClases = clases.split(' ');
+                  var idCurso = listaDeClases[2]
+                  var idUsuario = listaDeClases[3]
+                  obtenerMensaje(idCurso, idUsuario)
+               });
+
+
+            });
+
+            function obtenerMensaje(idCurso, idUsuario) {
+               var form = $("#form"+idCurso+idUsuario)
+               $.ajax({
+                  url: form.attr('action'),
+                  type: 'POST',
+                  data: form.serialize(),
+                  success : function(data) {
+                     console.log(data.msg)
+                  }
+               });
+            }

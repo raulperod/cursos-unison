@@ -93,7 +93,7 @@ html(lang='es')
                                           a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso  
                                     else if curso.tipo == 2
                                        td 
-                                          a.btn.btn-primary(href="#") Pasar lista
+                                          a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista
                                           a.btn.btn-primary(href="#") Evaluar participantes
                                     else
                                        td 
