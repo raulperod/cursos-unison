@@ -78,11 +78,33 @@ function editarRegistroGet(req, res){
                 if(error || registro == null){
                     res.redirect('/usuario/mis-cursos')
                 }else{
-                    res.render('./solicitud/editar_registro', {usuario:req.session.user, tipo:tipo.tipo, registro})
+                    registro = acomodarFecha(registro)
+                    console.log(registro)
+                    res.render('./solicitud/editar_registro', {usuario, tipo, registro})
                 }
             })
         }
     })
+}
+
+function acomodarFecha(registro){
+    let registro2 = registro
+
+    let fechaInicial = registro2.fechaInicial,
+        fechaFinal = registro2.fechaFinal
+
+    try{
+        fechaInicial = fechaInicial.split('T')[0]
+        fechaFinal = fechaFinal.split('T')[0]
+    }catch(error){
+        fechaInicial = '0000-00-00'
+        fechaFinal = '0000-00-00'
+    }
+    
+    registro2.fechaInicial = fechaInicial
+    registro2.fechaFinal = fechaFinal
+
+    return registro2
 }
 
 function editarRegistroPost(req, res){

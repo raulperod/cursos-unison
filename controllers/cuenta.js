@@ -104,6 +104,8 @@ function registrarPost(req, res) {
     req.body.tipo = (req.body.tipo == '0') ? 0 : 1
     req.body.password = bcrypt.hashSync(req.body.password)
     delete req.body.password_confirm // borro el de confirmar
+    if(req.body.institucion == '5') req.body.institucion = req.body.institucion2
+    delete req.body.institucion2 // borro la otra institucion
 
     UsuarioModel.crearUsuario(req.body, (error, id) => {
         if(error){

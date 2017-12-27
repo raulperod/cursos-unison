@@ -40,17 +40,20 @@ html(lang='en')
                            label(for='password_confirm') Confirmar contraseña
                            input#pass2.form-control(name='password_confirm' type='password', placeholder='Confirmar contraseña')
                   .form-group
-                     select.form-control(required='' name='institucion')
+                     select.form-control#seleccion(required='' name='institucion')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Institución
                         option() Universidad de Sonora
-                        option() Otra Institución
+                        option(value='5') Otra Institución
+            
+                  #div_5.form-group.contenido
+                     input.form-control(name='institucion2' type='text', placeholder='Institucion')
                   .form-group
                      select.form-control(required='' name='tipo')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
                         option(value='0') Alumno
-                        option(value='1') Profesor
+                        option(value='1') Profesor  
                   .form-group
-                     label(for='expediente') Expediente
+                     label(for='expediente') Expediente o número de empleado
                      input#exp.form-control(name='expediente' type='text', aria-describedby='nameHelp', placeholder='Expediente')      
                   input.btn.btn-primary.btn-block(type='submit' value='Registrar')
                .text-center
@@ -74,3 +77,11 @@ html(lang='en')
       // Core plugin JavaScript
       script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
       script(src='/public/js/avisos/cuenta/registro.js')
+      script(language='javascript', type='text/javascript').
+            $(document).ready(function(){
+                  $(".contenido").hide();
+                  $("#seleccion").change(function(){
+                        $(".contenido").hide();
+                        $("#div_" + $(this).val()).show();
+                  });
+            });

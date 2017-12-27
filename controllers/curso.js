@@ -70,9 +70,13 @@ function cancelarPost(req, res){
     })
 }
 
-function asistenciaGet(req, res){}
+function asistenciaGet(req, res){
 
-function asistenciaPost(req, res){}
+}
+
+function asistenciaPost(req, res){
+    
+}
 
 module.exports = {
     inscribirseGet,

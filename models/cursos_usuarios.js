@@ -85,7 +85,7 @@ function obtenerTipoPorIdCursoYidUsuario(idCurso, idUsuario, next){
                 ORDER BY cu.tipo DESC`, [idUsuario, idCurso] ,(error, resultado, fields) => {
                    
             try{
-                next(error, resultado[0])
+                next(error, resultado[0].tipo)
             }catch(error){
                 next(error, null)
             }        
