@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis Cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,14 +51,13 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
-               li.breadcrumb-item.active Mis cursos
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
+               li.breadcrumb-item.active Ver cursos
             // Example DataTables Card
             .card.mb-3
                .card-header
                   i.fa.fa-table
-                  |  Mis cursos
+                  |  Ver cursos
                .card-body
                   .table-responsive
                      table#dataTable.table.table-bordered(width='100%', cellspacing='0')
@@ -69,72 +68,78 @@ html(lang='es')
                               th Instructor
                               th Acción
                         tbody
-                           tr
-                              td Curso de Linux
-                              td Pedro Perez
-                              td Manuel Lopez
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-                           tr
-                              td Curso de Base de datos
-                              td Ivan Mendez
-                              td Luis Guerrero
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-                           tr
-                              td Curso de Java
-                              td Carlos Ramirez
-                              td Julio Castro
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-                           tr
-                              td Curso de Python
-                              td Alberto Castillo
-                              td Miguel Velasquez
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-                           tr
-                              td Curso de C++
-                              td Jose Acosta
-                              td Alejando Carrasco
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-                           tr
-                              td Curso de Videojuegos
-                              td Juan Ozuna
-                              td David Ramos
-                              td
-                                 a.btn.btn-primary(href='#') Ver curso
-         // /.container-fluid
-         // /.content-wrapper
-         footer.sticky-footer
-            .container
-               .text-center
-                  small Copyright © Your Website 2017
-         // Scroll to Top Button
-         a.scroll-to-top.rounded(href='#page-top')
-            i.fa.fa-angle-up
-         // Logout Modal
-         #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+
+                           each curso in verCursos
+                              tr
+                                 td= curso.nombreC
+                                 td= curso.nombreR
+                                 td= curso.nombreI
+                                 td
+                                    a.btn.btn-primary(href='/curso/inscribirse/'+curso.idCurso) Ver curso
+
+      if errorInscripcion
+         // errorInscripcionModal
+         #errorInscripcionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')
                .modal-content
                   .modal-header
-                     h5#exampleModalLabel.modal-title ¿Estas seguro?
+                     h5#exampleModalLabel.modal-title Error
                      button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                  .modal-body Selecciona cerrar sesión si realmente quieres salir.
+                     span(aria-hidden='true') ×
+                  .modal-body El curso tiene cupo lleno.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
-         // Bootstrap core JavaScript
-         script(src='/public/vendor/jquery/jquery.min.js')
-         script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
-         // Core plugin JavaScript
-         script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
-         // Custom scripts for all pages
-         script(src='/public/js/sb-admin.min.js')
-         // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+      if errorCupo
+         // errorCupoModal
+         #errorCupoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#exampleModalLabel.modal-title Error
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+                  .modal-body Ya estas inscrito en el curso.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+      // /.container-fluid
+      // /.content-wrapper
+      footer.sticky-footer
+         .container
+            .text-center
+               small Copyright © Your Website 2017
+      // Scroll to Top Button
+      a.scroll-to-top.rounded(href='#page-top')
+         i.fa.fa-angle-up
+      // Logout Modal
+      #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+         .modal-dialog(role='document')
+            .modal-content
+               .modal-header
+                  h5#exampleModalLabel.modal-title ¿Estas seguro?
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+               .modal-body Selecciona cerrar sesión si realmente quieres salir.
+               .modal-footer
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                  a.btn.btn-primary(href='#') Cerrar sesión
+      // Bootstrap core JavaScript
+      script(src='/public/vendor/jquery/jquery.min.js')
+      script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      // Core plugin JavaScript
+      script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
+      // Page level plugin JavaScript
+      script(src='/public/vendor/datatables/jquery.dataTables.js')
+      script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
+      // Custom scripts for all pages
+      script(src='/public/js/sb-admin.min.js')
+      // Custom scripts for this page
+      script(src='/public/js/sb-admin-datatables.min.js')
+      if errorInscripcion
+         script.
+            $('#errorInscripcionModal').modal('show')
+
+      if errorCupo
+         script.
+            $('#errorCupoModal').modal('show') 

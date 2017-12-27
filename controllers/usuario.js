@@ -36,30 +36,26 @@ function misCursosGet(req, res) {
         if(error || cursosUsuario.length == 0){
             res.render('./usuario/mis_cursos', {usuario, misCursos: [] })
         }else{ // idCurso, nombre del curso, Representante, Instructor, estado, tipo 
-            if(cursosUsuario.length > 0){
-                cursosUsuario = eliminarDeMas(cursosUsuario)
-                let idsCursos = []
-                // obtengo los ids de los cursos del usuario
-                for(let i=0 ; i<cursosUsuario.length ; i++){
-                    idsCursos.push(cursosUsuario[i].idCurso)
-                }
-                CursosUsuariosModel.obtenerCursosUsuariosPorIdCurso(idsCursos, (error, misCursos) => {
-                    if(error){
-                        console.log(error)
-                        res.render('./usuario/mis_cursos' , {usuario, misCursos: [] })
-                    }else{
-                        misCursos = acomodarMisCursos(cursosUsuario, misCursos)
-                        let enviarError = req.session.enviarError,
-                            enviarCorrecto = req.session.enviarCorrecto
-
-                        req.session.enviarError = false;
-                        req.session.enviarCorrecto = false;
-                        res.render('./usuario/mis_cursos' , {usuario, misCursos, enviarError, enviarCorrecto})
-                    }  
-                })
-            }else{
-                res.render('./usuario/mis_cursos')
+            cursosUsuario = eliminarDeMas(cursosUsuario)
+            let idsCursos = []
+            // obtengo los ids de los cursos del usuario
+            for(let i=0 ; i<cursosUsuario.length ; i++){
+                idsCursos.push(cursosUsuario[i].idCurso)
             }
+            CursosUsuariosModel.obtenerCursosUsuariosPorIdCurso(idsCursos, (error, misCursos) => {
+                if(error){
+                    console.log(error)
+                    res.render('./usuario/mis_cursos' , {usuario, misCursos: [] })
+                }else{
+                    misCursos = acomodarMisCursos(cursosUsuario, misCursos)
+                    let enviarError = req.session.enviarError,
+                        enviarCorrecto = req.session.enviarCorrecto
+
+                    req.session.enviarError = false;
+                    req.session.enviarCorrecto = false;
+                    res.render('./usuario/mis_cursos' , {usuario, misCursos, enviarError, enviarCorrecto})
+                }  
+            })
         }
     })
 }
@@ -108,7 +104,57 @@ function acomodarMisCursos(cursosUsuario, misCursos){
 }
 
 function verCursosGet(req, res) {
-    res.render('./usuario/ver_cursos')
+    const usuario = req.session.user
+    // consigue los cursos del usuario
+    CursoModel.obtenerCursosDisponibles( (error, cursosDisponibles) => {
+        let errorInscripcion = req.session.errorInscripcion,
+            errorCupo = req.session.errorCupo
+
+        req.session.errorInscripcion = false
+        req.session.errorCupo = false
+
+        if(error || cursosDisponibles.length == 0){
+            res.render('./usuario/ver_cursos', {usuario, verCursos: [], errorInscripcion, errorCupo })
+        }else{ // idCurso, nombre del curso, Representante, Instructor
+            let idsCursos = []
+            // obtengo los ids de los cursos del usuario
+            for(let i=0 ; i<cursosDisponibles.length ; i++){
+                idsCursos.push(cursosDisponibles[i].idCurso)
+            }
+            CursosUsuariosModel.obtenerCursosUsuariosPorIdCurso(idsCursos, (error, verCursos) => {
+                if(error){
+                    console.log(error)
+                    res.render('./usuario/ver_cursos' , {usuario, verCursos: [], errorInscripcion, errorCupo })
+                }else{
+                    verCursos = acomodarVerCursos(cursosDisponibles, verCursos)
+                    res.render('./usuario/ver_cursos' , {usuario, verCursos, errorInscripcion, errorCupo})
+                }  
+            })
+        }
+    })
+}
+
+function acomodarVerCursos(cursosDisponibles, verCursos){
+    let verCursosAux = verCursos,
+        verCursosVista = []
+
+    for(let i=0 ;i<cursosDisponibles.length ; i++){
+        let cursoVista = {
+            idCurso: cursosDisponibles[i].idCurso
+        }
+        for(let j=0 ; j<verCursosAux.length; j++){
+            if(cursoVista.idCurso == verCursosAux[j].idCurso){
+                if(verCursosAux[j].tipo == 3){
+                    cursoVista.nombreC = verCursosAux[j].nombreC
+                    cursoVista.nombreR = verCursosAux[j].nombreU
+                }else if(verCursosAux[j].tipo == 2){
+                    cursoVista.nombreI = verCursosAux[j].nombreU
+                }
+            }
+        }
+        verCursosVista.push(cursoVista)
+    }    
+    return verCursosVista
 }
 
 module.exports = {

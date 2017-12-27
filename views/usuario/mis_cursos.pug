@@ -35,7 +35,7 @@ html(lang='es')
                      li
                         a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -87,7 +87,21 @@ html(lang='es')
                                  else if curso.estado == 2
                                     td
                                        button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
-
+                                 else if curso.estado == 3
+                                    if curso.tipo == 3
+                                       td 
+                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso  
+                                    else if curso.tipo == 2
+                                       td 
+                                          a.btn.btn-primary(href="#") Pasar lista
+                                          a.btn.btn-primary(href="#") Evaluar participantes
+                                    else
+                                       td 
+                                          a.btn.btn-primary(href="#") Evaluar instructor
+                                          a.btn.btn-primary(href="#") Evaluar curso
+                                 else
+                                    td Se ha cancelado
+                                       
 
          each curso in misCursos
             if curso.estado == 1 
@@ -119,6 +133,26 @@ html(lang='es')
                            .modal-footer
                               button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                               a.btn.btn-primary(href='/solicitud/cancelar-registro/'+curso.idCurso) Aceptar
+            
+            else if curso.estado == 3
+               if curso.tipo == 3
+                  // cancelarCursoModal
+                  .modal.fade(id='cancelarCursoModal'+curso.idCurso,tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                     .modal-dialog(role='document')
+                        .modal-content
+                           .modal-header
+                              h5#cancelarModalLabel.modal-title ¿Estas seguro?
+                              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                 span(aria-hidden='true') ×
+                           form(method='post', action='/curso/cancelar/'+curso.idCurso)
+                              .modal-body 
+                                 p Selecciona "Aceptar" si realmente quieres cancelar el curso.
+                                 label.col-form-label(for='razones') Razones:
+                                 textarea.form-control(name='razones', rows='4')
+                              .modal-footer
+                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                                 button.btn.btn-primary(type='submit') Aceptar
+
          // enviarErrorModal
          #enviarErrorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')

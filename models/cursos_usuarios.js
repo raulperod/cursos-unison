@@ -13,6 +13,28 @@ function obtenerCursosUsuariosPorIdUsuario(id, next) {
         })
 }
 
+function siCurso(idUsuario, idCurso, next){
+    CursosUsuariosModel
+        .query(`SELECT *
+                FROM cursos_usuarios cu 
+                WHERE cu.idUsuario = ? AND cu.idCurso = ?`, [idUsuario, idCurso] ,(error, resultado, fields) => {
+            
+            next(error, resultado.length)
+        })
+}
+
+function obtenerParticipantesPorIdCurso(idCurso, next){
+    CursosUsuariosModel
+        .query(`SELECT u.idUsuario, u.correo, c.nombre nombreC
+                FROM cursos_usuarios cu
+                JOIN usuarios u ON u.idUsuario = cu.idUsuario
+                JOIN cursos c ON c.idCurso = cu.idCurso
+                WHERE cu.idCurso = ? AND cu.tipo = 1`, idCurso, (error, resultado, fields) => {
+            
+            next(error, resultado)
+        })
+}
+
 function obtenerResponsableYintructorPorIdCurso(idCurso, next){
     CursosUsuariosModel
         .query(`SELECT u.idUsuario, u.correo, c.nombre nombreC, cu.tipo
@@ -35,6 +57,23 @@ function obtenerCursosUsuariosPorIdCurso(idsCurso, next) {
                 WHERE ( cu.tipo = 3 OR cu.tipo = 2 ) AND cu.idCurso IN (?)`, [idsCurso] ,(error, resultado, fields) => {
                    
             next(error, resultado)
+        })
+}
+
+function obtenerDescripcionCursoPorId(idCurso, next) {
+    CursosUsuariosModel
+        .query(`SELECT c.idCurso, c.nombre, concat(u.nombre, ' ', u.apellido) nombreI, c.departamento, c.contenidoSintetico, c.requisitosDeEvaluacion, c.antecedentesAlumnos, c.cupoMaximo, c.numeroDeParticipantes
+                FROM cursos_usuarios cu
+                JOIN cursos c ON c.idCurso = cu.idCurso 
+                JOIN usuarios u ON u.idUsuario = cu.idUsuario
+                WHERE cu.idCurso = ? AND cu.tipo = 2`, idCurso ,(error, resultado, fields) => {
+                   
+            try{
+                next(error, resultado[0])
+            }catch(error){
+                next(error, null)
+            }        
+            
         })
 }
 
@@ -78,9 +117,12 @@ function crearCursosUsuarios(cursosUsuarios, next){
 
 module.exports = {
     obtenerCursosUsuariosPorIdUsuario,
+    siCurso,
     obtenerResponsableYintructorPorIdCurso,
+    obtenerParticipantesPorIdCurso,
     obtenerCursosUsuariosPorIdCurso,
     obtenerTipoPorIdCursoYidUsuario,
+    obtenerDescripcionCursoPorId,
     obtenerSolicitudes,
     crearCursosUsuarios
 }

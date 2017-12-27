@@ -17,18 +17,13 @@ function obtenerCursoPorId(id, next) {
         })
 }
 
-function obtenerDescripcionCursoPorId(id, next) {
+function obtenerCursosDisponibles(next){
     CursoModel
-        .query(`SELECT c.idCurso, 
-                FROM cursos c 
-                WHERE c.idCurso = ? `, id ,(error, resultado, fields) => {
-                   
-            try{
-                next(error, resultado[0])
-            }catch(error){
-                next(error, null)
-            }        
+        .query(`SELECT c.idCurso
+                FROM cursos c
+                WHERE c.estado = 3`, (error, resultado, fields) => {
             
+            next(error, resultado)
         })
 }
 
@@ -66,6 +61,7 @@ function borrarCurso(idCurso, next) {
 
 module.exports = {
     obtenerCursoPorId,
+    obtenerCursosDisponibles,
     crearCurso,
     actualizarCurso,
     borrarCurso

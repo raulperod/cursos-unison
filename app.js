@@ -9,6 +9,7 @@ const express = require('express'),
     CuentaRouter = require('./routes/cuenta'),
     UsuarioRouter = require('./routes/usuario'),
     SolicitudRouter = require('./routes/solicitud'),
+    CursoRouter = require('./routes/curso'),
     app = express()
 
 app
@@ -35,5 +36,6 @@ app.use("/cuenta",CuentaRouter)
 app.use("/usuario",UsuarioRouter)
 // cursos-unison/solicitud
 app.use("/solicitud",SolicitudRouter)
-
+// cursos-unison/curso
+app.use("/curso",CursoRouter)
 module.exports = app
