@@ -90,7 +90,8 @@ html(lang='es')
                                  else if curso.estado == 3
                                     if curso.tipo == 3
                                        td 
-                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso  
+                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                          a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
                                     else if curso.tipo == 2
                                        td 
                                           a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista

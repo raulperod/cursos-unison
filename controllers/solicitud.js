@@ -30,7 +30,12 @@ function crearSolicitudPost(req, res) {
                 ]
                 
                 CursosUsuariosModel.crearCursosUsuarios(nuevoCursosUsuarios, (error) => {
-                    (error) ? res.json({msg:'Error base de datos', tipo: 2}) : res.json({msg:'se agrego correctamente', tipo: 3})
+                    if(error){
+                        res.json({msg:'Error base de datos', tipo: 2})
+                    }else{
+                        CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso:id, idUsuario:usuario.idUsuario}, (error) => {})
+                        res.json({msg:'se agrego correctamente', tipo: 3})
+                    }
                 })
             }
         })
@@ -56,7 +61,7 @@ function crearSolicitudPost(req, res) {
                                 let asunto = 'Creacion de nuevo curso',
                                     mensaje = `<p>${usuario.nombre} ${usuario.apellido} lo a agregado como instructor para el curso ${nuevaSolicitud.nombre}.</p>`
                                 enviarCorreo(correoInstructor, asunto, mensaje)
-                                CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso:id, idUsuario:instructor.idUsuario}, (error) => {})
+                                CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso:id, idUsuario:usuario.idUsuario}, (error) => {})
                                 res.json({msg:'se agrego correctamente', tipo: 3})
                             }
                         })

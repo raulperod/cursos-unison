@@ -62,7 +62,7 @@ function obtenerCursosUsuariosPorIdCurso(idsCurso, next) {
 
 function obtenerDescripcionCursoPorId(idCurso, next) {
     CursosUsuariosModel
-        .query(`SELECT c.idCurso, c.nombre, concat(u.nombre, ' ', u.apellido) nombreI, c.departamento, c.contenidoSintetico, c.requisitosDeEvaluacion, c.antecedentesAlumnos, c.cupoMaximo, c.numeroDeParticipantes
+        .query(`SELECT c.idCurso, c.nombre, concat(u.nombre, ' ', u.apellido) nombreI, c.departamento, c.contenidoSintetico, c.requisitosDeEvaluacion, c.antecedentesAlumnos, c.cupoMaximo, c.numeroDeParticipantes, c.fechaInicio, c.fechaFinal, c.duracion
                 FROM cursos_usuarios cu
                 JOIN cursos c ON c.idCurso = cu.idCurso 
                 JOIN usuarios u ON u.idUsuario = cu.idUsuario
