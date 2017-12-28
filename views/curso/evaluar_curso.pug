@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,87 +51,86 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Evaluar curso
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Evaluar curso
                .card-body
-                  form
+                  form(method='post', action='/curso/evaluacion-curso/'+idCurso)
                      .form-group
-                        label(for='') De acuerdo a sus expectativas
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='expectativas') De acuerdo a sus expectativas
+                        select.form-control(name='expectativas', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') La pertinencia de los contenidos fue
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='pertinencia') La pertinencia de los contenidos fue
+                        select.form-control(name='pertinencia', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Los tópicos tratados
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='topicos') Los tópicos tratados
+                        select.form-control(name='topicos', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Los tiempos de la presentación
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='tiempos') Los tiempos de la presentación
+                        select.form-control(name='tiempos', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') El logro de los objetivos planteados fue
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='objetivos') El logro de los objetivos planteados fue
+                        select.form-control(name='objetivos', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Los materiales de apoyo fueron
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='materiales') Los materiales de apoyo fueron
+                        select.form-control(name='materiales', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') La aplicación de los conocimientos adquiridos es
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='aplicacion') La aplicación de los conocimientos adquiridos es
+                        select.form-control(name='aplicacion', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Los medios tecnológicos usados fueron
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='medios') Los medios tecnológicos usados fueron
+                        select.form-control(name='medios', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') La cantidad de información fue
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='informacion') La cantidad de información fue
+                        select.form-control(name='informacion', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') En general el programa fue
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='programa') En general el programa fue
+                        select.form-control(name='programa', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='exampleInputCaracter') Sugerencias para mejorar
-                        textarea.form-control(rows='4', placeholder='Sugerencias para mejorar')
+                        label(for='sugerencias') Sugerencias para mejorar
+                        textarea.form-control(rows='4',name='sugerencias', placeholder='Sugerencias para mejorar')
                      input.btn.btn-primary.btn-block(type='submit', value='Finalizar')
          // /.container-fluid
          // /.content-wrapper
@@ -153,7 +152,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

@@ -49,11 +49,14 @@ function misCursosGet(req, res) {
                 }else{
                     misCursos = acomodarMisCursos(cursosUsuario, misCursos)
                     let enviarError = req.session.enviarError,
-                        enviarCorrecto = req.session.enviarCorrecto
+                        enviarCorrecto = req.session.enviarCorrecto,
+                        errorEvaluacion = req.session.errorEvaluacion
 
-                    req.session.enviarError = false;
-                    req.session.enviarCorrecto = false;
-                    res.render('./usuario/mis_cursos' , {usuario, misCursos, enviarError, enviarCorrecto})
+                    req.session.enviarError = false
+                    req.session.enviarCorrecto = false
+                    req.session.errorEvaluacion = false
+                    
+                    res.render('./usuario/mis_cursos' , {usuario, misCursos, enviarError, enviarCorrecto, errorEvaluacion})
                 }  
             })
         }

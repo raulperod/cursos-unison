@@ -56,6 +56,7 @@ function crearSolicitudPost(req, res) {
                                 let asunto = 'Creacion de nuevo curso',
                                     mensaje = `<p>${usuario.nombre} ${usuario.apellido} lo a agregado como instructor para el curso ${nuevaSolicitud.nombre}.</p>`
                                 enviarCorreo(correoInstructor, asunto, mensaje)
+                                CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso:id, idUsuario:instructor.idUsuario}, (error) => {})
                                 res.json({msg:'se agrego correctamente', tipo: 3})
                             }
                         })

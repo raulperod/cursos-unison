@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,80 +51,79 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Evaluar instructor
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Evaluar instructor
                .card-body
-                  form
+                  form(method='post', action='/curso/evaluacion-instructor/'+idCurso)
                      .form-group
-                        label(for='') Dominio del tema
-                        select.form-control(required='')
+                        label(for='dominio') Dominio del tema
+                        select.form-control(name='dominio', required='')
                            option(value='0') Malo
                            option(value='1') Regular
                            option(value='2') Bueno
                            option(value='3') Excelente
                      .form-group
-                        label(for='') Presentación de conceptos
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='presentacionDeConceptos') Presentación de conceptos
+                        select.form-control(name='presentacionDeConceptos', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Interacción y motivación
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='interaccionYmotivacion') Interacción y motivación
+                        select.form-control(name='interaccionYmotivacion', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Uso de recursos didácticos y tecnológicos
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='usoDeRecursosDidacticos') Uso de recursos didácticos y tecnológicos
+                        select.form-control(name='usoDeRecursosDidacticos', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Comunicación con el grupo
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='comunicacionConElGrupo') Comunicación con el grupo
+                        select.form-control(name='comunicacionConElGrupo', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Tutoría
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='tutoria') Tutoría
+                        select.form-control(name='tutoria', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') La extensión de la información (otras fuentes: libros, www, revistas, etc.)
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='laExtensionDeLaInformacion') La extensión de la información (otras fuentes: libros, www, revistas, etc.)
+                        select.form-control(name='laExtensionDeLaInformacion', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') Estrategias para facilitar el aprendizaje
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='estrategias') Estrategias para facilitar el aprendizaje
+                        select.form-control(name='estrategias', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='') En general el desempeño del instructor fue
-                        select.form-control(required='')
-                           option(value='0') Excelente
-                           option(value='1') Bueno
-                           option(value='2') Regular
-                           option(value='3') Malo
+                        label(for='desempeno') En general el desempeño del instructor fue
+                        select.form-control(name='desempeno', required='')
+                           option(value='0') Malo
+                           option(value='1') Regular
+                           option(value='2') Bueno
+                           option(value='3') Excelente
                      .form-group
-                        label(for='exampleInputCaracter') Sugerencias para mejorar
-                        textarea.form-control(rows='4', placeholder='Sugerencias para mejorar')
+                        label(for='sugerencias') Sugerencias para mejorar
+                        textarea.form-control(rows='4',name='sugerencias', placeholder='Sugerencias para mejorar')
                      input.btn.btn-primary.btn-block(type='submit', value='Finalizar')
          // /.container-fluid
          // /.content-wrapper
@@ -146,7 +145,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

@@ -21,5 +21,16 @@ curso
 curso
     .route("/asistencia/:idCurso/:idUsuario")
     .post( CursoController.asistenciaPost )
+// cursos-unison/curso/evaluacion-curso/:idCurso
+curso
+    .route("/evaluacion-curso/:idCurso")
+    .get(  CursoController.evaluacionCursoGet )
+    .post( CursoController.evaluacionCursoPost )
+// cursos-unison/curso/evaluacion-curso/:idCurso
+curso
+    .route("/evaluacion-instructor/:idCurso")
+    .get(  CursoController.evaluacionInstructorGet )
+    .post( CursoController.evaluacionInstructorPost )
+
 
 module.exports = curso

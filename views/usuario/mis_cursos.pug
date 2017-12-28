@@ -97,8 +97,8 @@ html(lang='es')
                                           a.btn.btn-primary(href="#") Evaluar participantes
                                     else
                                        td 
-                                          a.btn.btn-primary(href="#") Evaluar instructor
-                                          a.btn.btn-primary(href="#") Evaluar curso
+                                          a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
+                                          a.btn.btn-primary(href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
                                  else
                                     td Se ha cancelado
                                        
@@ -182,6 +182,19 @@ html(lang='es')
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         // errorEvaluacionModal
+         #errorEvaluacionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5#exampleModalLabel.modal-title Aviso
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                  .modal-body 
+                     p Ya ha evaluado eso.
+                  .modal-footer
+                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -225,3 +238,7 @@ html(lang='es')
       if enviarCorrecto
          script.
             $('#enviarCorrectoModal').modal('show')
+
+      if errorEvaluacion
+         script.
+            $('#errorEvaluacionModal').modal('show')

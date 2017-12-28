@@ -4,6 +4,9 @@ const UsuarioModel = require('../models/usuario'),
     CursoModel = require('../models/curso'),
     CursosUsuariosModel = require('../models/cursos_usuarios'),
     CursosUsuariosAsistenciaModel = require('../models/cursos_usuarios_asistencia'),
+    CursosUsuariosEvaluacionParticipantesModel = require('../models/cursos_usuarios_evaluacion_participantes'),
+    EvaluacionCursoModel = require('../models/cursos_usuarios_evaluacion_curso'),
+    EvaluacionInstructorModel = require('../models/cursos_usuarios_evaluacion_instructor'),
     enviarCorreo = require('./correo'),
     bcrypt = require('bcrypt-nodejs')
 
@@ -40,6 +43,7 @@ function inscribirsePost(req, res) {
                     ]         
                     CursosUsuariosModel.crearCursosUsuarios(cursoUsuario, (error) => {})
                     CursoModel.actualizarCurso({idCurso, numeroDeParticipantes: curso.numeroDeParticipantes}, (error) => {})
+                    CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso, idUsuario:usuario.idUsuario}, (error) => {})
                     res.redirect('/usuario/mis-cursos')
                 }else{ // no hay cupo
                     req.session.errorInscripcion = true
@@ -139,10 +143,76 @@ function asistenciaPost(req, res){
     })
 }
 
+function evaluacionCursoGet(req, res){
+    let idCurso = req.params.idCurso,
+        usuario = req.session.user
+
+    // verifico si ya evaluo
+    CursosUsuariosEvaluacionParticipantesModel
+        .obtenerSiEvaluo(idCurso, usuario.idUsuario, (error, evaluaciones) => {
+            if(error){
+                res.redirect('/usuario/mis-cursos')
+            }else if(evaluaciones.evaluacion_curso == 1){
+                req.session.errorEvaluacion = true
+                res.redirect('/usuario/mis-cursos')
+            }else{
+                res.render('./curso/evaluar_curso',{usuario, idCurso})
+            }
+        })
+}
+
+function evaluacionCursoPost(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso,
+        evaluacion = req.body
+
+    evaluacion.idCurso = idCurso
+
+    EvaluacionCursoModel.crearEvaluacionCurso(evaluacion, (error) => {})
+    CursosUsuariosEvaluacionParticipantesModel.actualizarEvaluacion({idUsuario:usuario.idUsuario, idCurso, evaluacion_curso: 1}, (error) => {})
+
+    res.redirect('/usuario/mis-cursos')
+}
+
+function evaluacionInstructorGet(req, res){
+    let idCurso = req.params.idCurso,
+        usuario = req.session.user
+
+    // verifico si ya evaluo
+    CursosUsuariosEvaluacionParticipantesModel
+        .obtenerSiEvaluo(idCurso, usuario.idUsuario, (error, evaluaciones) => {
+            if(error){
+                res.redirect('/usuario/mis-cursos')
+            }else if(evaluaciones.evaluacion_instructor == 1){
+                req.session.errorEvaluacion = true
+                res.redirect('/usuario/mis-cursos')
+            }else{
+                res.render('./curso/evaluar_instructor',{usuario, idCurso})
+            }
+        })
+}
+
+function evaluacionInstructorPost(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso,
+        evaluacion = req.body
+
+    evaluacion.idCurso = idCurso
+
+    EvaluacionInstructorModel.crearEvaluacionInstructor(evaluacion, (error) => {})
+    CursosUsuariosEvaluacionParticipantesModel.actualizarEvaluacion({idUsuario:usuario.idUsuario, idCurso, evaluacion_instructor: 1}, (error) => {})
+
+    res.redirect('/usuario/mis-cursos')
+}
+
 module.exports = {
     inscribirseGet,
     inscribirsePost,
     cancelarPost,
     asistenciaGet,
-    asistenciaPost
+    asistenciaPost,
+    evaluacionCursoGet,
+    evaluacionCursoPost,
+    evaluacionInstructorGet,
+    evaluacionInstructorPost
 }
