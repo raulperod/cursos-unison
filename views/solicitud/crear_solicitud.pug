@@ -16,7 +16,7 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
@@ -26,16 +26,16 @@ html(lang='es')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi Perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
-                  a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
-                     i.fa.fa-fw.fa-book
-                     span.nav-link-text Mis cursos
-                  ul#collapseCursos.sidenav-second-level.collapse
-                     li
-                        a(href='/solicitud/crear-solicitud') Crear solicitud
-               li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
-                     i.fa.fa-fw.fa-book
-                     span.nav-link-text Ver cursos
+                     a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Mis cursos
+                     ul#collapseCursos.sidenav-second-level.collapse
+                        li
+                           a(href='/solicitud/crear-solicitud') Crear solicitud
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                     a.nav-link(href='/usuario/ver-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
                li.nav-item
                   a#sidenavToggler.nav-link.text-center

@@ -97,8 +97,11 @@ html(lang='es')
                                        td
                                           a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
                                  else if curso.estado == 2
-                                    td
-                                       button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
+                                    if curso.tipo == 3
+                                       td
+                                          button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
+                                    else
+                                       td En proceso de evaluación
                                  else if curso.estado == 3
                                     if curso.tipo == 3
                                        if curso.nombreR == curso.nombreI
@@ -138,6 +141,8 @@ html(lang='es')
                                           button(class='btn btn-success pdf3 '+curso.idCurso, type='button') Generar constancias
                                     else
                                        td Se ha concluido
+                                 else
+                                    td Se ha cancelado el curso
 
          each curso in misCursos
             if curso.estado == 1 

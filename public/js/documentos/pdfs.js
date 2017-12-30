@@ -26,10 +26,10 @@ function obtenerMensaje(idCurso) {
         type: 'POST',
         success : function(data) {
             var curso = data.curso
-            var representante = data.RyI[0]
+            var representante = data.representante
             
             generarRegistro(curso, representante.correo)
-            generarSolicitudCurso(representante.nombreU, curso.nombre,curso.departamento)
+            generarSolicitudCurso(representante.nombreU, curso.nombre, curso.departamento)
         }
     });
 }

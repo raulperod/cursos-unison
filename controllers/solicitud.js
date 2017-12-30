@@ -7,7 +7,16 @@ const UsuarioModel = require('../models/usuario'),
     enviarCorreo = require('./correo')
 
 function crearSolicitudGet(req, res) {
-    res.render('./solicitud/crear_solicitud', {usuario: req.session.user})
+    let usuario = req.session.user
+
+    if(usuario.tipo == 1){
+        res.render('./solicitud/crear_solicitud', {usuario})
+    }else if(usuario.tipo == 0){
+        res.redirect('/usuario/mis-cursos')
+    }else{
+        res.redirect('/solicitud/ver-solicitudes')
+    }
+    
 }
 
 function crearSolicitudPost(req, res) {
@@ -78,7 +87,11 @@ function editarRegistroGet(req, res){
     // obtener tipo
     CursosUsuariosModel.obtenerTipoPorIdCursoYidUsuario(idCurso, usuario.idUsuario, (error, tipo) => {
         if(error || tipo == null || tipo < 2){
-            res.redirect('/usuario/mis-cursos')
+            if(usuario.tipo < 2){
+                res.redirect('/usuario/mis-cursos')
+            }else{
+                res.redirect('/solicitud/ver-solicitudes')
+            }
         }else{
             CursoModel.obtenerCursoPorId(idCurso, (error, registro) => {
                 if(error || registro == null){
@@ -141,26 +154,30 @@ function cancelarRegistroGet(req, res){
 
     CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
         if(error || curso.length == 0 || curso == null){
-            res.redirect('/usuario/mis-cursos')
-        }else{
-            // si el usuario actual es el representante, entonces permite borrar el curso
-            if(curso[0].idUsuario == usuario.idUsuario){
-                CursoModel.borrarCurso(idCurso, (error) => {
-                    if(error){
-                        res.redirect('/usuario/mis-cursos')
-                    }else{
-                        // si el representante no es el instructor se le manda un correo al instructor del cancelamiento
-                        if(curso[1].idUsuario != usuario.idUsuario){ 
-                            let asunto = 'Solicitud de registro de curso cancelado!',
-                                mensaje = `<p>${usuario.nombre} ${usuario.apellido} ha cancelado la solicitud de registro del curso "${curso[0].nombreC}".</p>`
-                            
-                            enviarCorreo(curso[1].correo, asunto, mensaje)    
-                        }     
-                        res.redirect('/usuario/mis-cursos')
-                    }
-                    
-                })
+            if(usuario.tipo < 2){
+                res.redirect('/usuario/mis-cursos')
+            }else{
+                res.redirect('/solicitud/ver-solicitudes')
             }
+        }else if(curso[0].idUsuario == usuario.idUsuario){
+            CursoModel.borrarCurso(idCurso, (error) => {
+                if(error){
+                    res.redirect('/usuario/mis-cursos')
+                }else{
+                    // si el representante no es el instructor se le manda un correo al instructor del cancelamiento
+                    if(curso[1].idUsuario != usuario.idUsuario){ 
+                        let asunto = 'Solicitud de registro de curso cancelado!',
+                            mensaje = `<p>${usuario.nombre} ${usuario.apellido} ha cancelado la solicitud de registro del curso "${curso[0].nombreC}".</p>`
+                        
+                        enviarCorreo(curso[1].correo, asunto, mensaje)    
+                    }     
+                    res.redirect('/usuario/mis-cursos')
+                }
+            })
+        }else if(usuario.tipo == 2){
+            res.redirect('/solicitud/ver-solicitudes')
+        }else{
+            res.redirect('/usuario/mis-cursos')
         }
     })
 } 
@@ -200,6 +217,11 @@ function comprobarCurso(curso){
 function verSolicitudesGet(req, res){
     let usuario = req.session.user
 
+    if(usuario.tipo < 2){
+        res.redirect('/usuario/mis-cursos')
+        return;
+    }
+
     CursosUsuariosModel.obtenerSolicitudes((error, solicitudes) => {
         if(error){
             solicitudes = []
@@ -228,6 +250,11 @@ function obtenerSolicitudesOrdenadas(solicitudes){
 function aprobarGet(req, res){
     let usuario = req.session.user,
         idCurso = req.params.idCurso
+
+    if(usuario.tipo < 2){
+        res.redirect('/usuario/mis-cursos')
+        return;
+    }
 
     CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
         if(error || curso.length == 0){
@@ -286,13 +313,13 @@ function enviarDescripcionCursoPost(req, res){
 
     CursosUsuariosModel.obtenerCursosUsuariosPorIdCurso(idCurso, (error, RyI) => {
         if(error){
-            res.json({ curso: `${error}`})
+            res.json({ error: 1})
         }else{
             CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
                 if(error){
-                    res.json({ curso: `${error}`})
+                    res.json({ error: 1})
                 }else{
-                    res.json({RyI, curso})
+                    res.json({representante: RyI[0], curso, error: 0})
                 }
             })
         }
