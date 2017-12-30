@@ -120,15 +120,87 @@ function enviarDescripcionInformePost(req, res){
 }
 
 function verInformesGet(req, res){
+    let usuario = req.session.user
+
+    CursosUsuariosModel.obtenerInformes((error, informes) => {
+        if(error){
+            informes = []
+            res.render('./informe/ver_informes', {informes, usuario})
+        }else{
+            informes = obtenerInformesOrdenados(informes)
+            res.render('./informe/ver_informes', {informes, usuario})
+        }
+    })
+}
+
+function obtenerInformesOrdenados(informes){
+    let informesOrdenados = []
     
+    for(let i=0 ; i<informes.length ; i+=2){
+        let informe = {}
+        informe.idCurso = informes[i].idCurso
+        informe.nombreC = informes[i].nombreC
+        informe.nombreR = informes[i].nombreU
+        informe.nombreI = informes[i+1].nombreU
+        informesOrdenados.push(informe)
+    }
+    return informesOrdenados
 }
 
 function aprobarGet(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso
 
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length == 0){
+            res.redirect('/informe/ver-informes')
+        }else{ 
+            // cambio el estado del curso
+            let cursoUp = {idCurso, estado:6}
+
+            CursoModel.actualizarCurso(cursoUp, (error) => {
+                if(error){
+                    res.redirect('/informe/ver-informes')
+                }else{
+                    // mandar correo al responsable
+                    let asunto = 'Se a aprobado el informe del curso!',
+                        mensaje = `<p>El H. Consejo Divisional ha aprobado el informe del curso "${curso[0].nombreC}".</p>`
+                    
+                    enviarCorreo(curso[0].correo, asunto, mensaje)
+                    res.redirect('/informe/ver-informes')
+                }
+            })
+        }
+    })
 }
 
 function noAprobarPost(req, res){
-    
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso,
+        correccion = req.body.correccion
+
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length == 0){
+            res.redirect('/informe/ver-informes')
+        }else{ 
+            // cambio el estado del curso
+            let cursoUp = {idCurso, estado:5}
+
+            CursoModel.actualizarCurso(cursoUp, (error) => {
+                if(error){
+                    res.redirect('/informe/ver-informes')
+                }else{
+                    // mandar correo al responsable
+                    let asunto = 'No se aprobo el informe del curso...',
+                        mensaje = `<p>El H. Consejo Divisional no ha aprobado el informe del curso "${curso[0].nombreC}", por las siguientes razones:</p>
+                                   <p>${correccion}</p> `
+                    
+                    enviarCorreo(curso[0].correo, asunto, mensaje)
+                    res.redirect('/informe/ver-informes')
+                }
+            })
+        }
+    })
 }
 
 module.exports = {

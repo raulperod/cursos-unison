@@ -298,6 +298,29 @@ function evaluacionParticipantesPost(req, res){
     })
 }
 
+function enviarAprobadosPost(req, res){
+    // curso { duracion, nombre, fechaInicial, fechaFinal }
+    // aprobados { nombre }
+    let idCurso = req.params.idCurso
+
+    CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
+        if(error){
+            console.log(error)
+            res.json({error:1})
+        }else{
+            CursosUsuariosEvaluacionParticipantesModel
+            .obtenerNombreAprobadosPoridCurso(idCurso, (error, aprobados) => {
+                if(error){
+                    console.log(error)
+                    res.json({error:1})
+                }else{
+                    res.json({curso, aprobados, error:0})
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
     inscribirseGet,
     inscribirsePost,
@@ -309,5 +332,6 @@ module.exports = {
     evaluacionInstructorGet,
     evaluacionInstructorPost,
     evaluacionParticipantesGet,
-    evaluacionParticipantesPost
+    evaluacionParticipantesPost,
+    enviarAprobadosPost
 }

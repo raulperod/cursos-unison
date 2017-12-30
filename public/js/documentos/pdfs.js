@@ -11,6 +11,12 @@ $(function(){
       var idCurso = listaDeClases[3]
       obtenerMensaje2(idCurso)
    });
+   $('.pdf3').click(function(){
+      var clases = $(this).attr("class");
+      var listaDeClases = clases.split(' ');
+      var idCurso = listaDeClases[3]
+      obtenerMensaje3(idCurso)
+   });
 });
 
 function obtenerMensaje(idCurso) {
@@ -45,6 +51,24 @@ function obtenerMensaje2(idCurso) {
         }
     });
 }
+
+function obtenerMensaje3(idCurso) {
+	$.ajax({
+        url: '/curso/enviar-aprobados/'+idCurso,
+        type: 'POST',
+        success : function(data) {
+            if(data.error != 1){
+               var curso = data.curso
+               var aprobados = data.aprobados
+               
+               // curso { nombre, duracion, fechaInicial, fechaFinal  }
+               // aprobados { [{nombreCompleto},{nombreCompleto}, .....]}
+               //generarConstancia(curso, aprobados)
+            }
+        }
+    });
+}
+
 //la funcion que genera la carta para solicitud de evaluacion del curso esos serian de inicio los parametros que ocupa
 function generarSolicitudCurso(nombreRepresentante,nombreCurso) {
     var hoy = new Date();
@@ -520,4 +544,122 @@ function getCalif(calificacion){
                break;
    }
    return calificacion;
+}
+
+//constancias
+function generarConstancia(curso, aprobados) {
+   var hoy = new Date();
+   var dd = hoy.getDate();
+   var mm = hoy.getMonth()+1; //hoy es 0!
+   var yyyy = hoy.getFullYear();
+
+   if(dd<10) dd='0'+dd;
+   switch(mm) {
+         case 1:
+               mm='Enero';
+               break;
+         case 2:
+               mm='Febrero';
+               break;
+         case 3:
+               mm='Marzo';
+               break;
+         case 4:
+               mm='Abril';
+               break;
+         case 5:
+               mm='Mayo';
+               break;
+         case 6:
+               mm='Junio';
+               break;
+         case 7:
+               mm='Julio';
+               break;
+         case 8:
+               mm='Agosto';
+               break;
+         case 9:
+               mm='Septiembre';
+               break;
+         case 10:
+               mm='Octubre';
+               break;
+         case 11:
+               mm='Noviembre';
+               break;
+         case 12:
+               mm='Diciembre';
+               break;
+   }
+   var duracion=32;
+   var fechaI='3 de septiembre';
+   var fechaF='15 de octubre';
+   var nombreAlumno='Edelmira Rodríguez Alcántar'
+   var nombreCurso='Elaboración de revisiones sistemáticas de literatura en el área de calidad del software';
+   var url=regresarImagen();
+   var docDefinition = {
+         header: {
+               margin: [ 40,70,10,70 ],
+               columns: [
+                     {
+                        // usually you would use a dataUri instead of the name for client-side printing
+                        // sampleImage.jpg however works inside playground so you can play with it
+                        image: url,
+                        width: 100,
+                        height: 100
+                     },
+                     {
+                     }
+               ]
+         },
+         content: [
+               { text: 'Universidad de Sonora',margin: [ 80,0,0,0 ],bold: true,fontSize: 28},
+               { text: 'División de Ciencias Exactas y Naturales',margin: [ 80,0,0,0 ],fontSize: 20 },
+               { text: 'Departamento de Matemáticas\n\n\n',margin: [ 80,0,0,0 ],fontSize: 16 },
+               { text: 'Otorga la presente\n\n',style:'centrar',fontSize: 12 },
+               { text: 'CONSTANCIA\n\n',style:'centrar',fontSize: 16 },
+               { text: 'a\n\n',style:'centrar',fontSize: 12 },
+               { text: ''+nombreAlumno+'\n\n\n',style:'centrar',fontSize: 14,bold:true },
+               { text: 'por su asistencia y acreditación del curso intitulado '+nombreCurso+'. El curso, con una duración de '+duracion+' horas, se impartió del '+fechaI+' al '+fechaF+'.\n\n\n\n'},
+               { text: 'Hermosillo, Sonora, México '+dd+' de '+mm+' del '+yyyy+'\n\n\n\n\n\n', style: 'centrar' },
+               {
+                     alignment: 'center',
+                     columns: [
+                           {
+                                 decoration: 'overline',
+                                 text: '   Dr. Martín Gildardo García Alvarado   '
+                           },
+                           {
+                                 decoration: 'overline',
+                                 text: '   Dra. Rosa María Montesinos Cisneros   '
+                           }
+                     ]
+               },
+               {
+                     alignment: 'center',
+                     columns: [
+                           {
+                                 text: 'Jefe del Departamento de Matemáticas'
+                           },
+                           {
+                                 text: 'Directora de la División de Ciencias Exactas y Naturales'
+                           }
+                     ]
+               }
+         ],
+         styles: {
+               centrar: {
+                     alignment: 'center'
+               }
+         },
+         defaultStyle: {
+               fontSize: 10,
+               alignment: 'justify'
+         },
+         pageMargins: [ 80,80,80,60 ],
+         pageSize: 'LETTER',
+   };
+   pdfMake.createPdf(docDefinition).open();   
+   //pdfMake.createPdf(docDefinition).download('Constancia.pdf');
 }

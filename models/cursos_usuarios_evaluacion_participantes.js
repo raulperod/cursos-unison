@@ -55,6 +55,17 @@ function obtenerAprobadosPoridCurso(idCurso, next){
         })
 }
 
+function obtenerNombreAprobadosPoridCurso(idCurso, next){
+    CursosUsuariosEvaluacionParticipantesModel
+        .query(`SELECT CONCAT(u.nombre, ' ', u.apellido) nombreCompleto
+                FROM cursos_usuarios_evaluacion_participantes cuep
+                JOIN usuarios u ON u.idUsuario = cuep.idUsuario
+                WHERE cuep.idCurso = ? AND cuep.aprobo = 1`, idCurso, (error, resultado, fields) => {
+            
+            next(error, resultado)
+        })
+}
+
 function crearEvaluacion(evaluacion, next){
     CursosUsuariosEvaluacionParticipantesModel
         .query(`INSERT INTO cursos_usuarios_evaluacion_participantes
@@ -80,5 +91,6 @@ module.exports = {
     obtenerCursoCalificado,
     crearEvaluacion,
     actualizarEvaluacion,
+    obtenerNombreAprobadosPoridCurso,
     obtenerAprobadosPoridCurso
 }

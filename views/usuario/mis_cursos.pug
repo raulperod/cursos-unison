@@ -111,7 +111,13 @@ html(lang='es')
                                        td
                                           button(class='btn btn-success pdf2 '+curso.idCurso, type='button') Generar documentos
                                     else
-                                       td Se ha concluido   
+                                       td Se ha concluido
+                                 else if curso.estado == 6 
+                                    if curso.tipo == 3
+                                       td
+                                          button(class='btn btn-success pdf3 '+curso.idCurso, type='button') Generar constancias
+                                    else
+                                       td Se ha concluido
 
          each curso in misCursos
             if curso.estado == 1 
@@ -294,19 +300,15 @@ html(lang='es')
       if enviarError
          script.
             $('#enviarErrorModal').modal('show')
-
       if enviarCorrecto
          script.
             $('#enviarCorrectoModal').modal('show')
-
       if enviarInformeError
          script.
             $('#enviarInformeErrorModal').modal('show')
-
       if enviarInformeCorrecto
          script.
             $('#enviarInformeCorrectoModal').modal('show')
-
       if errorEvaluacion
          script.
             $('#errorEvaluacionModal').modal('show')

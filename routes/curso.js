@@ -39,5 +39,9 @@ curso
 curso
     .route("/evaluacion-participantes/:idCurso/:idUsuario")
     .post( CursoController.evaluacionParticipantesPost )
+// cursos-unison/curso/enviar-aprobados/:idCurso
+curso
+    .route("/enviar-aprobados/:idCurso")
+    .post( CursoController.enviarAprobadosPost )
 
 module.exports = curso
