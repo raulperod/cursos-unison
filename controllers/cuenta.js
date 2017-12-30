@@ -101,7 +101,7 @@ function registrarGet(req, res) {
 function registrarPost(req, res) {
     // modifico o agrego lo faltante
     req.body.codigoVerificacion = generarPassword(10)
-    req.body.tipo = (req.body.tipo == '0') ? 0 : 1
+    req.body.tipo = (req.body.institucion == 'Universidad de Sonora' && req.body.tipo == '1') ? 1 : 0
     req.body.password = bcrypt.hashSync(req.body.password)
     delete req.body.password_confirm // borro el de confirmar
     if(req.body.institucion == '5') req.body.institucion = req.body.institucion2

@@ -29,7 +29,7 @@ function obtenerInformePorIdCurso(idCurso, next){
 
 function obtenerDescripcionInformePorIdCurso(idCurso, next){
     InformesCursosModel
-        .query(`SELECT i.idCurso, c.nombre nombreCurso, CONCAT(u.nombre, ' ', u.apellido ) nombreRepresentante, i.nivelAutoFin, i.participantes, i.cumplimientoObjetivos, i.participantesAprobados, i.institucionesParticipantes, i.nivelVinculacion, i.evaluacionPromedioParticipantes
+        .query(`SELECT i.idCurso, c.nombre nombreCurso, c.departamento, CONCAT(u.nombre, ' ', u.apellido ) nombreRepresentante, i.nivelAutoFin, i.participantes, i.cumplimientoObjetivos, i.participantesAprobados, i.institucionesParticipantes, i.nivelVinculacion, i.evaluacionPromedioParticipantes
                 FROM informes_de_cursos i
                 JOIN cursos c ON c.idCurso = i.idCurso
                 JOIN cursos_usuarios CU on CU.idCurso = i.idCurso AND cu.tipo = 3

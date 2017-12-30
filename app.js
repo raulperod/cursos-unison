@@ -11,6 +11,7 @@ const express = require('express'),
     SolicitudRouter = require('./routes/solicitud'),
     CursoRouter = require('./routes/curso'),
     InformeRouter = require('./routes/informe'),
+    session_active = require('./middlewares/session-active'),
     app = express()
 
 app
@@ -32,13 +33,22 @@ app
     }))
 
 // cursos-unison/cuenta
-app.use("/cuenta",CuentaRouter)
+app
+    .use("/cuenta",CuentaRouter)
 // cursos-unison/usuario
-app.use("/usuario",UsuarioRouter)
+app
+    .use("/usuario",session_active)  
+    .use("/usuario",UsuarioRouter)
 // cursos-unison/solicitud
-app.use("/solicitud",SolicitudRouter)
+app
+    .use("/solicitud",session_active)
+    .use("/solicitud",SolicitudRouter)
 // cursos-unison/curso
-app.use("/curso",CursoRouter)
+app
+    .use("/curso",session_active)
+    .use("/curso",CursoRouter)
 // cursos-unison/informe
-app.use("/informe",InformeRouter)
+app
+    .use("/informe",session_active)
+    .use("/informe",InformeRouter)
 module.exports = app

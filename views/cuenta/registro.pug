@@ -42,7 +42,7 @@ html(lang='en')
                   .form-group
                      select.form-control#seleccion(required='' name='institucion')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Institución
-                        option(value='4') Universidad de Sonora
+                        option() Universidad de Sonora
                         option(value='5') Otra Institución
             
                   #div_5.form-group.contenido
@@ -70,7 +70,6 @@ html(lang='en')
                   p Para completar el registro, se enviara un codigo de verificacion a su correo.
                .modal-footer
                   a.btn.btn-primary(href='/cuenta/login') Aceptar
-                  //a.btn.btn-secondary(href='/cuenta/login') Cerrar
       // Bootstrap core JavaScript
       script(src='/public/vendor/jquery/jquery.min.js')
       script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

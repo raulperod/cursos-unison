@@ -27,7 +27,7 @@ $(function(){
 			return false;
 		}
 		//validar lo de si es maestro de la uni sea con el correo de la uni
-		if(institucion==4 && ocupacion==1){
+		if(institucion=='Universidad de Sonora' && ocupacion==1){
 			if(!correo.match('[a-z0-9._%+-]+@(mat|fisica|geologia)+\.uson\.mx$')) {
 				mostrarAviso(13);
 				return false;

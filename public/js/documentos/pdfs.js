@@ -29,7 +29,7 @@ function obtenerMensaje(idCurso) {
             var representante = data.RyI[0]
             
             generarRegistro(curso, representante.correo)
-            generarSolicitudCurso(representante.nombreU, curso.nombre)
+            generarSolicitudCurso(representante.nombreU, curso.nombre,curso.departamento)
         }
     });
 }
@@ -47,7 +47,7 @@ function obtenerMensaje2(idCurso) {
                generarEvaluacionInstructor(informe.nombreCurso, evaluacionesInstructor)
                generarEvaluacionCurso(informe.nombreCurso, evaluacionesCurso)
                generarInforme(informe)
-               generarSolicitudInforme(informe.nombreRepresentante, informe.nombreCurso)
+               generarSolicitudInforme(informe.nombreRepresentante, informe.nombreCurso,informe.departamento)
             }
         }
     });
@@ -71,7 +71,7 @@ function obtenerMensaje3(idCurso) {
 }
 
 //la funcion que genera la carta para solicitud de evaluacion del curso esos serian de inicio los parametros que ocupa
-function generarSolicitudCurso(nombreRepresentante,nombreCurso) {
+function generarSolicitudCurso(nombreRepresentante,nombreCurso,departamento) {
     var hoy = new Date();
     var dd = hoy.getDate();
     var mm = hoy.getMonth()+1; //hoy es 0!
@@ -127,7 +127,7 @@ function generarSolicitudCurso(nombreRepresentante,nombreCurso) {
                 { text: 'sea presentado ante el H. Consejo Divisional que Usted preside para su valoración, y si es el caso, para su aprobación.\n\n\n', style: 'justificado' },
                 'Agradezco su atención y estoy a sus órdenes para cualquier aclaración al respecto.\n\n\n\n\n\n',
                 { text: nombreRepresentante, style: 'resaltar' },
-                'MTC del Departamento de Matemáticas'
+                'MTC del '+departamento
           ],
           styles: {
                 justificado:{
@@ -279,7 +279,7 @@ function obtenerMes(mes){
 }
 
 //la funcion que genera la carta para solicitud de evaluacion del informe del curso esos serian de inicio los parametros que ocupa
-function generarSolicitudInforme(nombreRepresentante,nombreCurso) {
+function generarSolicitudInforme(nombreRepresentante,nombreCurso,departamento) {
    var hoy = new Date();
    var dd = hoy.getDate();
    var mm = hoy.getMonth()+1; //hoy es 0!
@@ -335,7 +335,7 @@ function generarSolicitudInforme(nombreRepresentante,nombreCurso) {
                { text: 'sea presentado ante el H. Consejo Divisional que Usted preside para su valoración, y si es el caso, para su aprobación.\n\n\n', style: 'justificado' },
                'Agradezco su atención y estoy a sus órdenes para cualquier aclaración al respecto.\n\n\n\n\n\n',
                { text: nombreRepresentante, style: 'resaltar' },
-               'MTC del Departamento de Matemáticas'
+               'MTC del '+departamento
          ],
          styles: {
                justificado:{
@@ -610,12 +610,13 @@ function generarConstancia(curso, aprobados) {
    }
    //var url;
    var url=regresarImagen();
+   var jefeDepartamento=obtenerJefe(curso.departamento);
    var contenido=[];
       for (i = 0; i < aprobados.length; i++) {
             //GENERAR UNA PAGINA
             contenido.push({ text: 'Universidad de Sonora',margin: [ 80,0,0,0 ],bold: true,fontSize: 28});
             contenido.push({ text: 'División de Ciencias Exactas y Naturales',margin: [ 80,0,0,0 ],fontSize: 20 });
-            contenido.push({ text: 'Departamento de Matemáticas\n\n\n',margin: [ 80,0,0,0 ],fontSize: 16 });
+            contenido.push({ text: curso.departamento+'\n\n\n',margin: [ 80,0,0,0 ],fontSize: 16 });
             contenido.push({ text: 'Otorga la presente\n\n',style:'centrar',fontSize: 12 });
             contenido.push({ text: 'CONSTANCIA\n\n',style:'centrar',fontSize: 16 });
             contenido.push({ text: 'a\n\n',style:'centrar',fontSize: 12 });
@@ -627,7 +628,7 @@ function generarConstancia(curso, aprobados) {
                   columns: [
                         {
                               decoration: 'overline',
-                              text: '   Dr. Martín Gildardo García Alvarado   '
+                              text: '   '+jefeDepartamento+'   '
                         },
                         {
                               decoration: 'overline',
@@ -639,7 +640,7 @@ function generarConstancia(curso, aprobados) {
                   alignment: 'center',
                   columns: [
                         {
-                              text: 'Jefe del Departamento de Matemáticas'
+                              text: 'Jefe del '+curso.departamento
                         },
                         {
                               text: 'Directora de la División de Ciencias Exactas y Naturales'
@@ -679,4 +680,19 @@ function generarConstancia(curso, aprobados) {
    };
    pdfMake.createPdf(docDefinition).open();   
    //pdfMake.createPdf(docDefinition).download('Constancia.pdf');
+}
+function obtenerJefe(departamento){
+      console.log(departamento);
+      switch(departamento) {
+            case 'Departamento de Matemáticas':
+                  departamento='Dr. Martín Gildardo García Alvarado';
+                  break;
+            case 'Departamento de Física':
+                  departamento='Dr. Ezequiel Rodríguez Jáuregui';
+                  break;
+            case 'Departamento de Geología':
+                  departamento='Dr. Inocente Guadalupe Espinoza Maldonado';
+                  break;
+      }
+      return departamento;
 }
