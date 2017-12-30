@@ -447,7 +447,7 @@ function generarEvaluacionCurso(nombreCurso, evaluacion){
                ]
                }
          });
-         contenido.push({ text: '', pageBreak:'after'});
+         if(i<evaluacion.length-1)contenido.push({ text: '', pageBreak:'after'});
          //HASTA AQUi GENERE UNA PAGINA 
    }
    var docDefinition = { 
@@ -503,7 +503,7 @@ function generarEvaluacionInstructor(nombreCurso, evaluacion) {
                ]
                }
          });
-         contenido.push({ text: '', pageBreak:'after'});
+         if(i<evaluacion.length-1)contenido.push({ text: '', pageBreak:'after'});
          //HASTA AQUi GENERE UNA PAGINA 
    }
    var docDefinition = {     
@@ -647,7 +647,7 @@ function generarConstancia(curso, aprobados) {
                         }
                   ]
             });
-            contenido.push({ text: '', pageBreak:'after'});
+            if(i<aprobados.length-1)contenido.push({ text: '', pageBreak:'after'});
             //HASTA AQUi GENERE UNA PAGINA 
       }
    var docDefinition = {
