@@ -93,23 +93,33 @@ function editarRegistroGet(req, res){
 }
 
 function acomodarFecha(registro){
-    let registro2 = registro
-
-    let fechaInicial = registro2.fechaInicial,
+    let registro2 = registro,
+        fechaInicial = registro2.fechaInicio,
         fechaFinal = registro2.fechaFinal
-
+       
     try{
-        fechaInicial = fechaInicial.split('T')[0]
-        fechaFinal = fechaFinal.split('T')[0]
+        fechaInicial = formatearFecha(fechaInicial)
+        fechaFinal = formatearFecha(fechaFinal)
     }catch(error){
         fechaInicial = '0000-00-00'
         fechaFinal = '0000-00-00'
     }
-    
-    registro2.fechaInicial = fechaInicial
+
+    registro2.fechaInicio = fechaInicial
     registro2.fechaFinal = fechaFinal
 
     return registro2
+}
+
+function formatearFecha(fecha){
+    let dia = fecha.getDate(), 
+        mes = fecha.getMonth()+1, 
+        año = fecha.getFullYear()
+    
+    if(dia < 10) dia = '0' + dia
+    if(mes < 10) mes = '0' + mes
+    
+    return año + '-' + mes  + '-' + dia
 }
 
 function editarRegistroPost(req, res){
