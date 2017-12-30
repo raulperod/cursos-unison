@@ -55,6 +55,8 @@ $.ajax({
     success : function(data) {
         if(data.tipo==4){
             window.location.replace("/usuario/mis-cursos");
+        }else if(data.tipo==4.5){
+            window.location.replace("/solicitud/ver-solicitudes");
         }
         mostrarAviso(data.tipo);
     }

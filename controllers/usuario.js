@@ -31,6 +31,10 @@ function miPerfilPost(req, res) {
 
 function misCursosGet(req, res) {
     const usuario = req.session.user
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    } 
     // consigue los cursos del usuario
     CursosUsuariosModel.obtenerCursosUsuariosPorIdUsuario(usuario.idUsuario, (error, cursosUsuario) => {
         if(error || cursosUsuario.length == 0){
@@ -112,6 +116,10 @@ function acomodarMisCursos(cursosUsuario, misCursos){
 
 function verCursosGet(req, res) {
     const usuario = req.session.user
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    } 
     // consigue los cursos del usuario
     CursoModel.obtenerCursosDisponibles( (error, cursosDisponibles) => {
         let errorInscripcion = req.session.errorInscripcion,

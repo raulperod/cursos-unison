@@ -48,7 +48,11 @@ function loginPost(req, res) {
             // inicia al usuario y sus variables a utlizar
             req.session.user = usuario
             // envia para saber que es correcto
-            res.json({msg:'Datos correctos', tipo: 4})
+            if(usuario.tipo < 2){
+                res.json({msg:'Datos correctos', tipo: 4})
+            }else{
+                res.json({msg:'Datos correctos', tipo: 4.5})
+            }
         })
         .catch( error => {
             // si hubo erro lo manda

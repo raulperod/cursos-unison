@@ -18,21 +18,21 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/solicitud/ver-solicitudes') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/solicitud/ver-solicitudes')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver solicitudes
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/informe/ver-informes')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver informes
             ul.navbar-nav.sidenav-toggler
@@ -112,7 +112,7 @@ html(lang='es')
                         span(aria-hidden='true') ×
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      
          // Bootstrap core JavaScript
