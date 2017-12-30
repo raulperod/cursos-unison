@@ -88,9 +88,16 @@ html(lang='es')
                                        button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
                                  else if curso.estado == 3
                                     if curso.tipo == 3
-                                       td 
-                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
-                                          a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
+                                       if curso.nombreR == curso.nombreI
+                                          td 
+                                             a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                             a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista
+                                             a.btn.btn-primary(href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes 
+                                       else
+                                          td 
+                                             a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                             a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
+
                                     else if curso.tipo == 2
                                        td 
                                           a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista

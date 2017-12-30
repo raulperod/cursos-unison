@@ -87,7 +87,7 @@ function asistenciaGet(req, res){
         }else if(asistencias.length == 0){
             // busco los participantes
             CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
-                if(error){
+                if(error || participantes.length == 0){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
                 }else{

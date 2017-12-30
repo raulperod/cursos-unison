@@ -1,3 +1,4 @@
+document.write("<"+"script type='text/javascript' src='../../public/js/documentos/imagen.js'><"+"/script>")
 $(function(){
 	$('.pdf').click(function(){
       var clases = $(this).attr("class");
@@ -63,7 +64,7 @@ function obtenerMensaje3(idCurso) {
                
                // curso { nombre, duracion, fechaInicial, fechaFinal  }
                // aprobados { [{nombreCompleto},{nombreCompleto}, .....]}
-               //generarConstancia(curso, aprobados)
+               generarConstancia(curso, aprobados)
             }
         }
     });
@@ -548,6 +549,21 @@ function getCalif(calificacion){
 
 //constancias
 function generarConstancia(curso, aprobados) {
+      //obtener en formato bien la fecha inicial y la fecha final del curso
+      var fechaI=curso.fechaInicio;
+      var fechaF=curso.fechaFinal;
+      var elem = fechaI.split('-');
+      anoI = elem[0];
+      mesI = obtenerMes(elem[1]);
+      aux=elem[2].split('T');
+      diaI = aux[0];
+      var elem = fechaF.split('-');
+      anoF = elem[0];
+      mesF = obtenerMes(elem[1]);
+      console.log(mesF);
+      aux=elem[2].split('T');
+      diaF = aux[0];
+      //Aqui ya tengo las fechas
    var hoy = new Date();
    var dd = hoy.getDate();
    var mm = hoy.getMonth()+1; //hoy es 0!
@@ -592,12 +608,47 @@ function generarConstancia(curso, aprobados) {
                mm='Diciembre';
                break;
    }
-   var duracion=32;
-   var fechaI='3 de septiembre';
-   var fechaF='15 de octubre';
-   var nombreAlumno='Edelmira Rodríguez Alcántar'
-   var nombreCurso='Elaboración de revisiones sistemáticas de literatura en el área de calidad del software';
+   //var url;
    var url=regresarImagen();
+   var contenido=[];
+      for (i = 0; i < aprobados.length; i++) {
+            //GENERAR UNA PAGINA
+            contenido.push({ text: 'Universidad de Sonora',margin: [ 80,0,0,0 ],bold: true,fontSize: 28});
+            contenido.push({ text: 'División de Ciencias Exactas y Naturales',margin: [ 80,0,0,0 ],fontSize: 20 });
+            contenido.push({ text: 'Departamento de Matemáticas\n\n\n',margin: [ 80,0,0,0 ],fontSize: 16 });
+            contenido.push({ text: 'Otorga la presente\n\n',style:'centrar',fontSize: 12 });
+            contenido.push({ text: 'CONSTANCIA\n\n',style:'centrar',fontSize: 16 });
+            contenido.push({ text: 'a\n\n',style:'centrar',fontSize: 12 });
+            contenido.push({ text: ''+aprobados[i].nombreCompleto+'\n\n\n',style:'centrar',fontSize: 14,bold:true });
+            contenido.push({ text: 'por su asistencia y acreditación del curso intitulado '+curso.nombre+'. El curso, con una duración de '+curso.duracion+' horas, se impartió del '+diaI+' de '+mesI+ ' del '+anoI+' al '+diaF+' de '+mesF+ ' del '+anoF+'.\n\n\n\n'});
+            contenido.push({ text: 'Hermosillo, Sonora, México '+dd+' de '+mm+' del '+yyyy+'\n\n\n\n\n\n', style: 'centrar' });
+            contenido.push({
+                  alignment: 'center',
+                  columns: [
+                        {
+                              decoration: 'overline',
+                              text: '   Dr. Martín Gildardo García Alvarado   '
+                        },
+                        {
+                              decoration: 'overline',
+                              text: '   Dra. Rosa María Montesinos Cisneros   '
+                        }
+                  ]
+            });
+            contenido.push({
+                  alignment: 'center',
+                  columns: [
+                        {
+                              text: 'Jefe del Departamento de Matemáticas'
+                        },
+                        {
+                              text: 'Directora de la División de Ciencias Exactas y Naturales'
+                        }
+                  ]
+            });
+            contenido.push({ text: '', pageBreak:'after'});
+            //HASTA AQUi GENERE UNA PAGINA 
+      }
    var docDefinition = {
          header: {
                margin: [ 40,70,10,70 ],
@@ -613,41 +664,7 @@ function generarConstancia(curso, aprobados) {
                      }
                ]
          },
-         content: [
-               { text: 'Universidad de Sonora',margin: [ 80,0,0,0 ],bold: true,fontSize: 28},
-               { text: 'División de Ciencias Exactas y Naturales',margin: [ 80,0,0,0 ],fontSize: 20 },
-               { text: 'Departamento de Matemáticas\n\n\n',margin: [ 80,0,0,0 ],fontSize: 16 },
-               { text: 'Otorga la presente\n\n',style:'centrar',fontSize: 12 },
-               { text: 'CONSTANCIA\n\n',style:'centrar',fontSize: 16 },
-               { text: 'a\n\n',style:'centrar',fontSize: 12 },
-               { text: ''+nombreAlumno+'\n\n\n',style:'centrar',fontSize: 14,bold:true },
-               { text: 'por su asistencia y acreditación del curso intitulado '+nombreCurso+'. El curso, con una duración de '+duracion+' horas, se impartió del '+fechaI+' al '+fechaF+'.\n\n\n\n'},
-               { text: 'Hermosillo, Sonora, México '+dd+' de '+mm+' del '+yyyy+'\n\n\n\n\n\n', style: 'centrar' },
-               {
-                     alignment: 'center',
-                     columns: [
-                           {
-                                 decoration: 'overline',
-                                 text: '   Dr. Martín Gildardo García Alvarado   '
-                           },
-                           {
-                                 decoration: 'overline',
-                                 text: '   Dra. Rosa María Montesinos Cisneros   '
-                           }
-                     ]
-               },
-               {
-                     alignment: 'center',
-                     columns: [
-                           {
-                                 text: 'Jefe del Departamento de Matemáticas'
-                           },
-                           {
-                                 text: 'Directora de la División de Ciencias Exactas y Naturales'
-                           }
-                     ]
-               }
-         ],
+         content: contenido, 
          styles: {
                centrar: {
                      alignment: 'center'
