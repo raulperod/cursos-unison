@@ -42,13 +42,13 @@ html(lang='en')
                   .form-group
                      select.form-control#seleccion(required='' name='institucion')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Institución
-                        option() Universidad de Sonora
+                        option(value='4') Universidad de Sonora
                         option(value='5') Otra Institución
             
                   #div_5.form-group.contenido
                      input.form-control(name='institucion2' type='text', placeholder='Institucion')
                   .form-group
-                     select.form-control(required='' name='tipo')
+                     select#ocupacion.form-control(required='' name='tipo')
                         option(value='', disabled='', selected='', hidden='') Seleccione una Ocupación
                         option(value='0') Alumno
                         option(value='1') Profesor  

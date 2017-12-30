@@ -51,8 +51,7 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Mis cursos
             // Example DataTables Card
             .card.mb-3
@@ -95,14 +94,24 @@ html(lang='es')
                                     else if curso.tipo == 2
                                        td 
                                           a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista
-                                          a.btn.btn-primary(href="#") Evaluar participantes
+                                          a.btn.btn-primary(href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes
                                     else
                                        td 
                                           a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
                                           a.btn.btn-primary(href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
-                                 else
-                                    td Se ha cancelado
-                                       
+                                 else if curso.estado == 4
+                                    if curso.tipo == 3
+                                       td
+                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarInformeModal'+curso.idCurso) Enviar informe
+                                          a.btn.btn-primary(href='/informe/editar-informe/'+curso.idCurso) Editar informe
+                                    else
+                                       td Se ha concluido
+                                 else if curso.estado == 5
+                                    if curso.tipo == 3
+                                       td
+                                          button(class='btn btn-success pdf2 '+curso.idCurso, type='button') Generar documentos
+                                    else
+                                       td Se ha concluido   
 
          each curso in misCursos
             if curso.estado == 1 
@@ -153,49 +162,99 @@ html(lang='es')
                               .modal-footer
                                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                                  button.btn.btn-primary(type='submit') Aceptar
+            else if curso.estado == 4
+               if curso.tipo == 3
+                  // Enviar informe Modal
+                  .modal.fade(id='enviarInformeModal'+curso.idCurso, tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                     .modal-dialog(role='document')
+                        .modal-content
+                           .modal-header
+                              h5#exampleModalLabel.modal-title ¿Estas seguro?
+                              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                 span(aria-hidden='true') ×
+                           form(method='post', action='/informe/enviar-informe/'+curso.idCurso)
+                              .modal-body
+                                 p Estas seguro que quieres enviar el informe
+                              .modal-footer
+                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                                 button.btn.btn-primary(type='submit') Aceptar
 
-         // enviarErrorModal
-         #enviarErrorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-            .modal-dialog(role='document')
-               .modal-content
-                  .modal-header
-                     h5#exampleModalLabel.modal-title Error
-                     button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                  .modal-body La solicitud tiene campos que no se han llenado.
-                  .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
-         // enviarCorrectoModal
-         #enviarCorrectoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-            .modal-dialog(role='document')
-               .modal-content
-                  .modal-header
-                     h5#exampleModalLabel.modal-title Se ha completado la solicitud
-                     button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-               
-                  .modal-body 
-                     h5 Los pasos a seguir son:
-                     p 1. Imprimir los documentos generados por el sistema.
-                     p 2. Presentar los documentos al Director de División.   
-                     p 3. Esperar a que el H. Consejo Divisional evalúe el formato de registro del curso.
-                  .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
-         // errorEvaluacionModal
-         #errorEvaluacionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-            .modal-dialog(role='document')
-               .modal-content
-                  .modal-header
-                     h5#exampleModalLabel.modal-title Aviso
-                     button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                  .modal-body 
-                     p Ya ha evaluado eso.
-                  .modal-footer
-                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if enviarError
+            // enviarErrorModal
+            #enviarErrorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Error
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                     .modal-body La solicitud tiene campos que no se han llenado.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if enviarInformeError               
+            // enviarInformeErrorModal
+            #enviarInformeErrorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Error
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                     .modal-body El informe tiene campos que no se han llenado.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if enviarCorrecto
+            // enviarCorrectoModal
+            #enviarCorrectoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Se ha completado la solicitud
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                  
+                     .modal-body 
+                        h5 Los pasos a seguir son:
+                        p 1. Imprimir los documentos generados por el sistema.
+                        p 2. Presentar los documentos al Director de División.   
+                        p 3. Esperar a que el H. Consejo Divisional evalúe el formato de registro del curso.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if enviarInformeCorrecto
+            // enviarInformeCorrectoModal
+            #enviarInformeCorrectoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Se ha completado el informe
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                  
+                     .modal-body 
+                        h5 Los pasos a seguir son:
+                        p 1. Imprimir los documentos generados por el sistema.
+                        p 2. Presentar los documentos al Director de División.   
+                        p 3. Esperar a que el H. Consejo Divisional evalúe el informe final del curso.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if errorEvaluacion
+            // errorEvaluacionModal
+            #errorEvaluacionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Aviso
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                     .modal-body 
+                        p Ya ha evaluado eso.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -231,7 +290,7 @@ html(lang='es')
       script(src='/public/js/sb-admin-datatables.min.js')
       script(src='/public/js/documentos/pdfmake.min.js')
       script(src='/public/js/documentos/vfs_fonts.js')
-      script(src='/public/js/documentos/solicitud.js')
+      script(src='/public/js/documentos/pdfs.js')
       if enviarError
          script.
             $('#enviarErrorModal').modal('show')
@@ -239,6 +298,14 @@ html(lang='es')
       if enviarCorrecto
          script.
             $('#enviarCorrectoModal').modal('show')
+
+      if enviarInformeError
+         script.
+            $('#enviarInformeErrorModal').modal('show')
+
+      if enviarInformeCorrecto
+         script.
+            $('#enviarInformeCorrectoModal').modal('show')
 
       if errorEvaluacion
          script.

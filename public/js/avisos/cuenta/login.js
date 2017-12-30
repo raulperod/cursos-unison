@@ -12,6 +12,10 @@ $(function(){
             mostrarAviso(5);
             return false;
         }
+        if(!correo.value.match('[a-z0-9._%+-]+@[a-z0-9.-]+\.+[a-z]{2,3}$')) {
+            mostrarAviso(6);
+            return false;
+        }
         obtenerMensaje();
         return false;
     });
@@ -21,7 +25,7 @@ function mostrarAviso(error){
 switch(error) {
     case 1:
         $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario no existe!.</div>");
+            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario no existe!</div>");
         break;
     case 2:
         $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
@@ -29,12 +33,16 @@ switch(error) {
         break;
     case 3:
         $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Contraseña incorrecta!.</div>");
+            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Contraseña incorrecta!</div>");
         break;
     case 5:
         $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ambos campos son requeridos!.</div>");
-        break; 
+            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ambos campos son requeridos!</div>");
+        break;
+    case 6:
+        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
+        break;     
     default:
         break;
 }

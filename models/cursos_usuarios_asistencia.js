@@ -13,6 +13,16 @@ function obtenerAsistenciaPorIdCurso(idCurso, next){
         })
 }
 
+function obtenerInasistenciasPoridCurso(idCurso, next){
+    CursosUsuariosAsistenciaModel
+        .query(`SELECT cua.idUsuario, COUNT(cua.asistio) inasistencia
+                FROM cursos_usuarios_asistencia cua
+                WHERE cua.idCurso = ? AND cua.asistio = 0`, idCurso, (error, resultado, fields) => {
+            
+            next(error, resultado)
+        })
+}
+
 function crearAsistencia(asistencia, next){
     CursosUsuariosAsistenciaModel
         .query(`INSERT INTO cursos_usuarios_asistencia ( idUsuario, idCurso, fecha ) 
@@ -46,6 +56,7 @@ function obtenerDiaActual(){
 
 module.exports = {
     obtenerAsistenciaPorIdCurso,
+    obtenerInasistenciasPoridCurso,
     crearAsistencia,
     actualizarAsistencia
 }

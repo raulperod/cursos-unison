@@ -10,6 +10,7 @@ const express = require('express'),
     UsuarioRouter = require('./routes/usuario'),
     SolicitudRouter = require('./routes/solicitud'),
     CursoRouter = require('./routes/curso'),
+    InformeRouter = require('./routes/informe'),
     app = express()
 
 app
@@ -38,4 +39,6 @@ app.use("/usuario",UsuarioRouter)
 app.use("/solicitud",SolicitudRouter)
 // cursos-unison/curso
 app.use("/curso",CursoRouter)
+// cursos-unison/informe
+app.use("/informe",InformeRouter)
 module.exports = app

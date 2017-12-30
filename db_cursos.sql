@@ -54,9 +54,19 @@ CREATE TABLE `cursos` (
   `fechaFinal` date NULL,
   `estado` int(10) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCurso`)
-
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `informes_de_cursos`(
+  `idCurso` int(10) unsigned NOT NULL,
+  `nivelAutoFin` TEXT NULL,
+  `participantes` int(10) unsigned NULL,
+  `participantesAprobados` int(10) unsigned NULL,
+  `cumplimientoObjetivos` TEXT NULL,
+  `institucionesParticipantes` TEXT NULL,
+  `evaluacionPromedioParticipantes` TEXT NULL,
+  `nivelVinculacion` TEXT NULL, 
+  KEY `idCurso` (`idCurso`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cursos_usuarios` (
   `idUsuario` int(10) unsigned NOT NULL,
@@ -116,6 +126,9 @@ CREATE TABLE `cursos_usuarios_evaluacion_participantes` (
   KEY `idUsuario` (`idUsuario`),
   KEY `idCurso` (`idCurso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `informes_de_cursos`
+ADD CONSTRAINT `informes_de_cursos_ibfk_1` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios`
 ADD CONSTRAINT `cursos_usuarios_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,

@@ -3,8 +3,8 @@
 const UsuarioModel = require('../models/usuario'),
     CursoModel = require('../models/curso'),
     CursosUsuariosModel = require('../models/cursos_usuarios'),
-    enviarCorreo = require('./correo'),
-    bcrypt = require('bcrypt-nodejs')
+    CursosUsuariosEvaluacionParticipantesModel = require('../models/cursos_usuarios_evaluacion_participantes'),
+    enviarCorreo = require('./correo')
 
 function crearSolicitudGet(req, res) {
     res.render('./solicitud/crear_solicitud', {usuario: req.session.user})
@@ -85,7 +85,6 @@ function editarRegistroGet(req, res){
                     res.redirect('/usuario/mis-cursos')
                 }else{
                     registro = acomodarFecha(registro)
-                    console.log(registro)
                     res.render('./solicitud/editar_registro', {usuario, tipo, registro})
                 }
             })

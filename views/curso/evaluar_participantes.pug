@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis Cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,14 +51,13 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Evaluar participantes
             .card.mb-3
                .card-body
                   | Nota: Al esta evaluando a los participantes la decisión se ira guardando en tiempo real.
                   | Si se termina de evaluar a los participantes, se dará por hecho que se termino de evaluar y
-                  | se concluirá el curso para continuar con el informe.
+                  | se concluirá el curso para continuar con el informe. Si el participantes no aprobo el curso se debera reafirmarlo.
             // Example DataTables Card
             .card.mb-3
                .card-header
@@ -71,34 +70,36 @@ html(lang='es')
                            tr
                               th Nombre
                               th Apellido
+                              th Inasistencias
                               th Acción
                         tbody
-                           tr
-                              td Pedro
-                              td Lopez
-                              td
-                                 form
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='si')
-                                          |  Aprobo
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='no', checked='')
-                                          |  No aprobo
-                           tr
-                              td Ivan
-                              td Guerrero
-                              td
-                                 form
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='si')
-                                          |  Aprobo
-                                    .form-check.form-check-inline
-                                       label.form-check-label
-                                          input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='no', checked='')
-                                          |  No aprobo
+
+                           each evaluacion in evaluaciones
+                              tr
+                                 td #{evaluacion.nombre} 
+                                 td #{evaluacion.apellido}
+                                 td #{evaluacion.inasistencia}
+                                 td
+                                    form(id='form'+evaluacion.idCurso+evaluacion.idUsuario, method='post', action='/curso/evaluacion-participantes/'+evaluacion.idCurso+'/'+evaluacion.idUsuario)
+                                       if evaluacion.aprobo == '1'
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='1',checked='')
+                                                |  Aprobo
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='0')
+                                                |  No aprobo
+                                       else
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='1')
+                                                |  Aprobo
+                                          .form-check.form-check-inline
+                                             label.form-check-label
+                                                input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='0', checked='')
+                                                |  No aprobo
+                           
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -132,3 +133,28 @@ html(lang='es')
          script(src='/public/js/sb-admin.min.js')
          // Custom scripts for this page
          script(src='/public/js/sb-admin-datatables.min.js')
+         script.
+            $(document).ready(function(){  
+               $(".radioA").click(function(){
+                  var clases = $(this).attr("class");
+                  var listaDeClases = clases.split(' ');
+                  var idCurso = listaDeClases[2]
+                  var idUsuario = listaDeClases[3]
+                  obtenerMensaje(idCurso, idUsuario)
+               });
+
+
+            });
+
+            function obtenerMensaje(idCurso, idUsuario) {
+               var form = $("#form"+idCurso+idUsuario)
+               $.ajax({
+                  url: form.attr('action'),
+                  type: 'POST',
+                  data: form.serialize(),
+                  success : function(data) {
+                     console.log(data.msg, data.termino)
+                     if(data.termino == 1) window.location.replace("/usuario/mis-cursos");
+                  }
+               });
+            }

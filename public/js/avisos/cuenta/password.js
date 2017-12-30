@@ -4,7 +4,7 @@ $(function(){
 	$("input:submit").click(function() {
 		datosFormulario= $('#formValid');
 		correo = document.getElementById('correo').value;
-		if(correo == ""){
+		if(correo == "" || !correo.value.match('[a-z0-9._%+-]+@[a-z0-9.-]+\.+[a-z]{2,3}$')){
 			mostrarAviso(1);
 			return false;
 		}
@@ -16,7 +16,7 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Todos los campos son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
             break;
         case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"

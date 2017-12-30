@@ -16,7 +16,7 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Todos los campos son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el código!</div>");
             break;
         case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"

@@ -31,6 +31,13 @@ curso
     .route("/evaluacion-instructor/:idCurso")
     .get(  CursoController.evaluacionInstructorGet )
     .post( CursoController.evaluacionInstructorPost )
-
+// cursos-unison/curso/evaluacion-participantes/:idCurso
+curso
+    .route("/evaluacion-participantes/:idCurso")
+    .get(  CursoController.evaluacionParticipantesGet )
+// cursos-unison/curso/evaluacion-participantes/:idCurso/:idUsuario
+curso
+    .route("/evaluacion-participantes/:idCurso/:idUsuario")
+    .post( CursoController.evaluacionParticipantesPost )
 
 module.exports = curso

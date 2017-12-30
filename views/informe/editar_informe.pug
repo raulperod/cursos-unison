@@ -18,13 +18,13 @@ html(lang='es')
    body#page-top.fixed-nav.sticky-footer.bg-dark
       // Navigation
       nav#mainNav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-         a.navbar-brand(href='#') Unison
+         a.navbar-brand(href='/usuario/mis-cursos') Unison
          button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
          #navbarResponsive.collapse.navbar-collapse
             ul#exampleAccordion.navbar-nav.navbar-sidenav
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mi Perfil')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
@@ -33,9 +33,9 @@ html(lang='es')
                      span.nav-link-text Mis cursos
                   ul#collapseCursos.sidenav-second-level.collapse
                      li
-                        a(href='#') Crear solicitud
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='#')
+                  a.nav-link(href='/usuario/ver-cursos')
                      i.fa.fa-fw.fa-book
                      span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
@@ -51,52 +51,51 @@ html(lang='es')
          .container-fluid
             // Breadcrumbs
             ol.breadcrumb
-               li.breadcrumb-item
-                  a(href='#') Nombre de usuario
+               li.breadcrumb-item #{usuario.nombre} #{usuario.apellido}
                li.breadcrumb-item.active Editar informe
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Editar informe
                .card-body
-                  form
+                  form(method='post', action='/informe/editar-informe/'+informe.idCurso)
                      .form-group
-                        label(for='exampleInputCAracter') Nombre del Curso
-                        input#exampleInputEmail1.form-control(type='text', aria-describedby='emailHelp', value='OpenCL y CUDA')
+                        label(for='nombre') Nombre del Curso
+                        input.form-control(type='text', value=informe.nombre, disabled='')
                      .form-group
-                        label(for='exampleInputCAracter') Nivel de Autofinanciamiento
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        label(for='nivelAutoFin') Nivel de Autofinanciamiento
+                        textarea.form-control(name='nivelAutoFin', rows='3') #{informe.nivelAutoFin}
                      .form-group
-                        label(for='exampleInputCAracter') Numero de participantes
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        label(for='participantes') Numero de participantes
+                        input.form-control(type='number', value=informe.participantes, disabled='')
                      .form-group
-                        label(for='exampleInputCAracter') Número de asistentes que cubrieron los requisitos de egreso
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        label(for='participantesAprobados') Número de asistentes que cubrieron los requisitos de egreso
+                        input.form-control(type='number', value=informe.participantesAprobados, disabled='')
                      .form-group
-                        label(for='exampleInputCAracter') Cumplimiento de los objetivos del programa
-                        textarea.form-control(rows='5', placeholder='Introduzca texto aqui...')
+                        label(for='cumplimientoObjetivos') Cumplimiento de los objetivos del programa
+                        textarea.form-control(name='cumplimientoObjetivos', rows='5') #{informe.cumplimientoObjetivos}
                      .form-group
-                        label(for='exampleInputCAracter') Número y tipo de instituciones participantes
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        label(for='institucionesParticipantes') Número y tipo de instituciones participantes
+                        textarea.form-control(name='institucionesParticipantes',rows='3') #{informe.institucionesParticipantes}
                      .form-group
-                        label(for='exampleInputCAracter')
+                        label(for='evaluacion')
                            | Evaluación del desempeño de los instructores por los participantes y el responsable
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        textarea.form-control(rows='3', disabled='') Se autogeneran despues de completar el informe
                      .form-group
-                        label(for='exampleInputCAracter')
+                        label(for='evaluacionPromedioParticipantes')
                            | Evaluación del desempeño promedio de los participantes por los instructores y el responsable
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        textarea.form-control(name='evaluacionPromedioParticipantes', rows='5') #{informe.evaluacionPromedioParticipantes}
                      .form-group
-                        label(for='exampleInputCAracter') Evaluación del programa por los participantes
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        label(for='evaluacion') Evaluación del programa por los participantes
+                        textarea.form-control(rows='3', disabled='') Se autogeneran despues de completar el informe
                      .form-group
-                        label(for='exampleInputCAracter')
+                        label(for='evaluacion')
                            | Autoevaluación de los participantes en relación al cumplimiento de los objetivos propuestos
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
+                        textarea.form-control(rows='3', disabled='') Se autogeneran despues de completar el informe
                      .form-group
-                        label(for='exampleInputCAracter')
+                        label(for='nivelVinculacion')
                            | Nivel de vinculación del programa con las necesidades del mercado laboral o de formación profesional
-                        textarea.form-control(rows='3', placeholder='Introduzca texto aqui...')
-                     a.btn.btn-primary.btn-block(href='login.html') Guardar
+                        textarea.form-control(name='nivelVinculacion', rows='3') #{informe.nivelVinculacion}
+                     button.btn.btn-primary.btn-block(type='submit') Guardar
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -117,7 +116,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

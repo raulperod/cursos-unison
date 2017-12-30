@@ -11,6 +11,17 @@ function crearEvaluacionInstructor(evauacion, next){
         })
 }
 
+function obtenerEvaluacionesPorIdCurso(idCurso, next){
+    EvaluacionInstructorModel
+        .query(`SELECT * 
+                FROM cursos_usuarios_evaluacion_instructor
+                WHERE idCurso = ?`, idCurso, (error, resultado, fields) => {
+            
+            next(error, resultado)
+        })
+}
+
 module.exports = {
-    crearEvaluacionInstructor
+    crearEvaluacionInstructor,
+    obtenerEvaluacionesPorIdCurso
 }

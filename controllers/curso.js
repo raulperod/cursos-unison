@@ -7,8 +7,9 @@ const UsuarioModel = require('../models/usuario'),
     CursosUsuariosEvaluacionParticipantesModel = require('../models/cursos_usuarios_evaluacion_participantes'),
     EvaluacionCursoModel = require('../models/cursos_usuarios_evaluacion_curso'),
     EvaluacionInstructorModel = require('../models/cursos_usuarios_evaluacion_instructor'),
-    enviarCorreo = require('./correo'),
-    bcrypt = require('bcrypt-nodejs')
+    InformesCursosModel = require('../models/informes_de_cursos'),
+    enviarCorreo = require('./correo')
+    
 
 function inscribirseGet(req, res) {
     let idCurso = req.params.idCurso,
@@ -205,6 +206,98 @@ function evaluacionInstructorPost(req, res){
     res.redirect('/usuario/mis-cursos')
 }
 
+function evaluacionParticipantesGet(req, res){
+    let usuario = req.session.user,
+        idCurso = req.params.idCurso
+
+    // idUsuario, idCurso, nombre, apellido, inasistencias, aprobo
+    CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
+        if(error){
+            console.log(error)
+            res.redirect('/usuario/mis-cursos')
+        }else{
+            // obtengo los ids de los participantes
+            let idsUsuario = []
+            for(let i=0 ; i < participantes.length ; i++){
+                idsUsuario.push(participantes[i].idUsuario)
+            }
+            // obtengo las evaluaciones
+            CursosUsuariosEvaluacionParticipantesModel
+            .obtenerEvaluacion(idCurso, idsUsuario, (error, evaluaciones) => {
+                if(error){
+                    console.log(error)
+                    res.redirect('/usuario/mis-cursos')
+                }else{
+                    // obtengo las inasistencias
+                    CursosUsuariosAsistenciaModel.obtenerInasistenciasPoridCurso(idCurso, (error, inasistencias) => {
+                        if(error){
+                            console.log(error)
+                            res.redirect('/usuario/mis-cursos')
+                        }else{
+                            evaluaciones = ponerInasistencia(evaluaciones, inasistencias)
+                            res.render('./curso/evaluar_participantes', {usuario, evaluaciones})
+                        }
+                    })
+                }
+            })
+
+        }
+    })
+}
+
+function ponerInasistencia(evaluaciones, inasistencias){
+    let evaluacionesAux = evaluaciones,
+        inasistenciasAux = inasistencias
+
+    for(let i=0; i<evaluacionesAux.length ; i++){
+        evaluacionesAux[i].inasistencia = 0
+        for(let j=0;j<inasistenciasAux.length;j++){
+            if(inasistenciasAux[j].idUsuario == evaluacionesAux[i].idUsuario){
+                evaluacionesAux[i].inasistencia = inasistenciasAux[j].inasistencia
+                break;
+            }
+        }      
+    }
+
+    return evaluacionesAux
+}
+
+function evaluacionParticipantesPost(req, res){
+    let idUsuario = req.params.idUsuario,
+        idCurso = req.params.idCurso,
+        aprobo = req.body.aprobo,
+        evaluacion = {
+            idUsuario,
+            idCurso,
+            aprobo,
+            calificado: 1
+        }
+
+    CursosUsuariosEvaluacionParticipantesModel
+    .actualizarEvaluacion(evaluacion, (error) =>{
+        // verifico si hay participantes que no han sido evaluados
+        CursosUsuariosModel
+        .obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
+            // obtengo los ids de los participantes
+            let idsUsuario = []
+            for(let i=0 ; i < participantes.length ; i++){
+                idsUsuario.push(participantes[i].idUsuario)
+            }
+            // obtengo las evaluaciones
+            CursosUsuariosEvaluacionParticipantesModel
+            .obtenerCursoCalificado(idCurso, idsUsuario, (error, calificado) => {
+                if(!error && calificado == 0){
+                    // se cambia el estado del curso
+                    CursoModel.actualizarCurso({idCurso, estado:4}, (error) => {})
+                    res.json({msg:`${idUsuario}, ${idCurso}, ${aprobo}`, termino:1})
+                }else{
+                    res.json({msg:`${idUsuario}, ${idCurso}, ${aprobo}`, termino:0})
+                }
+            })
+        })
+    })
+}
+
 module.exports = {
     inscribirseGet,
     inscribirsePost,
@@ -214,5 +307,7 @@ module.exports = {
     evaluacionCursoGet,
     evaluacionCursoPost,
     evaluacionInstructorGet,
-    evaluacionInstructorPost
+    evaluacionInstructorPost,
+    evaluacionParticipantesGet,
+    evaluacionParticipantesPost
 }
