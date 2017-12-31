@@ -27,17 +27,28 @@ html(lang='es')
                   a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
-               li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis Cursos')
-                  a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
-                     i.fa.fa-fw.fa-book
-                     span.nav-link-text Mis cursos
-                  ul#collapseCursos.sidenav-second-level.collapse
-                     li
-                        a(href='/solicitud/crear-solicitud') Crear solicitud
-               li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='/usuario/ver-cursos')
-                     i.fa.fa-fw.fa-user-o
-                     span.nav-link-text Ver cursos
+               // tipo de usuario
+               if usuario.tipo == 0
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
+                     a.nav-link(href='/usuario/mis-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Mis cursos
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                     a.nav-link(href='/usuario/ver-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Ver cursos
+               else
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
+                     a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Mis cursos
+                     ul#collapseCursos.sidenav-second-level.collapse
+                        li
+                           a(href='/solicitud/crear-solicitud') Crear solicitud
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                     a.nav-link(href='/usuario/ver-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
                li.nav-item
                   a#sidenavToggler.nav-link.text-center
@@ -120,7 +131,7 @@ html(lang='es')
                   .modal-body Selecciona cerrar sesión si realmente quieres salir.
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
-                     a.btn.btn-primary(href='#') Cerrar sesión
+                     a.btn.btn-primary(href='/cuenta/logout') Cerrar sesión
          // Bootstrap core JavaScript
          script(src='/public/vendor/jquery/jquery.min.js')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')

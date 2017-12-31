@@ -15,6 +15,11 @@ function inscribirseGet(req, res) {
     let idCurso = req.params.idCurso,
         usuario = req.session.user
 
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
     CursosUsuariosModel.obtenerDescripcionCursoPorId(idCurso, (error, curso) => {
         if(error || curso == null){
             res.redirect('/usuario/ver-cursos')
@@ -45,6 +50,12 @@ function inscribirsePost(req, res) {
                     CursosUsuariosModel.crearCursosUsuarios(cursoUsuario, (error) => {})
                     CursoModel.actualizarCurso({idCurso, numeroDeParticipantes: curso.numeroDeParticipantes}, (error) => {})
                     CursosUsuariosEvaluacionParticipantesModel.crearEvaluacion({idCurso, idUsuario:usuario.idUsuario}, (error) => {})
+                    CursosUsuariosAsistenciaModel.obtenerAsistenciaPorIdCurso(idCurso, (error, asistencia) => {
+                        if(!error && asistencia.length > 0){
+                            let asistenciaUsuario = [ [usuario.idUsuario, idCurso, obtenerDiaActual()] ]
+                            CursosUsuariosAsistenciaModel.crearAsistencia(asistenciaUsuario, (error) => {})
+                        }
+                    })
                     res.redirect('/usuario/mis-cursos')
                 }else{ // no hay cupo
                     req.session.errorInscripcion = true
@@ -80,6 +91,11 @@ function asistenciaGet(req, res){
     let usuario = req.session.user,
         idCurso = req.params.idCurso
 
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
     CursosUsuariosAsistenciaModel.obtenerAsistenciaPorIdCurso(idCurso, (error, asistencias) => {
         if(error){
             console.log(error)
@@ -89,6 +105,7 @@ function asistenciaGet(req, res){
             CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
                 if(error || participantes.length == 0){
                     console.log(error)
+                    req.session.errorParticipantes = true
                     res.redirect('/usuario/mis-cursos')
                 }else{
                     // creas la lista de asistencia
@@ -148,10 +165,15 @@ function evaluacionCursoGet(req, res){
     let idCurso = req.params.idCurso,
         usuario = req.session.user
 
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
     // verifico si ya evaluo
     CursosUsuariosEvaluacionParticipantesModel
         .obtenerSiEvaluo(idCurso, usuario.idUsuario, (error, evaluaciones) => {
-            if(error){
+            if(error || typeof evaluacion == 'undefined'){
                 res.redirect('/usuario/mis-cursos')
             }else if(evaluaciones.evaluacion_curso == 1){
                 req.session.errorEvaluacion = true
@@ -179,10 +201,15 @@ function evaluacionInstructorGet(req, res){
     let idCurso = req.params.idCurso,
         usuario = req.session.user
 
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
     // verifico si ya evaluo
     CursosUsuariosEvaluacionParticipantesModel
         .obtenerSiEvaluo(idCurso, usuario.idUsuario, (error, evaluaciones) => {
-            if(error){
+            if(error || typeof evaluaciones == 'undefined'){
                 res.redirect('/usuario/mis-cursos')
             }else if(evaluaciones.evaluacion_instructor == 1){
                 req.session.errorEvaluacion = true
@@ -210,37 +237,53 @@ function evaluacionParticipantesGet(req, res){
     let usuario = req.session.user,
         idCurso = req.params.idCurso
 
-    // idUsuario, idCurso, nombre, apellido, inasistencias, aprobo
-    CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
-        if(error){
-            console.log(error)
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length < 2 || curso[1].idUsuario != usuario.idUsuario){
+            // si no es el instructor o hubo algun error
             res.redirect('/usuario/mis-cursos')
         }else{
-            // obtengo los ids de los participantes
-            let idsUsuario = []
-            for(let i=0 ; i < participantes.length ; i++){
-                idsUsuario.push(participantes[i].idUsuario)
-            }
-            // obtengo las evaluaciones
-            CursosUsuariosEvaluacionParticipantesModel
-            .obtenerEvaluacion(idCurso, idsUsuario, (error, evaluaciones) => {
+            // idUsuario, idCurso, nombre, apellido, inasistencias, aprobo
+            CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
                 if(error){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
+                
+                }else if(participantes.length == 0){
+                    req.session.errorParticipantes = true
+                    res.redirect('/usuario/mis-cursos')
                 }else{
-                    // obtengo las inasistencias
-                    CursosUsuariosAsistenciaModel.obtenerInasistenciasPoridCurso(idCurso, (error, inasistencias) => {
+                    // obtengo los ids de los participantes
+                    let idsUsuario = []
+                    for(let i=0 ; i < participantes.length ; i++){
+                        idsUsuario.push(participantes[i].idUsuario)
+                    }
+                    // obtengo las evaluaciones
+                    CursosUsuariosEvaluacionParticipantesModel
+                    .obtenerEvaluacion(idCurso, idsUsuario, (error, evaluaciones) => {
                         if(error){
                             console.log(error)
                             res.redirect('/usuario/mis-cursos')
                         }else{
-                            evaluaciones = ponerInasistencia(evaluaciones, inasistencias)
-                            res.render('./curso/evaluar_participantes', {usuario, evaluaciones})
+                            // obtengo las inasistencias
+                            CursosUsuariosAsistenciaModel.obtenerInasistenciasPoridCurso(idCurso, (error, inasistencias) => {
+                                if(error){
+                                    console.log(error)
+                                    res.redirect('/usuario/mis-cursos')
+                                }else{
+                                    evaluaciones = ponerInasistencia(evaluaciones, inasistencias)
+                                    res.render('./curso/evaluar_participantes', {usuario, evaluaciones})
+                                }
+                            })
                         }
                     })
+
                 }
             })
-
         }
     })
 }

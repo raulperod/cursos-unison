@@ -56,15 +56,17 @@ function misCursosGet(req, res) {
                         enviarCorrecto = req.session.enviarCorrecto,
                         errorEvaluacion = req.session.errorEvaluacion,
                         enviarInformeError = req.session.enviarInformeError,
-                        enviarInformeCorrecto = req.session.enviarInformeCorrecto
+                        enviarInformeCorrecto = req.session.enviarInformeCorrecto,
+                        errorParticipantes = req.session.errorParticipantes
 
                     req.session.enviarError = false
                     req.session.enviarCorrecto = false
                     req.session.errorEvaluacion = false
                     req.session.enviarInformeError = false
                     req.session.enviarInformeCorrecto = false
+                    req.session.errorParticipantes = false
 
-                    res.render('./usuario/mis_cursos', {usuario, misCursos, enviarError, enviarCorrecto, errorEvaluacion, enviarInformeError, enviarInformeCorrecto})
+                    res.render('./usuario/mis_cursos', {usuario, misCursos, enviarError, enviarCorrecto, errorEvaluacion, enviarInformeError, enviarInformeCorrecto, errorParticipantes})
                 }  
             })
         }

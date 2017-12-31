@@ -11,8 +11,6 @@ html(lang='es')
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
       // Custom fonts for this template
       link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
-      // Page level plugin CSS
-      link(href='/public/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
       // Custom styles for this template
       link(href='/public/css/sb-admin.css', rel='stylesheet')
    body#page-top.fixed-nav.sticky-footer.bg-dark
@@ -27,17 +25,28 @@ html(lang='es')
                   a.nav-link(href='/usuario/mi-perfil')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi perfil
-               li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
-                  a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
-                     i.fa.fa-fw.fa-book
-                     span.nav-link-text Mis cursos
-                  ul#collapseCursos.sidenav-second-level.collapse
-                     li
-                        a(href='/solicitud/crear-solicitud') Crear solicitud
-               li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver Cursos')
-                  a.nav-link(href='/usuario/ver-cursos')
-                     i.fa.fa-fw.fa-book
-                     span.nav-link-text Ver cursos
+               // tipo de usuario
+               if usuario.tipo == 0
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
+                     a.nav-link(href='/usuario/mis-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Mis cursos
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                     a.nav-link(href='/usuario/ver-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Ver cursos
+               else
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
+                     a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Mis cursos
+                     ul#collapseCursos.sidenav-second-level.collapse
+                        li
+                           a(href='/solicitud/crear-solicitud') Crear solicitud
+                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                     a.nav-link(href='/usuario/ver-cursos')
+                        i.fa.fa-fw.fa-book
+                        span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
                li.nav-item
                   a#sidenavToggler.nav-link.text-center
@@ -158,10 +167,5 @@ html(lang='es')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
          // Core plugin JavaScript
          script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
          // Custom scripts for all pages
          script(src='/public/js/sb-admin.min.js')
-         // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')

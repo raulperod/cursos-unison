@@ -286,6 +286,21 @@ html(lang='es')
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         if errorParticipantes  
+            // errorParticipantesModal
+            #errorParticipantesModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+               .modal-dialog(role='document')
+                  .modal-content
+                     .modal-header
+                        h5#exampleModalLabel.modal-title Aviso
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                           span(aria-hidden='true') ×
+                     .modal-body 
+                        p El curso aun no cuenta con participantes.
+                     .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
+                        button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+
          // /.container-fluid
          // /.content-wrapper
          footer.sticky-footer
@@ -337,3 +352,6 @@ html(lang='es')
       if errorEvaluacion
          script.
             $('#errorEvaluacionModal').modal('show')
+      if errorParticipantes
+         script.
+            $('#errorParticipantesModal').modal('show')
