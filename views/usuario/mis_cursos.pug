@@ -103,25 +103,37 @@ html(lang='es')
                                     else
                                        td En proceso de evaluación
                                  else if curso.estado == 3
-                                    if curso.tipo == 3
-                                       if curso.nombreR == curso.nombreI
-                                          td 
-                                             a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
-                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
-                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes 
-                                       else
-                                          td 
-                                             a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
-                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
+                                    if curso.fechaActual >= curso.fechaInicio
+                                       if curso.tipo == 3
+                                          if curso.nombreR == curso.nombreI
+                                             td 
+                                                a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso
+                                                a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
+                                                if curso.fechaActual >= curso.fechaFinal 
+                                                   a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes 
+                                          else
+                                             td 
+                                                a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                                if curso.fechaActual >= curso.fechaFinal 
+                                                   a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
 
-                                    else if curso.tipo == 2
+                                       else if curso.tipo == 2
+                                          td 
+                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
+                                             if curso.fechaActual >= curso.fechaFinal 
+                                                a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes
+                                       else
+                                          if curso.fechaActual >= curso.fechaFinal 
+                                             td 
+                                                a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
+                                                a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
+                                          else
+                                             td Curso en proceso
+                                    else if curso.tipo == 3
                                        td 
-                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
-                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes
+                                          a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
                                     else
-                                       td 
-                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
-                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
+                                       td Todabia no es la fecha de inicio del curso
                                  else if curso.estado == 4
                                     if curso.tipo == 3
                                        td
@@ -296,7 +308,7 @@ html(lang='es')
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                            span(aria-hidden='true') ×
                      .modal-body 
-                        p El curso aun no cuenta con participantes.
+                        p El curso aun no cuenta con los participantes minimos para empezar.
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar

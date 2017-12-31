@@ -108,12 +108,27 @@ function acomodarMisCursos(cursosUsuario, misCursos){
                     cursoVista.estado = misCursosAux[j].estado
                 }else if(misCursosAux[j].tipo == 2){
                     cursoVista.nombreI = misCursosAux[j].nombreU
+                    cursoVista.fechaInicio = misCursosAux[j].fechaInicio
+                    cursoVista.fechaFinal = misCursosAux[j].fechaFinal
+                    cursoVista.fechaActual = obtenerDiaActual()
                 }
             }
         }
         misCursosVista.push(cursoVista)
     }    
     return misCursosVista
+}
+
+function obtenerDiaActual(){
+    let date = new Date(),
+        day = date.getDate(),
+        month = date.getMonth()+1,
+        year = date.getFullYear()
+
+    if (month < 10) month = "0" + month
+    if (day < 10) day = "0" + day
+
+    return new Date(year + "/" + month + "/" + day)
 }
 
 function verCursosGet(req, res) {

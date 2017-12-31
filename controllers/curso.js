@@ -159,7 +159,7 @@ function asistenciaGet(req, res){
         }else if(asistencias.length == 0){
             // busco los participantes
             CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
-                if(error || participantes.length == 0){
+                if(error || participantes.length == 0  || participantes.length < participantes[0].cupoMinimo){
                     console.log(error)
                     req.session.errorParticipantes = true
                     res.redirect('/usuario/mis-cursos')
@@ -176,6 +176,9 @@ function asistenciaGet(req, res){
                     })
                 }
             })
+        }else if(asistencias.length < asistencias[0].cupoMinimo){
+            req.session.errorParticipantes = true
+            res.redirect('/usuario/mis-cursos')
         }else{
             res.render('./curso/pasar_asistencia', {usuario, asistencias})
         }
@@ -305,10 +308,10 @@ function evaluacionParticipantesGet(req, res){
         }else{
             // idUsuario, idCurso, nombre, apellido, inasistencias, aprobo
             CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
-                if(error){
+                if(error || participantes.length == 0){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
-                }else if(participantes.length == 0){
+                }else if(participantes.length < participantes[0].cupoMinimo){
                     req.session.errorParticipantes = true
                     res.redirect('/usuario/mis-cursos')
                 }else{

@@ -4,9 +4,10 @@ const CursosUsuariosAsistenciaModel = require('./conexion')
 
 function obtenerAsistenciaPorIdCurso(idCurso, next){
     CursosUsuariosAsistenciaModel
-        .query(`SELECT cua.idUsuario, cua.idCurso, u.nombre, u.apellido, cua.asistio
+        .query(`SELECT cua.idUsuario, cua.idCurso, u.nombre, u.apellido, cua.asistio, c.cupoMinimo
                 FROM cursos_usuarios_asistencia cua
                 JOIN usuarios u ON u.idUsuario = cua.idUsuario
+                JOIN cursos c ON c.idCurso = cua.idCurso
                 WHERE cua.idCurso = ? AND cua.fecha = ?`, [idCurso, obtenerDiaActual()], (error, resultado, fields) => {
 
             next(error, resultado)
