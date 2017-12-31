@@ -14,29 +14,41 @@ function editarInformeGet(req, res){
     let usuario = req.session.user,
         idCurso = req.params.idCurso
 
-    InformesCursosModel.obtenerInformePorIdCurso(idCurso, (error, informe) => {
-        if(error || typeof informe == 'undefined'){
-            // creo el informe
-            CursosUsuariosEvaluacionParticipantesModel
-            .obtenerAprobadosPoridCurso(idCurso, (error, aprobados) => {
-                if(error){
-                    res.redirect('/usuario/mis-cursos')
-                }else{
+    if(usuario.tipo == 2){
+        res.redirect('/solicitud/ver-solicitudes')
+        return;
+    }
+
+    CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
+        if(error || curso.length < 2 || curso[0].idUsuario != usuario.idUsuario){
+            // si no es el responsable o hubo algun error
+            res.redirect('/usuario/mis-cursos')
+        }else{
+            InformesCursosModel.obtenerInformePorIdCurso(idCurso, (error, informe) => {
+                if(error || typeof informe == 'undefined'){
                     // creo el informe
-                    let nuevo_informe = {
-                        idCurso,
-                        participantes: aprobados.numeroDeParticipantes,
-                        participantesAprobados: aprobados.num_aprobados
-                    }
-                    InformesCursosModel
-                    .crearInforme(nuevo_informe, (error) => { 
-                        if(error) console.log(error)
-                        res.redirect('/informe/editar-informe/'+idCurso)
+                    CursosUsuariosEvaluacionParticipantesModel
+                    .obtenerAprobadosPoridCurso(idCurso, (error, aprobados) => {
+                        if(error){
+                            res.redirect('/usuario/mis-cursos')
+                        }else{
+                            // creo el informe
+                            let nuevo_informe = {
+                                idCurso,
+                                participantes: aprobados.numeroDeParticipantes,
+                                participantesAprobados: aprobados.num_aprobados
+                            }
+                            InformesCursosModel
+                            .crearInforme(nuevo_informe, (error) => { 
+                                if(error) console.log(error)
+                                res.redirect('/informe/editar-informe/'+idCurso)
+                            })
+                        }
                     })
+                }else{
+                    res.render('./informe/editar_informe', {usuario, informe})
                 }
             })
-        }else{
-            res.render('./informe/editar_informe', {usuario, informe})
         }
     })
 }
@@ -122,6 +134,11 @@ function enviarDescripcionInformePost(req, res){
 function verInformesGet(req, res){
     let usuario = req.session.user
 
+    if(usuario.tipo < 2){
+        res.redirect('/usuario/mis-cursos')
+        return;
+    }
+
     CursosUsuariosModel.obtenerInformes((error, informes) => {
         if(error){
             informes = []
@@ -151,8 +168,13 @@ function aprobarGet(req, res){
     let usuario = req.session.user,
         idCurso = req.params.idCurso
 
+    if(usuario.tipo < 2){
+        res.redirect('/usuario/mis-cursos')
+        return;
+    }
+
     CursosUsuariosModel.obtenerResponsableYintructorPorIdCurso(idCurso, (error, curso) => {
-        if(error || curso.length == 0){
+        if(error || curso.length < 2){
             res.redirect('/informe/ver-informes')
         }else{ 
             // cambio el estado del curso

@@ -86,7 +86,7 @@ function editarRegistroGet(req, res){
         usuario = req.session.user
     // obtener tipo
     CursosUsuariosModel.obtenerTipoPorIdCursoYidUsuario(idCurso, usuario.idUsuario, (error, tipo) => {
-        if(error || tipo == null || tipo < 2){
+        if(error || tipo == null || typeof tipo == 'undefined' || tipo < 2){
             if(usuario.tipo < 2){
                 res.redirect('/usuario/mis-cursos')
             }else{
