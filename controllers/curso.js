@@ -229,7 +229,7 @@ function evaluacionCursoGet(req, res){
     // verifico si ya evaluo
     CursosUsuariosEvaluacionParticipantesModel
         .obtenerSiEvaluo(idCurso, usuario.idUsuario, (error, evaluaciones) => {
-            if(error || typeof evaluacion == 'undefined'){
+            if(error || typeof evaluaciones == 'undefined'){
                 res.redirect('/usuario/mis-cursos')
             }else if(evaluaciones.evaluacion_curso == 1){
                 req.session.errorEvaluacion = true
