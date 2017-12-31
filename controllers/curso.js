@@ -24,9 +24,65 @@ function inscribirseGet(req, res) {
         if(error || curso == null){
             res.redirect('/usuario/ver-cursos')
         }else{
+            curso.horario = obtenerHorario(curso)
             res.render('./curso/inscribirse', {usuario, curso})
         }
     })
+}
+
+function obtenerHorario(curso){
+    let fechaInicio = obtenerFecha(curso.fechaInicio),
+        fechaFinal = obtenerFecha(curso.fechaFinal),
+        duracion = curso.duracion
+
+    return `El curso tiene una duración de ${duracion} horas. Iniciará ${fechaInicio} y terminará ${fechaFinal}.`
+}
+
+function obtenerFecha(fecha){
+    let dia = fecha.getDate(),
+        mes = fecha.getMonth()+1,
+        ano = fecha.getFullYear()
+    
+    switch(mes) {
+          case 1:
+                mes='enero';
+                break;
+          case 2:
+                mes='febrero';
+                break;
+          case 3:
+                mes='marzo';
+                break;
+          case 4:
+                mes='abril';
+                break;
+          case 5:
+                mes='mayo';
+                break;
+          case 6:
+                mes='junio';
+                break;
+          case 7:
+                mes='julio';
+                break;
+          case 8:
+                mes='agosto';
+                break;
+          case 9:
+                mes='septiembre';
+                break;
+          case 10:
+                mes='octubre';
+                break;
+          case 11:
+                mes='noviembre';
+                break;
+          case 12:
+                mes='diciembre';
+                break;
+    }
+    
+    return `el ${dia} de ${mes} del ${ano}`
 }
 
 function inscribirsePost(req, res) {
@@ -129,7 +185,7 @@ function asistenciaGet(req, res){
 function obtenerDiaActual(){
     let date = new Date(),
         day = date.getDate(),
-        month = date.getMonth(),
+        month = date.getMonth()+1,
         year = date.getFullYear()
 
     if (month < 10) month = "0" + month
