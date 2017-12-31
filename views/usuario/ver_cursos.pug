@@ -90,9 +90,9 @@ html(lang='es')
                                  td
                                     a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href='/curso/inscribirse/'+curso.idCurso) Ver curso
 
-      if errorInscripcion
-         // errorInscripcionModal
-         #errorInscripcionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      if errorCupo
+         // errorCupoModal
+         #errorCupoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')
                .modal-content
                   .modal-header
@@ -103,9 +103,9 @@ html(lang='es')
                   .modal-footer
                      button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                      button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
-      if errorCupo
-         // errorCupoModal
-         #errorCupoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      if errorInscripcion
+         // errorInscripcionModal
+         #errorInscripcionModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')
                .modal-content
                   .modal-header

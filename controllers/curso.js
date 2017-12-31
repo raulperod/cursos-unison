@@ -92,11 +92,11 @@ function inscribirsePost(req, res) {
     // comprueba si esta inscrito en el curso
     CursosUsuariosModel.siCurso(usuario.idUsuario, idCurso, (error, len) => {
         if(error || len == 1){
-            req.session.errorCupo = true
+            req.session.errorInscripcion = true
             res.redirect('/usuario/ver-cursos')
         }else{
             CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
-                if(error || curso == null){
+                if(error || typeof curso == 'undefined' || curso == null){
                     res.redirect('/usuario/ver-cursos')
                 }else if(curso.numeroDeParticipantes < curso.cupoMaximo){ // hay cupo
                     curso.numeroDeParticipantes += 1
@@ -114,7 +114,7 @@ function inscribirsePost(req, res) {
                     })
                     res.redirect('/usuario/mis-cursos')
                 }else{ // no hay cupo
-                    req.session.errorInscripcion = true
+                    req.session.errorCupo = true
                     res.redirect('/usuario/ver-cursos')
                 }
             }) 

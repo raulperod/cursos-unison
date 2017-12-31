@@ -26,16 +26,16 @@ html(lang='es')
                      i.fa.fa-fw.fa-user-o
                      span.nav-link-text Mi Perfil
                li.nav-item(data-toggle='tooltip', data-placement='right', title='Mis cursos')
-                     a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
-                        i.fa.fa-fw.fa-book
-                        span.nav-link-text Mis cursos
-                     ul#collapseCursos.sidenav-second-level.collapse
-                        li
-                           a(href='/solicitud/crear-solicitud') Crear solicitud
-                  li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
-                     a.nav-link(href='/usuario/ver-cursos')
-                        i.fa.fa-fw.fa-book
-                        span.nav-link-text Ver cursos
+                  a.nav-link.nav-link-collapse.collapsed(data-toggle='collapse', href='#collapseCursos', data-parent='#exampleAccordion')
+                     i.fa.fa-fw.fa-book
+                     span.nav-link-text Mis cursos
+                  ul#collapseCursos.sidenav-second-level.collapse
+                     li
+                        a(href='/solicitud/crear-solicitud') Crear solicitud
+               li.nav-item(data-toggle='tooltip', data-placement='right', title='Ver cursos')
+                  a.nav-link(href='/usuario/ver-cursos')
+                     i.fa.fa-fw.fa-book
+                     span.nav-link-text Ver cursos
             ul.navbar-nav.sidenav-toggler
                li.nav-item
                   a#sidenavToggler.nav-link.text-center
