@@ -73,7 +73,7 @@ html(lang='es')
                                  td= solicitud.nombreR
                                  td= solicitud.nombreI
                                  td
-                                    a.btn.btn-success(href='#', data-toggle='modal', data-target='#evaluarModal'+solicitud.idCurso) Evaluar
+                                    a.btn.btn-success(style='margin: 10px 0px 10px 2px;' href='#', data-toggle='modal', data-target='#evaluarModal'+solicitud.idCurso) Evaluar
          
          each solicitud in solicitudes
             .modal.fade(id='evaluarModal'+solicitud.idCurso,tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')

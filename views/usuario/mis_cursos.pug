@@ -90,55 +90,55 @@ html(lang='es')
                                  if curso.estado == 1 
                                     if curso.tipo == 3
                                        td
-                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarModal'+curso.idCurso) Enviar registro
-                                          a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
-                                          a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarModal'+curso.idCurso) Cancelar registro
+                                          a.btn.btn-success(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#enviarModal'+curso.idCurso) Enviar registro
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
+                                          a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarModal'+curso.idCurso) Cancelar registro
                                     else
                                        td
-                                          a.btn.btn-primary(href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href='/solicitud/editar-registro/'+curso.idCurso) Editar registro
                                  else if curso.estado == 2
                                     if curso.tipo == 3
                                        td
-                                          button(class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
+                                          button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
                                     else
                                        td En proceso de evaluación
                                  else if curso.estado == 3
                                     if curso.tipo == 3
                                        if curso.nombreR == curso.nombreI
                                           td 
-                                             a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
-                                             a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista
-                                             a.btn.btn-primary(href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes 
+                                             a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
+                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes 
                                        else
                                           td 
-                                             a.btn.btn-danger(href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
-                                             a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
+                                             a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
+                                             a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor 
 
                                     else if curso.tipo == 2
                                        td 
-                                          a.btn.btn-primary(href="/curso/asistencia/"+curso.idCurso) Pasar lista
-                                          a.btn.btn-primary(href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/asistencia/"+curso.idCurso) Pasar lista
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-participantes/"+curso.idCurso) Evaluar participantes
                                     else
                                        td 
-                                          a.btn.btn-primary(href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
-                                          a.btn.btn-primary(href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-instructor/"+curso.idCurso) Evaluar instructor
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href="/curso/evaluacion-curso/"+curso.idCurso) Evaluar curso
                                  else if curso.estado == 4
                                     if curso.tipo == 3
                                        td
-                                          a.btn.btn-success(href='#' data-toggle='modal', data-target='#enviarInformeModal'+curso.idCurso) Enviar informe
-                                          a.btn.btn-primary(href='/informe/editar-informe/'+curso.idCurso) Editar informe
+                                          a.btn.btn-success(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#enviarInformeModal'+curso.idCurso) Enviar informe
+                                          a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href='/informe/editar-informe/'+curso.idCurso) Editar informe
                                     else
                                        td Se ha concluido
                                  else if curso.estado == 5
                                     if curso.tipo == 3
                                        td
-                                          button(class='btn btn-success pdf2 '+curso.idCurso, type='button') Generar documentos
+                                          button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf2 '+curso.idCurso, type='button') Generar documentos
                                     else
                                        td Se ha concluido
                                  else if curso.estado == 6 
                                     if curso.tipo == 3
                                        td
-                                          button(class='btn btn-success pdf3 '+curso.idCurso, type='button') Generar constancias
+                                          button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf3 '+curso.idCurso, type='button') Generar constancias
                                     else
                                        td Se ha concluido
                                  else
