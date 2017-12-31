@@ -252,7 +252,6 @@ function evaluacionParticipantesGet(req, res){
                 if(error){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
-                
                 }else if(participantes.length == 0){
                     req.session.errorParticipantes = true
                     res.redirect('/usuario/mis-cursos')

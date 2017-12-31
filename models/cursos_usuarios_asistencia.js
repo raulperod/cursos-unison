@@ -17,7 +17,8 @@ function obtenerInasistenciasPoridCurso(idCurso, next){
     CursosUsuariosAsistenciaModel
         .query(`SELECT cua.idUsuario, COUNT(cua.asistio) inasistencia
                 FROM cursos_usuarios_asistencia cua
-                WHERE cua.idCurso = ? AND cua.asistio = 0`, idCurso, (error, resultado, fields) => {
+                WHERE cua.idCurso = ? AND cua.asistio = 0
+                GROUP BY cua.idUsuario`, idCurso, (error, resultado, fields) => {
             
             next(error, resultado)
         })
