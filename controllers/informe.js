@@ -103,32 +103,35 @@ function enviarDescripcionInformePost(req, res){
     // informe // nombre del curso y informe
     // evaluaciones // evaluaciones curso, evaluaciones instructor 
     let idCurso = req.params.idCurso
-    // obtengo el informe
-    InformesCursosModel
-    .obtenerDescripcionInformePorIdCurso(idCurso, (error, informe) => {
-        if(error){
-            console.log(error)
-            res.json({error: 1})
-        }else{
-            // obtengo las evaluaciones del curso
-            EvaluacionCursoModel.obtenerEvaluacionesPorIdCurso(idCurso, (error, evaluacionesCurso) =>{
-                if(error){
-                    console.log(error)
-                    res.json({error: 1})
-                }else{
-                    // obtengo las evaluaciones del instructor
-                    EvaluacionInstructorModel.obtenerEvaluacionesPorIdCurso(idCurso, (error, evaluacionesInstructor) => {
-                        if(error){
-                            console.log(error)
-                            res.json({error: 1})
-                        }else{
-                            res.json({informe, evaluacionesCurso, evaluacionesInstructor, error: 0})
-                        }
+    try{
+        // obtengo el informe
+        InformesCursosModel
+        .obtenerDescripcionInformePorIdCurso(idCurso, (error, informe) => {
+            if(error) throw error
+            // obtengo los participantes (nombreU)
+            CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
+                if(error) throw error
+                // obtengo los que aprobaron (nombre U)
+                CursosUsuariosEvaluacionParticipantesModel
+                .obtenerNombreAprobadosPoridCurso(idCurso, (error, aprobados) => {
+                    if(error) throw error
+                    // obtengo las evaluaciones del curso
+                    EvaluacionCursoModel.obtenerEvaluacionesPorIdCurso(idCurso, (error, evaluacionesCurso) =>{
+                        if(error) throw error
+                        // obtengo las evaluaciones del instructor
+                        EvaluacionInstructorModel.obtenerEvaluacionesPorIdCurso(idCurso, (error, evaluacionesInstructor) => {
+                            if(error) throw error
+                            res.json({informe, participantes, aprobados, evaluacionesCurso, evaluacionesInstructor, error: 0})
+                        })
                     })
-                }
+                })
+                
             })
-        }
-    })
+        })
+    }catch(error){
+        console.log(error)
+        res.json({error: 1})
+    }
 }
 
 function verInformesGet(req, res){

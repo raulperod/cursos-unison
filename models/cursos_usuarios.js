@@ -25,7 +25,7 @@ function siCurso(idUsuario, idCurso, next){
 
 function obtenerParticipantesPorIdCurso(idCurso, next){
     CursosUsuariosModel
-        .query(`SELECT u.idUsuario, u.correo, c.nombre nombreC, c.cupoMinimo
+        .query(`SELECT u.idUsuario, CONCAT(u.nombre, ' ', u.apellido) nombreU, u.correo, c.nombre nombreC, c.cupoMinimo
                 FROM cursos_usuarios cu
                 JOIN usuarios u ON u.idUsuario = cu.idUsuario
                 JOIN cursos c ON c.idCurso = cu.idCurso

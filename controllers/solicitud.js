@@ -186,7 +186,7 @@ function enviarRegistroPost(req, res){
     let idCurso = req.params.idCurso
 
     CursoModel.obtenerCursoPorId(idCurso, (error, curso) => {
-        if(error || curso == null || comprobarCurso(curso)){
+        if(error || typeof curso == 'undefined' || comprobarCurso(curso)){
             req.session.enviarError = true;
             res.redirect('/usuario/mis-cursos')
         }else{

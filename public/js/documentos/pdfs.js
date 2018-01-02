@@ -43,6 +43,8 @@ function obtenerMensaje2(idCurso) {
                var informe = data.informe
                var evaluacionesCurso = data.evaluacionesCurso
                var evaluacionesInstructor = data.evaluacionesInstructor
+               var participantes = data.participantes // nombreU
+               var aprobados = data.aprobados // nombreCompleto
                
                generarEvaluacionInstructor(informe.nombreCurso, evaluacionesInstructor)
                generarEvaluacionCurso(informe.nombreCurso, evaluacionesCurso)
@@ -178,30 +180,30 @@ function generarRegistro(curso, correo) {
                     // keepWithHeaderRows: 1,
                     body: [
                         [{text: 'Registro de curso',style:['titulo'], colSpan: 2, alignment: 'center',color: 'white'}, {}],
-                        [{text: 'Nombre del curso:',style: [ 'campo']}, curso.nombre],
-                        [{text: 'División:',style: [ 'campo']}, curso.division],
-                        [{text: 'Departamento:',style: [ 'campo']}, curso.departamento],
-                        [{text: 'Carácter:',style: [ 'campo']}, curso.caracter],
-                        [{text: 'Objetivo General:',style: [ 'campo']}, curso.objetivoGeneral],
-                        [{text: 'Objetivos Específicos:',style: [ 'campo']}, curso.objetivosEspecificos],
-                        [{text: 'Contenido sintético:',style: [ 'campo']}, curso.contenidoSintetico],
-                        [{text: 'Forma de conducción del proceso enseñanza-aprendizaje:',style: [ 'campo']}, curso.formaEnsenanza],
-                        [{text: 'Requisitos de evaluación:',style: [ 'campo']}, curso.requisitosDeEvaluacion],
-                        [{text: 'Bibliografía:',style: [ 'campo']}, curso.bibliografia],
-                        [{text: 'Perfil académico deseable del responsable de la materia:',style: [ 'campo']}, curso.perfilAcademico],
-                        [{text: 'Capacidad de autofinanciamiento:',style: [ 'campo']}, curso.capacidadAutoFin],
-                        [{text: 'Utilidad y oportunidad en funcion del programa:',style: [ 'campo']}, curso.utilidad],
-                        [{text: 'Experiencia, calidad profesional y academica del instructor:',style: [ 'campo']}, 'Se adjunta'],
-                        [{text: 'Antecedentes o habilidades necesarias de los alumnos:',style: [ 'campo']}, curso.antecedentesAlumnos],
-                        [{text: 'Duración del programa:',style: [ 'campo']}, curso.duracion],
-                        [{text: 'Cupo mínimo y máximo:',style: [ 'campo']}, 'de '+curso.cupoMinimo+' a '+curso.cupoMaximo+' participantes'],
-                        [{text: 'Requisitos de idioma:',style: [ 'campo']}, curso.reqIdioma],
-                        [{text: 'Fecha de inicio y terminación:',style: [ 'campo']}, 'Iniciará el '+diaI+' de '+mesI+ ' del '+anoI+' y terminará el '+diaF+' de '+mesF+ ' del '+anoF],
-                        [{text: 'Infraestructura necesaria para ofrecer el curso:',style: [ 'campo']}, curso.infraestructuraNecesaria],
-                        [{text: 'Cargo del instructor:',style: [ 'campo']}, curso.cargoInstructor],
-                        [{text: 'Dependecia:',style: [ 'campo']}, curso.dependencia],
-                        [{text: 'Teléfono/Fax:',style: [ 'campo']}, curso.telefono],
-                        [{text: 'Correo electronico:',style: [ 'campo']}, correo],
+                        [{text: 'Nombre del curso:',style: [ 'campo']}, {text: curso.nombre,style:['texto']}],
+                        [{text: 'División:',style: [ 'campo']}, {text: curso.division,style:['texto']}],
+                        [{text: 'Departamento:',style: [ 'campo']}, {text: curso.departamento,style:['texto']}],
+                        [{text: 'Carácter:',style: [ 'campo']}, {text: curso.caracter,style:['texto']}],
+                        [{text: 'Objetivo General:',style: [ 'campo']}, {text: curso.objetivoGeneral,style:['texto']}],
+                        [{text: 'Objetivos Específicos:',style: [ 'campo']}, {text: curso.objetivosEspecificos,style:['texto']}],
+                        [{text: 'Contenido sintético:',style: [ 'campo']}, {text: curso.contenidoSintetico,style:['texto']}],
+                        [{text: 'Forma de conducción del proceso enseñanza-aprendizaje:',style: [ 'campo']}, {text: curso.formaEnsenanza,style:['texto']}],
+                        [{text: 'Requisitos de evaluación:',style: [ 'campo']}, {text: curso.requisitosDeEvaluacion,style:['texto']}],
+                        [{text: 'Bibliografía:',style: [ 'campo']}, {text: curso.bibliografia,style:['texto']}],
+                        [{text: 'Perfil académico deseable del responsable de la materia:',style: [ 'campo']}, {text: curso.perfilAcademico,style:['texto']}],
+                        [{text: 'Capacidad de autofinanciamiento:',style: [ 'campo']}, {text: curso.capacidadAutoFin,style:['texto']}],
+                        [{text: 'Utilidad y oportunidad en funcion del programa:',style: [ 'campo']}, {text: curso.utilidad,style:['texto']}],
+                        [{text: 'Experiencia, calidad profesional y academica del instructor:',style: [ 'campo']}, {text: 'Se adjunta',style:['texto']}],
+                        [{text: 'Antecedentes o habilidades necesarias de los alumnos:',style: [ 'campo']}, {text: curso.antecedentesAlumnos,style:['texto']}],
+                        [{text: 'Duración del programa:',style: [ 'campo']}, {text: curso.duracion,style:['texto']}],
+                        [{text: 'Cupo mínimo y máximo:',style: [ 'campo']}, {text: 'de '+curso.cupoMinimo+' a '+curso.cupoMaximo+' participantes',style:['texto']}],
+                        [{text: 'Requisitos de idioma:',style: [ 'campo']}, {text: curso.reqIdioma,style:['texto']}],
+                        [{text: 'Fecha de inicio y terminación:',style: [ 'campo']}, {text: 'Iniciará el '+diaI+' de '+mesI+ ' del '+anoI+' y terminará el '+diaF+' de '+mesF+ ' del '+anoF,style:['texto']}],
+                        [{text: 'Infraestructura necesaria para ofrecer el curso:',style: [ 'campo']}, {text: curso.infraestructuraNecesaria,style:['texto']}],
+                        [{text: 'Cargo del instructor:',style: [ 'campo']}, {text: curso.cargoInstructor,style:['texto']}],
+                        [{text: 'Dependecia:',style: [ 'campo']}, {text: curso.dependencia,style:['texto']}],
+                        [{text: 'Teléfono/Fax:',style: [ 'campo']}, {text: curso.telefono,style:['texto']}],
+                        [{text: 'Correo electronico:',style: [ 'campo']}, {text: correo,style:['texto']}],
                     ]
                 },
                 layout: {
@@ -223,9 +225,12 @@ function generarRegistro(curso, correo) {
             campo: {
                 alignment: 'right',
                 bold: true
+            },
+            texto: {
+                  margin: [0, 8, 0, 8]
             }
         },
-        defaultStyle: {
+        defaultStyle: {  
             fontSize: 10,
             alignment: 'justify'
         },
@@ -370,17 +375,17 @@ function generarInforme(informe) {
                            // keepWithHeaderRows: 1,
                            body: [
                                  [{text: 'Informe de curso',style:['titulo'], colSpan: 2, alignment: 'center',color: 'white'}, {}],
-                                 [{text: 'Nombre del curso:',style: [ 'campo']}, informe.nombreCurso],
-                                 [{text: 'I. Nivel de autofinanciamiento',style: [ 'campo']}, informe.nivelAutoFin],
-                                 [{text: 'II. Número de participantes',style: [ 'campo']}, informe.participantes],
-                                 [{text: 'III. Número de asistentes que cubrieron los requisitos de egreso',style: [ 'campo']}, informe.participantesAprobados],
-                                 [{text: 'IV. Cumplimineto de los objetivos del programa',style: [ 'campo']}, informe.cumplimientoObjetivos],
-                                 [{text: 'V. Número y tipo de instituciones participantes',style: [ 'campo']}, informe.institucionesParticipantes],
-                                 [{text: 'VI. Evaluación del desempeño de los instructores por los participantes y el responsable',style: [ 'campo']}, 'Se adjunta'],
-                                 [{text: 'VII. Evaluación del desempeño promedio de los participantes por los instructores y el responsable',style: [ 'campo']}, informe.evaluacionPromedioParticipantes],
-                                 [{text: 'VIII. Evaluación del programa por los participantes',style: [ 'campo']}, 'Se adjunta'],
-                                 [{text: 'IX. Autoevaluación de los participantes en relación al cumplimiento de los objetivos propuestos',style: [ 'campo']}, 'Se adjunta'],
-                                 [{text: 'X. Nivel de vinculación del programa con las necesidades del mercado laboral o de formación profesional',style: [ 'campo']}, informe.nivelVinculacion],
+                                 [{text: 'Nombre del curso:',style: [ 'campo']}, {text: informe.nombreCurso,style:['texto']}],
+                                 [{text: 'I. Nivel de autofinanciamiento',style: [ 'campo']}, {text: informe.nivelAutoFin,style:['texto']}],
+                                 [{text: 'II. Número de participantes',style: [ 'campo']}, {text: informe.participantes,style:['texto']}],
+                                 [{text: 'III. Número de asistentes que cubrieron los requisitos de egreso',style: [ 'campo']}, {text: informe.participantesAprobados,style:['texto']}],
+                                 [{text: 'IV. Cumplimineto de los objetivos del programa',style: [ 'campo']}, {text: informe.cumplimientoObjetivos,style:['texto']}],
+                                 [{text: 'V. Número y tipo de instituciones participantes',style: [ 'campo']}, {text: informe.institucionesParticipantes,style:['texto']}],
+                                 [{text: 'VI. Evaluación del desempeño de los instructores por los participantes y el responsable',style: [ 'campo']}, {text: 'Se adjunta',style:['texto']}],
+                                 [{text: 'VII. Evaluación del desempeño promedio de los participantes por los instructores y el responsable',style: [ 'campo']}, {text: informe.evaluacionPromedioParticipantes,style:['texto']}],
+                                 [{text: 'VIII. Evaluación del programa por los participantes',style: [ 'campo']}, {text: 'Se adjunta',style:['texto']}],
+                                 [{text: 'IX. Autoevaluación de los participantes en relación al cumplimiento de los objetivos propuestos',style: [ 'campo']}, {text: 'Se adjunta',style:['texto']}],
+                                 [{text: 'X. Nivel de vinculación del programa con las necesidades del mercado laboral o de formación profesional',style: [ 'campo']}, {text: informe.nivelVinculacion,style:['texto']}],
                            ]
                      },
                      layout: {
@@ -402,6 +407,9 @@ function generarInforme(informe) {
                campo: {
                      alignment: 'right',
                      bold: true
+               },
+               texto: {
+                     margin: [0, 8, 0, 8]
                }
          },
          defaultStyle: {
