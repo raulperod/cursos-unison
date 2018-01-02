@@ -107,18 +107,18 @@ function editarRegistroGet(req, res){
 
 function acomodarFecha(registro){
     let registro2 = registro,
-        fechaInicial = registro2.fechaInicio,
+        fechaInicio = registro2.fechaInicio,
         fechaFinal = registro2.fechaFinal
        
     try{
-        fechaInicial = formatearFecha(fechaInicial)
+        fechaInicio = formatearFecha(fechaInicio)
         fechaFinal = formatearFecha(fechaFinal)
     }catch(error){
-        fechaInicial = '0000-00-00'
+        fechaInicio = '0000-00-00'
         fechaFinal = '0000-00-00'
     }
 
-    registro2.fechaInicio = fechaInicial
+    registro2.fechaInicio = fechaInicio
     registro2.fechaFinal = fechaFinal
 
     return registro2
@@ -138,14 +138,37 @@ function formatearFecha(fecha){
 function editarRegistroPost(req, res){
     let registro = req.body
     registro.idCurso = req.params.idCurso
+    let tipo = comprobarFecha(registro)
+    
+    if(tipo > 0){
+        res.json({msg:`Hubo un error en las fechas`, tipo})
+        return
+    }
 
     CursoModel.actualizarCurso(registro, (error) => {
         if(error){
-            res.json({msg:`${error}`, tipo:0})
+            res.json({msg:`${error}`, tipo:3})
         }else{
-            res.json({msg:`Cambios correctamente`, tipo:1})
+            res.json({msg:`Cambios correctamente`, tipo:0})
         }
-    })
+    })    
+}
+
+function comprobarFecha(registro){
+    let fechaInicio = new Date(registro.fechaInicio),
+        fechaFinal = new Date(registro.fechaFinal),
+        fechaActual = new Date()
+    
+    let day = fechaActual.getDate(),
+        month = fechaActual.getMonth()+1,
+        year = fechaActual.getFullYear()
+
+    let fecha15 = new Date(year + '-' + month + '-' + day) 
+    fecha15.setDate(fecha15.getDate()+15)
+    
+    if(fechaFinal < fechaInicio) return 1
+    if(fechaInicio < fecha15) return 2
+    return 0
 }
 
 function cancelarRegistroGet(req, res){

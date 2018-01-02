@@ -210,7 +210,7 @@ html(lang='es')
                         .form-group
                            .form-row
                               .col-md-6
-                                 label(for='fechaInicio') Fecha inicio
+                                 label(for='fechaInicio') Fecha inicial
                                  input.form-control(name='fechaInicio' type='date', value=registro.fechaInicio)
                               .col-md-6
                                  label(for='fechaFinal') Fecha terminación
@@ -240,15 +240,6 @@ html(lang='es')
                            textarea.form-control(name='telefono', rows='1') #{registro.telefono}
                         input.btn.btn-primary.btn-block(type='submit' value='Guardar') 
 
-         // /.container-fluid
-         // /.content-wrapper
-         footer.sticky-footer
-            .container
-               .text-center
-                  small Copyright © Your Website 2017
-         // Scroll to Top Button
-         a.scroll-to-top.rounded(href='#page-top')
-            i.fa.fa-angle-up
          // editarModel
          #editarModel.modal(tabindex='-1', role='dialog')
             .modal-dialog(role='document')
@@ -261,6 +252,39 @@ html(lang='es')
                      p Las modificaciones se han guardado correctamente.
                   .modal-footer
                      a.btn.btn-primary(href='/usuario/mis-cursos') Aceptar  
+         // error1Model
+         #error1Model.modal(tabindex='-1', role='dialog')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5.modal-title Aviso
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+                  .modal-body
+                     p La fecha final debe ser despues a la fecha inicial.
+                  .modal-footer
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptarr  
+         // error2Model
+         #error2Model.modal(tabindex='-1', role='dialog')
+            .modal-dialog(role='document')
+               .modal-content
+                  .modal-header
+                     h5.modal-title Aviso
+                     button.close(type='button', data-dismiss='modal', aria-label='Close')
+                     span(aria-hidden='true') ×
+                  .modal-body
+                     p Debe haber un margen de 15 dias con la fecha inicial.
+                  .modal-footer
+                     button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
+         // /.container-fluid
+         // /.content-wrapper
+         footer.sticky-footer
+            .container
+               .text-center
+                  small Copyright © Your Website 2017
+         // Scroll to Top Button
+         a.scroll-to-top.rounded(href='#page-top')
+            i.fa.fa-angle-up
          // Logout Modal
          #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
             .modal-dialog(role='document')

@@ -17,8 +17,12 @@ function obtenerMensaje() {
         data: datosFormulario.serialize(),
         success : function(data) {
             var arreglo=Object.values(data);
-            if(arreglo[1] == 1){
+            if(arreglo[1] == 0){
 				$('#editarModel').modal('show')
+			}else if(arreglo[1] == 1){
+				$('#error1Model').modal('show')
+			}else if(arreglo[1] == 2){
+				$('#error2Model').modal('show')
 			} 
 			mostrarAviso(arreglo[1]);
         }

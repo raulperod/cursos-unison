@@ -48,7 +48,7 @@ function obtenerMensaje2(idCurso) {
                
                generarEvaluacionInstructor(informe.nombreCurso, evaluacionesInstructor)
                generarEvaluacionCurso(informe.nombreCurso, evaluacionesCurso)
-               generarInforme(informe)
+               generarInforme(informe,participantes, aprobados)
                generarSolicitudInforme(informe.nombreRepresentante, informe.nombreCurso,informe.departamento)
             }
         }
@@ -363,7 +363,19 @@ function generarSolicitudInforme(nombreRepresentante,nombreCurso,departamento) {
    pdfMake.createPdf(docDefinition).open();
 }
 
-function generarInforme(informe) {
+function generarInforme(informe,participantes,aprobados) {
+   //obtener participantes para la lista
+   var ulParticipantes=[];
+   for (var i=0; i < participantes.length; i++) {
+      //GENERAR UNA PAGINA
+      ulParticipantes.push(''+participantes[i].nombreU);
+   } 
+   //obtener aprobados para la lista
+   var ulAprobados=[];
+   for (var i=0; i < aprobados.length; i++) {
+      //GENERAR UNA PAGINA
+      ulAprobados.push(''+aprobados[i].nombreCompleto);
+   }   
    var docDefinition = {
          content: [
                {
@@ -377,8 +389,24 @@ function generarInforme(informe) {
                                  [{text: 'Informe de curso',style:['titulo'], colSpan: 2, alignment: 'center',color: 'white'}, {}],
                                  [{text: 'Nombre del curso:',style: [ 'campo']}, {text: informe.nombreCurso,style:['texto']}],
                                  [{text: 'I. Nivel de autofinanciamiento',style: [ 'campo']}, {text: informe.nivelAutoFin,style:['texto']}],
-                                 [{text: 'II. Número de participantes',style: [ 'campo']}, {text: informe.participantes,style:['texto']}],
-                                 [{text: 'III. Número de asistentes que cubrieron los requisitos de egreso',style: [ 'campo']}, {text: informe.participantesAprobados,style:['texto']}],
+                                 [{text: 'II. Número de participantes',style: [ 'campo']}, {
+                                    stack: [
+                                          {text: informe.participantes,style:['texto']},
+                                          {
+                                                ul: ulParticipantes,
+                                                style: 'margenLista'
+                                          }
+                                    ]
+                                 }],
+                                 [{text: 'III. Número de asistentes que cubrieron los requisitos de egreso',style: [ 'campo']}, {
+                                    stack: [
+                                          {text: informe.participantesAprobados,style:['texto']},
+                                          {
+                                                ul: ulAprobados,
+                                                style: 'margenLista'
+                                          }
+                                    ]
+                                 }],
                                  [{text: 'IV. Cumplimineto de los objetivos del programa',style: [ 'campo']}, {text: informe.cumplimientoObjetivos,style:['texto']}],
                                  [{text: 'V. Número y tipo de instituciones participantes',style: [ 'campo']}, {text: informe.institucionesParticipantes,style:['texto']}],
                                  [{text: 'VI. Evaluación del desempeño de los instructores por los participantes y el responsable',style: [ 'campo']}, {text: 'Se adjunta',style:['texto']}],
@@ -410,6 +438,9 @@ function generarInforme(informe) {
                },
                texto: {
                      margin: [0, 8, 0, 8]
+               },
+               margenLista: {
+                     margin: [0, 0, 0, 8]
                }
          },
          defaultStyle: {
