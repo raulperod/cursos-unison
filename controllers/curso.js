@@ -21,7 +21,7 @@ function inscribirseGet(req, res) {
     }
 
     CursosUsuariosModel.obtenerDescripcionCursoPorId(idCurso, (error, curso) => {
-        if(error || curso == null){
+        if(error || typeof curso == "undefined" || curso == null){
             res.redirect('/usuario/ver-cursos')
         }else{
             curso.horario = obtenerHorario(curso)
@@ -136,8 +136,8 @@ function cancelarPost(req, res){
                                         <p>${razones}.</p>`
                         enviarCorreo(participantes[i].correo, asunto, mensaje)
                     }
-                    res.redirect('/usuario/mis-cursos')
                 }
+                res.redirect('/usuario/mis-cursos')
             })
         }
     })

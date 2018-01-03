@@ -4,8 +4,6 @@ html(lang='es')
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible', content='IE=edge')
       meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-      meta(name='description', content='')
-      meta(name='author', content='')
       title Evaluar participantes
       // Bootstrap core CSS
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
@@ -68,7 +66,7 @@ html(lang='es')
                .card-body
                   | Nota: Al esta evaluando a los participantes la decisión se ira guardando en tiempo real.
                   | Si se termina de evaluar a los participantes, se dará por hecho que se termino de evaluar y
-                  | se concluirá el curso para continuar con el informe. Si el participantes no aprobo el curso se debera reafirmarlo.
+                  | se concluirá el curso para continuar con el informe. Si el participantes no aprobó el curso se deberá reafirmarlo.
             // Example DataTables Card
             .card.mb-3
                .card-header
@@ -96,20 +94,20 @@ html(lang='es')
                                           .form-check.form-check-inline
                                              label.form-check-label
                                                 input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='1',checked='')
-                                                |  Aprobo
+                                                |  Aprobó
                                           .form-check.form-check-inline
                                              label.form-check-label
                                                 input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='0')
-                                                |  No aprobo
+                                                |  No aprobó
                                        else
                                           .form-check.form-check-inline
                                              label.form-check-label
                                                 input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='1')
-                                                |  Aprobo
+                                                |  Aprobó
                                           .form-check.form-check-inline
                                              label.form-check-label
                                                 input(class='form-check-input radioA '+evaluacion.idCurso+' '+evaluacion.idUsuario, type='radio', name='aprobo', value='0', checked='')
-                                                |  No aprobo
+                                                |  No aprobó
                            
          // /.container-fluid
          // /.content-wrapper

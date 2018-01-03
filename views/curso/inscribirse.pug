@@ -65,7 +65,7 @@ html(lang='es')
                .card-header Ver curso
                .card-body
                   .form-group
-                     label(for='nombre') Nombre del Curso
+                     label(for='nombre') Nombre del curso
                      input.form-control(type='text', value=curso.nombre, disabled)
                   .form-group
                      label(for='nombreI') Instructor
@@ -77,8 +77,8 @@ html(lang='es')
                               option(selected='') División de Ciencias Exactas y Naturales
                         .col-md-6
                            select.form-control(disabled='')
-                              if curso.departamento == 'Departemento de Matemáticas'
-                                 option(selected='') Departemento de Matemáticas
+                              if curso.departamento == 'Departamento de Matemáticas'
+                                 option(selected='') Departamento de Matemáticas
                               else if curso.departamento == 'Departamento de Física'
                                  option(selected='') Departamento de Física
                               else
