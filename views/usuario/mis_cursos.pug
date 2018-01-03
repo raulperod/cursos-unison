@@ -101,7 +101,7 @@ html(lang='es')
                                        td
                                           button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf '+curso.idCurso, type='button') Generar documentos
                                     else
-                                       td En proceso de evaluación
+                                       td Registro en proceso de evaluación
                                  else if curso.estado == 3
                                     if curso.fechaActual >= curso.fechaInicio
                                        if curso.tipo == 3
@@ -133,28 +133,28 @@ html(lang='es')
                                        td 
                                           a.btn.btn-danger(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#cancelarCursoModal'+curso.idCurso) Cancelar curso 
                                     else
-                                       td Todabia no es la fecha de inicio del curso
+                                       td El curso no ha iniciado
                                  else if curso.estado == 4
                                     if curso.tipo == 3
                                        td
                                           a.btn.btn-success(style='margin: 10px 0px 10px 2px;' href='#' data-toggle='modal', data-target='#enviarInformeModal'+curso.idCurso) Enviar informe
                                           a.btn.btn-primary(style='margin: 10px 0px 10px 2px;' href='/informe/editar-informe/'+curso.idCurso) Editar informe
                                     else
-                                       td Se ha concluido
+                                       td Curso terminado
                                  else if curso.estado == 5
                                     if curso.tipo == 3
                                        td
                                           button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf2 '+curso.idCurso, type='button') Generar documentos
                                     else
-                                       td Se ha concluido
+                                       tdCurso terminado
                                  else if curso.estado == 6 
                                     if curso.tipo == 3
                                        td
                                           button(style='margin: 10px 0px 10px 2px;' class='btn btn-success pdf3 '+curso.idCurso, type='button') Generar constancias
                                     else
-                                       td Se ha concluido
+                                       td Curso terminado
                                  else
-                                    td Se ha cancelado el curso
+                                    td Curso cancelado
 
          each curso in misCursos
             if curso.estado == 1 
@@ -169,7 +169,7 @@ html(lang='es')
                                  span(aria-hidden='true') ×
                            form(id='enviarForm'+curso.idCurso, method='post', action='/solicitud/enviar-registro/'+curso.idCurso)
                               .modal-body
-                                 p Estas seguro que quieres enviar la solicitud
+                                 p ¿Estas seguro que quieres enviar la solicitud?
                               .modal-footer
                                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                                  button.btn.btn-primary(type='submit') Aceptar
@@ -217,7 +217,7 @@ html(lang='es')
                                  span(aria-hidden='true') ×
                            form(method='post', action='/informe/enviar-informe/'+curso.idCurso)
                               .modal-body
-                                 p Estas seguro que quieres enviar el informe
+                                 p ¿Estas seguro que quieres enviar el informe?
                               .modal-footer
                                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                                  button.btn.btn-primary(type='submit') Aceptar
@@ -228,10 +228,10 @@ html(lang='es')
                .modal-dialog(role='document')
                   .modal-content
                      .modal-header
-                        h5#exampleModalLabel.modal-title Error
+                        h5#exampleModalLabel.modal-title Aviso
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                            span(aria-hidden='true') ×
-                     .modal-body La solicitud tiene campos que no se han llenado.
+                     .modal-body Hay campos sin llenar en la solicitud
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
@@ -241,10 +241,10 @@ html(lang='es')
                .modal-dialog(role='document')
                   .modal-content
                      .modal-header
-                        h5#exampleModalLabel.modal-title Error
+                        h5#exampleModalLabel.modal-title Aviso
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                            span(aria-hidden='true') ×
-                     .modal-body El informe tiene campos que no se han llenado.
+                     .modal-body Hay campos sin llenar en el informe
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
@@ -294,7 +294,7 @@ html(lang='es')
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                            span(aria-hidden='true') ×
                      .modal-body 
-                        p Ya ha evaluado eso.
+                        p Ya se ha evaluado
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
@@ -308,7 +308,7 @@ html(lang='es')
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                            span(aria-hidden='true') ×
                      .modal-body 
-                        p El curso aun no cuenta con los participantes minimos para empezar.
+                        p El curso no cuenta con el mínimo de participantes requerido para iniciar
                      .modal-footer
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancelar
                         button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar

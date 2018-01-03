@@ -13,7 +13,7 @@ $(function(){
 		ocupacion = document.getElementById('ocupacion').value;
 		exp = document.getElementById('exp').value;
 		//validan si hay campos vacios
-		if(correo== "" || name=="" || last=="" || pass=="" || pass2=="" || exp==""){
+		if(correo== "" || name=="" || last=="" || pass=="" || pass2==""){
 			mostrarAviso(2);
 			return false;
 		}
@@ -27,16 +27,22 @@ $(function(){
 			return false;
 		}
 		//validar lo de si es maestro de la uni sea con el correo de la uni
-		if(institucion=='Universidad de Sonora' && ocupacion==1){
-			if(!correo.match('[a-z0-9._%+-]+@(mat|fisica|geologia)+\.uson\.mx$')) {
-				mostrarAviso(13);
+		if(institucion=='Universidad de Sonora'){
+			if(exp=="") {
+				mostrarAviso(14);
 				return false;
 			}
+			if(!exp.match(/^(\d+)$/)) {
+				mostrarAviso(12);
+				return false;
+			}
+			if(ocupacion==1){
+				if(!correo.match('[a-z0-9._%+-]+@(mat|fisica|geologia)+\.uson\.mx$')) {
+					mostrarAviso(13);
+					return false;
+				}
+			}
 		}
-		if(!exp.match(/^(\d+)$/)) {
-            mostrarAviso(12);
-            return false;
-        }
 		obtenerMensaje();
 		return false;
 	});
@@ -46,11 +52,11 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡El usuario ya existe!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Usuario repetido!</div>");
 	        break;
 	    case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Todos los campos son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Faltan datos por llenar!</div>");
 	        break;
 	    case 10:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
@@ -67,7 +73,11 @@ function mostrarAviso(error){
 		case 13:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
 		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Se requiere correo institucional si se es Profesor de la UNISON!</div>");
-	        break;						
+			break;
+		case 14:
+	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Se requiere expediente si se pertenece a la UNISON!</div>");
+			 break;						
 	}
 }
 function obtenerMensaje() {

@@ -24,15 +24,15 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Todos los campos de contraseña son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Todos los campos de contraseña son necesarios!</div>");
 			break;
 		case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>La contraseña actual es incorrecta!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡La contraseña actual es incorrecta!</div>");
 	        break;	
 	    case 3:
 	        $("#aviso2").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Las contraseñas no coinciden!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Las contraseñas no coinciden!</div>");
 			break;
 				
 	}

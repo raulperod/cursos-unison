@@ -83,13 +83,13 @@ html(lang='es')
                         .form-row
                            .col-md-6
                               label(for='nombre') Nombre(s)
-                              input#nombre.form-control(type='text', value=''+usuario.nombre+'', aria-describedby='nameHelp', disabled)
+                              input#nombre.form-control(type='text', value=usuario.nombre, aria-describedby='nameHelp', disabled)
                            .col-md-6
                               label(for='apellido') Apellidos
-                              input#apellido.form-control(type='text', value=''+usuario.apellido+'', aria-describedby='nameHelp', placeholder='Apellidos' disabled)
+                              input#apellido.form-control(type='text', value=usuario.apellido, aria-describedby='nameHelp', placeholder='Apellidos' disabled)
                      .form-group
-                        label(for='correo') Correo Electronico
-                        input#correo.form-control(type='email', value=''+usuario.correo+'', aria-describedby='emailHelp', placeholder='Correo Electronico' disabled)
+                        label(for='correo') Correo Electrónico
+                        input#correo.form-control(type='email', value=usuario.correo, aria-describedby='emailHelp', placeholder='Correo Electronico' disabled)
                      .form-group
                         #aviso
                         label(for='password_old') Contraseña actual
@@ -105,7 +105,7 @@ html(lang='es')
                               input#passnew2.form-control(type='password', placeholder='Confirmar nueva contraseña')
                      .form-group
                         label(for='institución') Institución
-                        input.form-control(type='text', value=''+usuario.institucion+'', disabled)
+                        input.form-control(type='text', value=usuario.institucion, disabled)
                      .form-group
                         label(for='tipo') Ocupación
                         if usuario.tipo == 0
@@ -114,9 +114,10 @@ html(lang='es')
                            input.form-control(type='text', value='Maestro', disabled)   
                         else
                            input.form-control(type='text', value='Consejo Divisional', disabled)   
-                     .form-group
-                        label(for='expediente') Expediente
-                        input#exp.form-control(type='text', aria-describedby='nameHelp', value=''+usuario.expediente+'', disabled)      
+                     if usuario.institucion == "Universidad de Sonora"     
+                        .form-group
+                           label(for='expediente') Expediente o número de empleado
+                           input.form-control(type='text', aria-describedby='nameHelp', value=usuario.expediente, disabled)      
                      input.btn.btn-primary.btn-block(type='submit' value='Guardar Perfil') 
          // /.container-fluid
          // /.content-wrapper
