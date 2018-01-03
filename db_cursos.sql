@@ -15,7 +15,7 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(50) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `expediente` varchar(50) NOT NULL,
+  `expediente` varchar(50) NULL,
   `codigoVerificacion` varchar(20) NOT NULL,
   `institucion` varchar(255) NOT NULL,
   `tipo` int(10) unsigned NOT NULL,

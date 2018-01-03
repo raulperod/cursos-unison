@@ -16,15 +16,15 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Ingrese el correo electronico valido!</div>");
             break;
         case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario inexistente!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡El usuario no existe!</div>");
             break;	
         case 3:
 	        $("#aviso").html("<div class='alert alert-success alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Se envio correctamente la nueva contraseña al correo!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Se envio correctamente la nueva contraseña al correo!</div>");
 	        break;
 	}
 }

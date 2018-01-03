@@ -22,43 +22,44 @@ $(function(){
 
 });
 function mostrarAviso(error){
-switch(error) {
-    case 1:
-        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario no existe!</div>");
-        break;
-    case 2:
-        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario inactivo.</div>");
-        break;
-    case 3:
-        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Contraseña incorrecta!</div>");
-        break;
-    case 5:
-        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ambos campos son requeridos!</div>");
-        break;
-    case 6:
-        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-            +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
-        break;     
-    default:
-        break;
-}
-}
-function obtenerMensaje() {
-$.ajax({
-    url: '/cuenta/login',
-    type: 'POST',
-    data: datosFormulario.serialize(),
-    success : function(data) {
-        if(data.tipo==4){
-            window.location.replace("/usuario/mis-cursos");
-        }else if(data.tipo==4.5){
-            window.location.replace("/solicitud/ver-solicitudes");
-        }
-        mostrarAviso(data.tipo);
+    switch(error) {
+        case 1:
+            $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+                +"data-dismiss='alert' aria-hidden='true'>&times;</button>¡El usuario no existe!</div>");
+            break;
+        case 2:
+            $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+                +"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Usuario inactivo.</div>");
+            break;
+        case 3:
+            $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+                +"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Contraseña incorrecta!</div>");
+            break;
+        case 5:
+            $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+                +"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Ambos campos son requeridos!</div>");
+            break;
+        case 6:
+            $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
+                +"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Ingrese un correo electrónico valido!</div>");
+            break;     
+        default:
+            break;
     }
-});
+}
+
+function obtenerMensaje() {
+    $.ajax({
+        url: '/cuenta/login',
+        type: 'POST',
+        data: datosFormulario.serialize(),
+        success : function(data) {
+            if(data.tipo==4){
+                window.location.replace("/usuario/mis-cursos");
+            }else if(data.tipo==4.5){
+                window.location.replace("/solicitud/ver-solicitudes");
+            }
+            mostrarAviso(data.tipo);
+        }
+    });
 }

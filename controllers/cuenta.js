@@ -12,7 +12,7 @@ function loginPost(req, res) {
     let correo = req.body.correo.toLowerCase(),
         password = req.body.password
 
-        UsuarioModel.obtenerUsuarioPorCorreo(correo, (error, usuario) =>{
+    UsuarioModel.obtenerUsuarioPorCorreo(correo, (error, usuario) =>{
         // declaro la promesa
         let promesa = new Promise((resolve, reject) => {
             (!error) ? resolve(true) : reject({ msg: `Error con la base de datos : ${error}`, tipo: 0 })
@@ -48,27 +48,23 @@ function loginPost(req, res) {
             // inicia al usuario y sus variables a utlizar
             req.session.user = usuario
             // envia para saber que es correcto
-            if(usuario.tipo < 2){
+            if(usuario.tipo < 2){ // maestro o alumnos
                 res.json({msg:'Datos correctos', tipo: 4})
-            }else{
+            }else{ // consejo divisional
                 res.json({msg:'Datos correctos', tipo: 4.5})
             }
         })
         .catch( error => {
             // si hubo erro lo manda
-            try{
-                console.log(error.msg)
-                res.json(error)
-            } catch (error){
-                // no pasa nada
-            }
+            console.log(error.msg)
+            res.json(error)
         })
     })
 }
 
 function generarPassword(longitud){
-    const caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789"
-    let pass = ""
+    let caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789",
+        pass = ""
     for (let i=0 ; i<longitud; i++){
         pass += caracteres.charAt( Math.floor( Math.random() * caracteres.length ) )
     }
@@ -134,7 +130,7 @@ function logout(req, res) {
 
 function verificarCorreoGet(req, res) {
     UsuarioModel.comprobarEstadoPorId(req.params.idUsuario, (error, usuario) => {
-        if(error || usuario.estado > 0){
+        if(error || typeof usuario == 'undefined' || usuario.estado == 1){
             res.redirect('/cuenta/login')
         }else{
             res.render('./cuenta/verificar_correo', {idUsuario: req.params.idUsuario})
@@ -147,22 +143,20 @@ function verificarCorreoPost(req, res) {
         codigoVerificacion = req.body.codigoVerificacion
 
     UsuarioModel.obtenerUsuarioPorId(idUsuario, (error, usuario) => {
-        if(error){
+        if(error || typeof usuario == 'undefined'){
             res.json({error, tipo:0})
-        }else{
-            if(codigoVerificacion == usuario.codigoVerificacion){ // lo puso bien
-                // cambio su estado        
-                UsuarioModel.actualizarUsuario({idUsuario, estado:1}, (error) => {
-                    if(error){
-                        res.json({error, tipo:0})
-                    }else{
-                        req.session.user = usuario
-                        res.json({error, tipo:3})
-                    }
-                })    
-            }else{ // lo puso mal
-                res.json({error: 'codigo incorrecto', tipo:2})
-            }
+        }else if(codigoVerificacion == usuario.codigoVerificacion){ // lo puso bien
+            // cambio su estado        
+            UsuarioModel.actualizarUsuario({idUsuario, estado:1}, (error) => {
+                if(error){
+                    res.json({error, tipo:0})
+                }else{
+                    req.session.user = usuario
+                    res.json({error, tipo:3})
+                }
+            })    
+        }else{ // lo puso mal
+            res.json({error: 'codigo incorrecto', tipo:2})
         }
     })
 }

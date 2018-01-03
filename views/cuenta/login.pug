@@ -4,8 +4,6 @@ html(lang='es')
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible', content='IE=edge')
       meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-      meta(name='description', content='')
-      meta(name='author', content='')
       title Iniciar Sesión
       // Bootstrap core CSS
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
@@ -21,7 +19,7 @@ html(lang='es')
                #aviso   
                form(id='formLogin' method='post' action='/cuenta/login')
                   .form-group
-                     label(for='correo') Correo Electronico
+                     label(for='correo') Correo Electrónico
                      input.form-control(id='correo' name='correo' type='email', aria-describedby='emailHelp', placeholder='Correo Electronico')
                   .form-group
                      label(for='password') Contraseña

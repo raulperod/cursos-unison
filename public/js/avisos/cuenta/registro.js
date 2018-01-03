@@ -46,27 +46,27 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Usuario repetido!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡El usuario ya existe!</div>");
 	        break;
 	    case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Todos los campos son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Todos los campos son necesarios!</div>");
 	        break;
 	    case 10:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Las contraseñas deben coincidir!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Las contraseñas deben coincidir!</div>");
 			break;
 		case 11:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Ingrese el correo electronico valido!</div>");
 			break;
 		case 12:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>El expediente es numerico!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡El expediente es numerico!</div>");
 			break;
 		case 13:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Se requiere correo institucional si se es Profesor de la UNISON!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Se requiere correo institucional si se es Profesor de la UNISON!</div>");
 	        break;						
 	}
 }

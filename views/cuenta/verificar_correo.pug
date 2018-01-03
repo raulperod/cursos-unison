@@ -22,7 +22,7 @@ html(lang='en')
                form#formValid(method='post' action='/cuenta/verificar-correo/'+idUsuario+'')
                   .form-group
                      h1 Verificar Correo
-                     p Introduzca el codigo de verificación que se envio a su correo.
+                     p Introduzca el código de verificación que se envió a su correo.
                   .form-group
                      input#codigo.form-control(name='codigoVerificacion' type='text' placeholder='Codigo de Verificación')
                   input.btn.btn-primary.btn-block(type='submit' value='Completar Registro')
@@ -31,11 +31,11 @@ html(lang='en')
          .modal-dialog(role='document')
             .modal-content
                .modal-header
-                  h5.modal-title Codigo de verificación
+                  h5.modal-title Código de verificación
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                   span(aria-hidden='true') ×
                .modal-body
-                  p Codigo de verificación correcto.
+                  p Código de verificación correcto.
                .modal-footer
                   a.btn.btn-primary(href='/cuenta/login') Aceptar
                   //a.btn.btn-secondary(href='/cuenta/login') Cerrar
