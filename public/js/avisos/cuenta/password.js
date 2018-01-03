@@ -1,9 +1,9 @@
 var datosFormulario; //lo que se va a enviar
 var correo;
 $(function(){
-	$("input:submit").click(function() {
-		datosFormulario= $('#formValid');
-		correo = document.getElementById('correo').value;
+	$("input:submit").click(function(){
+		datosFormulario = $('#formValid');
+		correo = document.getElementById('correo');
 		if(correo == "" || !correo.value.match('[a-z0-9._%+-]+@[a-z0-9.-]+\.+[a-z]{2,3}$')){
 			mostrarAviso(1);
 			return false;
