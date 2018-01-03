@@ -24,15 +24,15 @@ function mostrarAviso(error){
 	switch(error) {
 	    case 1:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Todos los campos son necesarios!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡Todos los campos son necesarios!</div>");
 			break;
 		case 2:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>No existe un usuario con ese correo!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>¡No existe un usuario con ese correo!</div>");
 			break;
 		case 10:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
-		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Ingrese el correo electronico valido!</div>");
+		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>?Ingrese el correo electrónico valido!</div>");
 	        break;					
 	}
 }

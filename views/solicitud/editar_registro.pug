@@ -4,15 +4,11 @@ html(lang='es')
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible', content='IE=edge')
       meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-      meta(name='description', content='')
-      meta(name='author', content='')
       title Editar Registro
       // Bootstrap core CSS
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
       // Custom fonts for this template
       link(href='/public/vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
-      // Page level plugin CSS
-      link(href='/public/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
       // Custom styles for this template
       link(href='/public/css/sb-admin.css', rel='stylesheet')
    body#page-top.fixed-nav.sticky-footer.bg-dark
@@ -66,7 +62,7 @@ html(lang='es')
                li.breadcrumb-item.active Editar solicitud de registro
             .card.mb-3
                .card-body
-                  | Nota: El curriculum debera entregarse por separado.   
+                  | Nota: El currículum deberá entregarse por separado. 
             // Example DataTables Card
             .card.card-register.mx-auto.mt-5
                .card-header Editar solicitud de registro
@@ -74,7 +70,7 @@ html(lang='es')
                   form(id='editForm' method='post', action='/solicitud/editar-registro/'+registro.idCurso)
                      if tipo == 3
                         .form-group
-                           label(for='nombre') Nombre del Curso
+                           label(for='nombre') Nombre del curso
                            input.form-control(name='nombre' type='text' value=''+registro.nombre+'' )
                         .form-group
                            .form-row
@@ -147,7 +143,7 @@ html(lang='es')
                                  label(for='fechaInicio') Fecha inicio
                                  input.form-control(name='fechaInicio' type='date' value=''+registro.fechaInicio+'')
                               .col-md-6
-                                 label(for='fechaFinal') Fecha terminación
+                                 label(for='fechaFinal') Fecha de terminación
                                  input.form-control(name='fechaFinal' type='date' value=''+registro.fechaFinal+'')
                         .form-group
                            .form-row
@@ -175,7 +171,7 @@ html(lang='es')
                         input.btn.btn-primary.btn-block(type='submit' value='Guardar') 
                      else
                         .form-group
-                           label(for='nombre') Nombre del Curso
+                           label(for='nombre') Nombre del curso
                            input.form-control(type='text' value=''+registro.nombre+'' disabled)
                         .form-group
                            label(for='caracter') Caracter
@@ -213,7 +209,7 @@ html(lang='es')
                                  label(for='fechaInicio') Fecha inicial
                                  input.form-control(name='fechaInicio' type='date', value=registro.fechaInicio)
                               .col-md-6
-                                 label(for='fechaFinal') Fecha terminación
+                                 label(for='fechaFinal') Fecha de terminación
                                  input.form-control(name='fechaFinal' type='date', value=registro.fechaFinal)
                         .form-group
                            .form-row
@@ -261,7 +257,7 @@ html(lang='es')
                      button.close(type='button', data-dismiss='modal', aria-label='Close')
                      span(aria-hidden='true') ×
                   .modal-body
-                     p La fecha final debe ser despues a la fecha inicial.
+                     p La fecha de terminación debe ser despues a la fecha inicial.
                   .modal-footer
                      button.btn.btn-primary(type='button', data-dismiss='modal') Aceptarr  
          // error2Model
@@ -273,7 +269,7 @@ html(lang='es')
                      button.close(type='button', data-dismiss='modal', aria-label='Close')
                      span(aria-hidden='true') ×
                   .modal-body
-                     p Debe haber un margen de 15 dias con la fecha inicial.
+                     p Debe haber un margen de 15 dias con la fecha inicial para su evaluación.
                   .modal-footer
                      button.btn.btn-primary(type='button', data-dismiss='modal') Aceptar
          // /.container-fluid
@@ -302,11 +298,6 @@ html(lang='es')
          script(src='/public/vendor/bootstrap/js/bootstrap.bundle.min.js')
          // Core plugin JavaScript
          script(src='/public/vendor/jquery-easing/jquery.easing.min.js')
-         // Page level plugin JavaScript
-         script(src='/public/vendor/datatables/jquery.dataTables.js')
-         script(src='/public/vendor/datatables/dataTables.bootstrap4.js')
          // Custom scripts for all pages
          script(src='/public/js/sb-admin.min.js')
-         // Custom scripts for this page
-         script(src='/public/js/sb-admin-datatables.min.js')
          script(src='/public/js/avisos/solicitud/editarRegistro.js')

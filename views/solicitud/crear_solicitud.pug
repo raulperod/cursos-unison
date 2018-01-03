@@ -4,8 +4,6 @@ html(lang='es')
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible', content='IE=edge')
       meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-      meta(name='description', content='')
-      meta(name='author', content='')
       title Crear Solicutud
       // Bootstrap core CSS
       link(href='/public/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
@@ -59,10 +57,10 @@ html(lang='es')
                   form#formCS(method='post' action='/solicitud/crear-curso')
                      #aviso   
                      .form-group
-                        label(for='nombre') Nombre del Curso
+                        label(for='nombre') Nombre del curso
                         input#nombre.form-control(name='nombre', type='text', aria-describedby='emailHelp', placeholder='Nombre del Curso')
                      .form-group
-                        label(for='correo') Correo del Instructor
+                        label(for='correo') Correo electrónico del instructor
                         input#correo.form-control(name='correo', type='email', aria-describedby='emailHelp', placeholder='Correo del Instructor')
                      input.btn.btn-primary.btn-block(type='submit', value='Crear solicitud')
          // crearSolicitud Modal

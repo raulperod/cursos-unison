@@ -308,7 +308,7 @@ function evaluacionParticipantesGet(req, res){
         }else{
             // idUsuario, idCurso, nombre, apellido, inasistencias, aprobo
             CursosUsuariosModel.obtenerParticipantesPorIdCurso(idCurso, (error, participantes) => {
-                if(error || participantes.length == 0){
+                if(error){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
                 }else if(participantes.length < participantes[0].cupoMinimo){

@@ -51,7 +51,7 @@ function crearSolicitudPost(req, res) {
     }else{
         // verifico que el correo del instructor exista
         UsuarioModel.obtenerUsuarioPorCorreo(correoInstructor, (error, instructor) => {
-            if(error || instructor == null){
+            if(error || typeof instructor == "undefined" || instructor == null){
                 res.json({msg:'Error base de datos', tipo: 2})
             }else{
                 CursoModel.crearCurso(nuevaSolicitud, (error, id) => {
@@ -94,7 +94,7 @@ function editarRegistroGet(req, res){
             }
         }else{
             CursoModel.obtenerCursoPorId(idCurso, (error, registro) => {
-                if(error || registro == null){
+                if(error || typeof tipo == 'undefined' || registro == null){
                     res.redirect('/usuario/mis-cursos')
                 }else{
                     registro = acomodarFecha(registro)
