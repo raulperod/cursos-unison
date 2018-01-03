@@ -311,7 +311,7 @@ function evaluacionParticipantesGet(req, res){
                 if(error){
                     console.log(error)
                     res.redirect('/usuario/mis-cursos')
-                }else if(participantes.length < participantes[0].cupoMinimo){
+                }else if(participantes.length == 0 || participantes.length < participantes[0].cupoMinimo){
                     req.session.errorParticipantes = true
                     res.redirect('/usuario/mis-cursos')
                 }else{
