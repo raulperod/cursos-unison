@@ -46,7 +46,7 @@ CREATE TABLE `cursos` (
   `cupoMinimo` int(10) unsigned NULL,
   `numeroDeParticipantes` int(10) unsigned NOT NULL DEFAULT '0',
   `reqIdioma` varchar(70) NULL,
-  `infraestrucupoMinimocturaNecesaria` TEXT NULL,
+  `infraestructuraNecesaria` TEXT NULL,
   `cargoInstructor` TEXT NULL,
   `dependencia` varchar(50) NULL,
   `telefono` varchar(20) NULL,

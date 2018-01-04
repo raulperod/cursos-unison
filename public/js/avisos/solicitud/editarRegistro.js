@@ -16,6 +16,7 @@ function obtenerMensaje() {
         type: 'POST',
         data: datosFormulario.serialize(),
         success : function(data) {
+			console.log(data)
             var arreglo=Object.values(data);
             if(arreglo[1] == 0){
 				$('#editarModel').modal('show')
