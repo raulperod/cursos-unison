@@ -24,7 +24,6 @@ function obtenerMensaje() {
 			}else if(arreglo[1] == 2){
 				$('#error2Model').modal('show')
 			} 
-			mostrarAviso(arreglo[1]);
         }
     });
 }

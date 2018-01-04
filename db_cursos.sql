@@ -128,22 +128,22 @@ CREATE TABLE `cursos_usuarios_evaluacion_participantes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `informes_de_cursos`
-ADD CONSTRAINT `informes_de_cursos_ibfk_1` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios`
-ADD CONSTRAINT `cursos_usuarios_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
-ADD CONSTRAINT `cursos_usuarios_ibfk_2` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios_asistencia`
-ADD CONSTRAINT `cursos_usuarios_asistencia_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
-ADD CONSTRAINT `cursos_usuarios_asistencia_ibfk_2` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios_evaluacion_curso`
-ADD CONSTRAINT `cursos_usuarios_evaluacion_curso_ibfk_1` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios_evaluacion_instructor`
-ADD CONSTRAINT `cursos_usuarios_evaluacion_instructor_ibfk_1` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `cursos_usuarios_evaluacion_participantes`
-ADD CONSTRAINT `cursos_usuarios_evaluacion_participantes_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
-ADD CONSTRAINT `cursos_usuarios_evaluacion_participantes_ibfk_2` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ADD FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION,
+ADD FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`) ON DELETE CASCADE ON UPDATE NO ACTION;
