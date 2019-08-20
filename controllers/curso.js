@@ -91,7 +91,7 @@ function inscribirsePost(req, res) {
 
     // comprueba si esta inscrito en el curso
     CursosUsuariosModel.siCurso(usuario.idUsuario, idCurso, (error, len) => {
-        if(error || len == 1){
+        if(error || len >= 1){
             req.session.errorInscripcion = true
             res.redirect('/usuario/ver-cursos')
         }else{
